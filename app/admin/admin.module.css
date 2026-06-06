@@ -1089,7 +1089,14 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--subtle-hover);
+  color: inherit;
   padding: 9px 10px;
+  text-decoration: none;
+}
+
+.messageAttachment[href]:hover {
+  border-color: rgba(103, 232, 249, 0.55);
+  background: var(--surface-soft);
 }
 
 .messageAttachment span {

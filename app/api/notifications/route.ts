@@ -1,24 +1,8 @@
 import { NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
-import { serializeNotification } from "@/lib/notifications"
+import { listNotifications, serializeNotification, updateNotifications } from "@/lib/notifications"
 
 const recipientRoles = ["client", "admin"]
 const notificationActions = ["read", "unread", "archive"]
-
-function getNotificationWhere(audience: string, userId?: string) {
-  if (audience === "admin") {
-    return {
-      recipientRole: "admin",
-      archivedAt: null,
-    }
-  }
-
-  return {
-    recipientRole: "client",
-    recipientId: userId,
-    archivedAt: null,
-  }
-}
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
@@ -34,22 +18,11 @@ export async function GET(req: Request) {
     return NextResponse.json({ message: "Informe o usuario." }, { status: 400 })
   }
 
-  const where = getNotificationWhere(audience, userId)
-
-  const [notifications, unreadCount, totalCount] = await Promise.all([
-    prisma.notification.findMany({
-      where,
-      orderBy: { createdAt: "desc" },
-      take,
-    }),
-    prisma.notification.count({
-      where: {
-        ...where,
-        readAt: null,
-      },
-    }),
-    prisma.notification.count({ where }),
-  ])
+  const { notifications, unreadCount, totalCount } = await listNotifications({
+    audience: audience as "client" | "admin",
+    userId,
+    take,
+  })
 
   return NextResponse.json({
     notifications: notifications.map(serializeNotification),
@@ -83,38 +56,13 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ message: "Informe as notificacoes." }, { status: 400 })
     }
 
-    const scopeWhere = getNotificationWhere(audience, userId)
-    const where = {
-      ...scopeWhere,
-      ...(markAll ? {} : { id: { in: ids } }),
-    }
-    const now = new Date()
-    const data =
-      action === "archive"
-        ? { archivedAt: now, readAt: now }
-        : action === "unread"
-          ? { readAt: null }
-          : { readAt: now }
-
-    await prisma.notification.updateMany({
-      where,
-      data,
+    const { notifications, unreadCount, totalCount } = await updateNotifications({
+      audience: audience as "client" | "admin",
+      userId,
+      action: action as "read" | "unread" | "archive",
+      all: markAll,
+      ids,
     })
-
-    const [notifications, unreadCount, totalCount] = await Promise.all([
-      prisma.notification.findMany({
-        where: scopeWhere,
-        orderBy: { createdAt: "desc" },
-        take: 80,
-      }),
-      prisma.notification.count({
-        where: {
-          ...scopeWhere,
-          readAt: null,
-        },
-      }),
-      prisma.notification.count({ where: scopeWhere }),
-    ])
 
     return NextResponse.json({
       ok: true,

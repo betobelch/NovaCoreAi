@@ -9,7 +9,7 @@ import {
   projectValueToCents,
 } from "@/lib/abacate-pay"
 import { notifyPaymentStatusChanged } from "@/lib/notifications"
-import { getProject, updateProjectCheckout, usesBlobProjectStore, type StoredProject } from "@/lib/project-store"
+import { getProject, updateProjectCheckout, type StoredProject } from "@/lib/project-store"
 
 function getSiteUrl(req: Request) {
   return process.env.NEXT_PUBLIC_SITE_URL?.trim() || new URL(req.url).origin
@@ -128,12 +128,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Projeto nao encontrado para este cliente." }, { status: 404 })
     }
 
-    if (!usesBlobProjectStore) {
-      try {
-        await notifyPaymentStatusChanged(toNotificationProject(updatedProject), project.paymentStatus)
-      } catch {
-        // Checkout creation should not depend on notification delivery.
-      }
+    try {
+      await notifyPaymentStatusChanged(toNotificationProject(updatedProject), project.paymentStatus)
+    } catch {
+      // Checkout creation should not depend on notification delivery.
     }
 
     return NextResponse.json({

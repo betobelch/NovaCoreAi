@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { createMessage, listMessages, type StoredMessage } from "@/lib/message-store"
+import { createMessage, listMessages, type StoredAttachment, type StoredMessage } from "@/lib/message-store"
 import { notifyMessageCreated } from "@/lib/notifications"
 
 function serializeMessage(message: StoredMessage) {
@@ -9,9 +9,34 @@ function serializeMessage(message: StoredMessage) {
     author: message.author,
     name: message.name,
     text: message.text,
+    attachments: message.attachments,
     createdAt: message.createdAt,
     client: message.client,
   }
+}
+
+function normalizeAttachment(attachment: any): StoredAttachment | null {
+  const id = String(attachment?.id ?? "").trim()
+  const name = String(attachment?.name ?? "").trim()
+  const size = Number(attachment?.size ?? 0)
+  const type = String(attachment?.type ?? "Arquivo").trim() || "Arquivo"
+  const dataUrl = String(attachment?.dataUrl ?? "").trim()
+
+  if (!id || !name || !Number.isFinite(size) || size < 0) return null
+
+  return {
+    id,
+    name,
+    size,
+    type,
+    ...(dataUrl ? { dataUrl } : {}),
+  }
+}
+
+function normalizeAttachments(attachments: unknown) {
+  if (!Array.isArray(attachments)) return []
+
+  return attachments.map(normalizeAttachment).filter(Boolean) as StoredAttachment[]
 }
 
 export async function GET(req: Request) {
@@ -29,6 +54,7 @@ export async function POST(req: Request) {
     const userId = String(body.userId ?? "").trim()
     const author = String(body.author ?? "").trim()
     const text = String(body.text ?? "").trim()
+    const attachments = normalizeAttachments(body.attachments)
     const client = {
       id: userId,
       name: String(body.clientName ?? "").trim(),
@@ -37,7 +63,7 @@ export async function POST(req: Request) {
       cpf: String(body.clientCpf ?? "").trim(),
     }
 
-    if (!userId || !text) {
+    if (!userId || (!text && attachments.length === 0)) {
       return NextResponse.json({ message: "Informe cliente e mensagem." }, { status: 400 })
     }
 
@@ -48,7 +74,8 @@ export async function POST(req: Request) {
     const message = await createMessage({
       userId,
       author,
-      text,
+      text: text || "Arquivo enviado.",
+      attachments,
       client,
     })
 
@@ -56,26 +83,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Cliente nao encontrado." }, { status: 404 })
     }
 
-    if (!process.env.NETLIFY) {
-      try {
-        await notifyMessageCreated(
-          {
-            id: message.id,
-            userId: message.userId,
-            author: message.author,
-            name: message.name,
-            text: message.text,
-          },
-          {
-            id: message.client?.id ?? userId,
-            name: message.client?.name ?? message.name,
-            company: message.client?.company ?? "",
-            email: message.client?.email ?? "",
-          },
-        )
-      } catch {
-        // The message should remain available even if a notification hook fails.
-      }
+    try {
+      await notifyMessageCreated(
+        {
+          id: message.id,
+          userId: message.userId,
+          author: message.author,
+          name: message.name,
+          text: message.text,
+        },
+        {
+          id: message.client?.id ?? userId,
+          name: message.client?.name ?? message.name,
+          company: message.client?.company ?? "",
+          email: message.client?.email ?? "",
+        },
+      )
+    } catch {
+      // The message should remain available even if a notification hook fails.
     }
 
     return NextResponse.json({ ok: true, message: serializeMessage(message) })

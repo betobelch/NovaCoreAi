@@ -5,7 +5,6 @@ import {
   deleteProject,
   listProjects,
   updateProjectStatus,
-  usesBlobProjectStore,
   type StoredProject,
 } from "@/lib/project-store"
 
@@ -114,12 +113,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Cliente nao encontrado." }, { status: 404 })
     }
 
-    if (!usesBlobProjectStore) {
-      try {
-        await notifyProjectCreated(toNotificationProject(project))
-      } catch {
-        // Project creation should not depend on notification delivery.
-      }
+    try {
+      await notifyProjectCreated(toNotificationProject(project))
+    } catch {
+      // Project creation should not depend on notification delivery.
     }
 
     return NextResponse.json({ ok: true, project: serializeProject(project) })
@@ -148,12 +145,10 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ message: "Projeto nao encontrado." }, { status: 404 })
     }
 
-    if (!usesBlobProjectStore) {
-      try {
-        await notifyProjectStatusChanged(toNotificationProject(result.project), result.previousStatus)
-      } catch {
-        // Status updates should not depend on notification delivery.
-      }
+    try {
+      await notifyProjectStatusChanged(toNotificationProject(result.project), result.previousStatus)
+    } catch {
+      // Status updates should not depend on notification delivery.
     }
 
     return NextResponse.json({ ok: true, project: serializeProject(result.project) })

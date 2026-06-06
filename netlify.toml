@@ -4,6 +4,7 @@
 
 [build.environment]
   DATABASE_URL = "file:/tmp/novacore.db"
+  NODE_VERSION = "20"
 
 [functions]
   included_files = ["data/novacore.db"]

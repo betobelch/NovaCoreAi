@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import { notifyClientRegistered } from "@/lib/notifications"
 import { normalizeCpf, normalizePhone, validateRegistrationForm } from "@/lib/registration-validation"
 import { hashPassword } from "@/lib/password"
-import { createUser, getUserByCpf, getUserByEmail, serializeAuthUser, usesBlobUserStore } from "@/lib/user-store"
+import { createUser, getUserByCpf, getUserByEmail, serializeAuthUser } from "@/lib/user-store"
 import { normalizeEmail } from "@/lib/users"
 
 export async function POST(req: Request) {
@@ -42,12 +42,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Nao foi possivel criar o cadastro." }, { status: 500 })
     }
 
-    if (!usesBlobUserStore) {
-      try {
-        await notifyClientRegistered(user)
-      } catch {
-        // Registration should not depend on notification delivery.
-      }
+    try {
+      await notifyClientRegistered(user)
+    } catch {
+      // Registration should not depend on notification delivery.
     }
 
     return NextResponse.json({

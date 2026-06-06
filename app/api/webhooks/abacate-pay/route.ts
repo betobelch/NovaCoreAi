@@ -1,7 +1,7 @@
 import crypto from "node:crypto"
 import { NextResponse } from "next/server"
 import { notifyPaymentStatusChanged } from "@/lib/notifications"
-import { updateProjectsPaymentByCheckout, usesBlobProjectStore, type StoredProject } from "@/lib/project-store"
+import { updateProjectsPaymentByCheckout, type StoredProject } from "@/lib/project-store"
 
 const ABACATEPAY_PUBLIC_KEY =
   "t9dXRhHHo3yDEj5pVDYz0frf7q6bMKyMRmxxCPIPp3RCplBfXRxqlC6ZpiWmOqj4L63qEaeUOtrCI8P0VMUgo6iIga2ri9ogaHFs0WIIywSMg0q7RmBfybe1E5XJcfC4IW3alNqym0tXoAKkzvfEjZxV6bE0oG2zJrNNYmUCKZyV0KZ3JS8Votf9EAWWYdiDkMkpbMdPggfh1EqHlVkMiTady6jOR3hyzGEHrIz2Ret0xHKMbiqkr9HS1JhNHDX9"
@@ -90,16 +90,14 @@ export async function POST(req: Request) {
     checkoutUrl: checkout.url ? String(checkout.url) : null,
   })
 
-  if (!usesBlobProjectStore) {
-    try {
-      await Promise.all(
-        updatedProjects.map(({ project, previousPaymentStatus }) =>
-          notifyPaymentStatusChanged(toNotificationProject(project), previousPaymentStatus),
-        ),
-      )
-    } catch {
-      // Webhook confirmation should not depend on notification delivery.
-    }
+  try {
+    await Promise.all(
+      updatedProjects.map(({ project, previousPaymentStatus }) =>
+        notifyPaymentStatusChanged(toNotificationProject(project), previousPaymentStatus),
+      ),
+    )
+  } catch {
+    // Webhook confirmation should not depend on notification delivery.
   }
 
   return NextResponse.json({ ok: true })

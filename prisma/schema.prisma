@@ -89,6 +89,7 @@ model Message {
   author    String
   name      String
   text      String
+  attachments String?
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

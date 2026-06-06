@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, KeyboardEvent, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
@@ -52,6 +52,7 @@ type ChatAttachment = {
   name: string
   size: number
   type: string
+  dataUrl?: string
 }
 
 type ApiMessage = {
@@ -60,6 +61,7 @@ type ApiMessage = {
   author: "client" | "admin"
   name: string
   text: string
+  attachments?: ChatAttachment[]
   createdAt: string
 }
 
@@ -169,6 +171,7 @@ function mapApiMessageToClient(message: ApiMessage): ChatMessage {
     author: message.author === "admin" ? "team" : "client",
     name: message.author === "admin" ? message.name : "Voce",
     text: message.text,
+    attachments: message.attachments ?? [],
     time: formatMessageTime(message.createdAt),
   }
 }
@@ -187,13 +190,24 @@ function createClientMessage(text: string, attachments: ChatAttachment[] = []): 
   }
 }
 
-function createAttachments(files: FileList) {
-  return Array.from(files).map((file) => ({
+function readFileAsDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader()
+
+    reader.onload = () => resolve(String(reader.result ?? ""))
+    reader.onerror = () => reject(reader.error)
+    reader.readAsDataURL(file)
+  })
+}
+
+async function createAttachments(files: FileList) {
+  return Promise.all(Array.from(files).map(async (file) => ({
     id: `${file.name}-${file.size}-${Date.now()}-${Math.random().toString(36).slice(2)}`,
     name: file.name,
     size: file.size,
     type: file.type || "Arquivo",
-  }))
+    dataUrl: await readFileAsDataUrl(file),
+  })))
 }
 
 function formatFileSize(size: number) {
@@ -525,6 +539,7 @@ export default function ClientePage() {
           clientCompany: clientUser.company,
           clientEmail: clientUser.email,
           clientCpf: clientUser.cpf,
+          attachments,
         }),
       })
 
@@ -1096,9 +1111,7 @@ function ContactTab({ messages, onSendMessage }: ContactTabProps) {
   const [message, setMessage] = useState("")
   const [attachments, setAttachments] = useState<ChatAttachment[]>([])
 
-  async function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
+  async function submitContactMessage() {
     const trimmedMessage = message.trim()
 
     if (!trimmedMessage && attachments.length === 0) return
@@ -1108,9 +1121,22 @@ function ContactTab({ messages, onSendMessage }: ContactTabProps) {
     setAttachments([])
   }
 
-  function handleAttachmentChange(files: FileList | null) {
+  async function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    await submitContactMessage()
+  }
+
+  function handleMessageKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key !== "Enter" || event.shiftKey) return
+
+    event.preventDefault()
+    void submitContactMessage()
+  }
+
+  async function handleAttachmentChange(files: FileList | null) {
     if (!files?.length) return
-    setAttachments((currentAttachments) => [...currentAttachments, ...createAttachments(files)])
+    const nextAttachments = await createAttachments(files)
+    setAttachments((currentAttachments) => [...currentAttachments, ...nextAttachments])
   }
 
   function removeAttachment(attachmentId: string) {
@@ -1145,13 +1171,28 @@ function ContactTab({ messages, onSendMessage }: ContactTabProps) {
                   <p>{item.text}</p>
                   {item.attachments && item.attachments.length > 0 && (
                     <div className={styles.messageAttachments}>
-                      {item.attachments.map((attachment) => (
-                        <div key={attachment.id} className={styles.messageAttachment}>
-                          <FileText className={styles.smallIcon} />
-                          <span>{attachment.name}</span>
-                          <small>{formatFileSize(attachment.size)}</small>
-                        </div>
-                      ))}
+                      {item.attachments.map((attachment) =>
+                        attachment.dataUrl ? (
+                          <a
+                            key={attachment.id}
+                            className={styles.messageAttachment}
+                            href={attachment.dataUrl}
+                            download={attachment.name}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <FileText className={styles.smallIcon} />
+                            <span>{attachment.name}</span>
+                            <small>{formatFileSize(attachment.size)}</small>
+                          </a>
+                        ) : (
+                          <div key={attachment.id} className={styles.messageAttachment}>
+                            <FileText className={styles.smallIcon} />
+                            <span>{attachment.name}</span>
+                            <small>{formatFileSize(attachment.size)}</small>
+                          </div>
+                        ),
+                      )}
                     </div>
                   )}
                 </div>
@@ -1193,6 +1234,7 @@ function ContactTab({ messages, onSendMessage }: ContactTabProps) {
             <textarea
               value={message}
               onChange={(event) => setMessage(event.target.value)}
+              onKeyDown={handleMessageKeyDown}
               className={styles.chatInput}
               rows={2}
               placeholder="Digite sua mensagem para a NovaCore AI..."

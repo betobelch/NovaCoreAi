@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEvent, useEffect, useMemo, useState } from "react"
+import { FormEvent, KeyboardEvent, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
   BarChart3,
@@ -68,6 +68,7 @@ type AdminAttachment = {
   name: string
   size: number
   type: string
+  dataUrl?: string
 }
 
 type ApiMessage = {
@@ -76,6 +77,7 @@ type ApiMessage = {
   author: "client" | "admin"
   name: string
   text: string
+  attachments?: AdminAttachment[]
   createdAt: string
   client?: {
     id: string
@@ -182,6 +184,7 @@ function mapApiMessageToAdmin(message: ApiMessage): AdminMessage {
     author: message.author,
     name: message.name,
     text: message.text,
+    attachments: message.attachments ?? [],
     time: formatMessageTime(message.createdAt),
   }
 }
@@ -221,13 +224,24 @@ function getConversationClass(status: ConversationStatus) {
   return status === "Aberta" ? styles.statusActive : styles.statusDone
 }
 
-function createAttachments(files: FileList) {
-  return Array.from(files).map((file) => ({
+function readFileAsDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader()
+
+    reader.onload = () => resolve(String(reader.result ?? ""))
+    reader.onerror = () => reject(reader.error)
+    reader.readAsDataURL(file)
+  })
+}
+
+async function createAttachments(files: FileList) {
+  return Promise.all(Array.from(files).map(async (file) => ({
     id: `${file.name}-${file.size}-${Date.now()}-${Math.random().toString(36).slice(2)}`,
     name: file.name,
     size: file.size,
     type: file.type || "Arquivo",
-  }))
+    dataUrl: await readFileAsDataUrl(file),
+  })))
 }
 
 function formatFileSize(size: number) {
@@ -587,9 +601,7 @@ export default function AdminPage() {
     }))
   }
 
-  async function handleReplySubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
+  async function submitReplyMessage() {
     if (!selectedClient || (!reply.trim() && replyAttachments.length === 0)) return
 
     const nextMessage: AdminMessage = {
@@ -630,6 +642,7 @@ export default function AdminPage() {
           clientName: selectedClient.name,
           clientCompany: selectedClient.company,
           clientEmail: selectedClient.email,
+          attachments: replyAttachments,
         }),
       })
 
@@ -658,9 +671,22 @@ export default function AdminPage() {
     }
   }
 
-  function handleReplyAttachmentChange(files: FileList | null) {
+  async function handleReplySubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    await submitReplyMessage()
+  }
+
+  function handleReplyKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key !== "Enter" || event.shiftKey) return
+
+    event.preventDefault()
+    void submitReplyMessage()
+  }
+
+  async function handleReplyAttachmentChange(files: FileList | null) {
     if (!files?.length) return
-    setReplyAttachments((currentAttachments) => [...currentAttachments, ...createAttachments(files)])
+    const nextAttachments = await createAttachments(files)
+    setReplyAttachments((currentAttachments) => [...currentAttachments, ...nextAttachments])
   }
 
   function removeReplyAttachment(attachmentId: string) {
@@ -943,13 +969,28 @@ export default function AdminPage() {
                             <p>{message.text}</p>
                             {message.attachments && message.attachments.length > 0 && (
                               <div className={styles.messageAttachments}>
-                                {message.attachments.map((attachment) => (
-                                  <div key={attachment.id} className={styles.messageAttachment}>
-                                    <FileText className={styles.smallIcon} />
-                                    <span>{attachment.name}</span>
-                                    <small>{formatFileSize(attachment.size)}</small>
-                                  </div>
-                                ))}
+                                {message.attachments.map((attachment) =>
+                                  attachment.dataUrl ? (
+                                    <a
+                                      key={attachment.id}
+                                      className={styles.messageAttachment}
+                                      href={attachment.dataUrl}
+                                      download={attachment.name}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                    >
+                                      <FileText className={styles.smallIcon} />
+                                      <span>{attachment.name}</span>
+                                      <small>{formatFileSize(attachment.size)}</small>
+                                    </a>
+                                  ) : (
+                                    <div key={attachment.id} className={styles.messageAttachment}>
+                                      <FileText className={styles.smallIcon} />
+                                      <span>{attachment.name}</span>
+                                      <small>{formatFileSize(attachment.size)}</small>
+                                    </div>
+                                  ),
+                                )}
                               </div>
                             )}
                           </div>
@@ -995,6 +1036,7 @@ export default function AdminPage() {
                         <textarea
                           value={reply}
                           onChange={(event) => setReply(event.target.value)}
+                          onKeyDown={handleReplyKeyDown}
                           rows={2}
                           placeholder="Responder cliente"
                         />

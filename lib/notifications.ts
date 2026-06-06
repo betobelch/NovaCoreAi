@@ -1,3 +1,4 @@
+import { getStore } from "@netlify/blobs"
 import { prisma } from "@/lib/prisma"
 
 export type NotificationRecipientRole = "client" | "admin"
@@ -26,12 +27,12 @@ type NotificationRecord = {
   entityId: string | null
   emailEnabled: boolean
   whatsappEnabled: boolean
-  emailSentAt: Date | null
-  whatsappSentAt: Date | null
-  readAt: Date | null
-  archivedAt: Date | null
-  createdAt: Date
-  updatedAt: Date
+  emailSentAt: Date | string | null
+  whatsappSentAt: Date | string | null
+  readAt: Date | string | null
+  archivedAt: Date | string | null
+  createdAt: Date | string
+  updatedAt: Date | string
 }
 
 type NotificationUser = {
@@ -77,10 +78,23 @@ type CreateNotificationInput = {
   whatsappEnabled?: boolean
 }
 
+type NotificationAction = "read" | "unread" | "archive"
+
+const notificationStoreKey = "notifications"
+const usesBlobNotificationStore = Boolean(process.env.NETLIFY || process.env.NETLIFY_BLOBS_CONTEXT)
+
 const moneyFormatter = new Intl.NumberFormat("pt-BR", {
   style: "currency",
   currency: "BRL",
 })
+
+function createNotificationId() {
+  return `notification-${Date.now()}-${Math.random().toString(36).slice(2)}`
+}
+
+function getNotificationStore() {
+  return getStore("novacore-notifications")
+}
 
 function truncateText(value: string, maxLength = 180) {
   const normalizedValue = value.replace(/\s+/g, " ").trim()
@@ -108,6 +122,93 @@ function formatDate(date: Date | null) {
   }).format(date)
 }
 
+function toIsoString(value: Date | string | null | undefined) {
+  if (!value) return null
+  if (value instanceof Date) return value.toISOString()
+
+  const date = new Date(value)
+
+  return Number.isNaN(date.getTime()) ? value : date.toISOString()
+}
+
+function normalizeNotification(notification: any): NotificationRecord | null {
+  const id = String(notification?.id ?? "").trim()
+  const recipientRole = String(notification?.recipientRole ?? "").trim()
+  const type = String(notification?.type ?? "").trim()
+  const title = String(notification?.title ?? "").trim()
+  const body = String(notification?.body ?? "").trim()
+  const createdAt = toIsoString(notification?.createdAt) ?? new Date().toISOString()
+  const updatedAt = toIsoString(notification?.updatedAt) ?? createdAt
+
+  if (!id || !recipientRole || !type || !title || !body) return null
+
+  return {
+    id,
+    recipientRole,
+    recipientId: notification?.recipientId ? String(notification.recipientId) : null,
+    actorId: notification?.actorId ? String(notification.actorId) : null,
+    actorName: notification?.actorName ? String(notification.actorName) : null,
+    type,
+    title,
+    body,
+    actionUrl: notification?.actionUrl ? String(notification.actionUrl) : null,
+    actionLabel: notification?.actionLabel ? String(notification.actionLabel) : null,
+    entityType: notification?.entityType ? String(notification.entityType) : null,
+    entityId: notification?.entityId ? String(notification.entityId) : null,
+    emailEnabled: Boolean(notification?.emailEnabled),
+    whatsappEnabled: Boolean(notification?.whatsappEnabled),
+    emailSentAt: toIsoString(notification?.emailSentAt),
+    whatsappSentAt: toIsoString(notification?.whatsappSentAt),
+    readAt: toIsoString(notification?.readAt),
+    archivedAt: toIsoString(notification?.archivedAt),
+    createdAt,
+    updatedAt,
+  }
+}
+
+function sortNotifications(notifications: NotificationRecord[]) {
+  return [...notifications].sort((first, second) => {
+    const firstCreatedAt = toIsoString(first.createdAt) ?? ""
+    const secondCreatedAt = toIsoString(second.createdAt) ?? ""
+
+    return secondCreatedAt.localeCompare(firstCreatedAt)
+  })
+}
+
+async function readBlobNotifications() {
+  const notifications = await getNotificationStore().get(notificationStoreKey, { type: "json" })
+
+  return Array.isArray(notifications)
+    ? sortNotifications(notifications.map(normalizeNotification).filter(Boolean) as NotificationRecord[])
+    : []
+}
+
+async function writeBlobNotifications(notifications: NotificationRecord[]) {
+  await getNotificationStore().setJSON(notificationStoreKey, sortNotifications(notifications))
+}
+
+function matchesNotificationScope(notification: NotificationRecord, audience: NotificationRecipientRole, userId?: string) {
+  if (notification.archivedAt) return false
+  if (audience === "admin") return notification.recipientRole === "admin"
+
+  return notification.recipientRole === "client" && notification.recipientId === userId
+}
+
+function getNotificationWhere(audience: NotificationRecipientRole, userId?: string) {
+  if (audience === "admin") {
+    return {
+      recipientRole: "admin",
+      archivedAt: null,
+    }
+  }
+
+  return {
+    recipientRole: "client",
+    recipientId: userId,
+    archivedAt: null,
+  }
+}
+
 export function serializeNotification(notification: NotificationRecord) {
   return {
     id: notification.id,
@@ -126,17 +227,48 @@ export function serializeNotification(notification: NotificationRecord) {
       panel: true,
       emailEnabled: notification.emailEnabled,
       whatsappEnabled: notification.whatsappEnabled,
-      emailSentAt: notification.emailSentAt?.toISOString() ?? null,
-      whatsappSentAt: notification.whatsappSentAt?.toISOString() ?? null,
+      emailSentAt: toIsoString(notification.emailSentAt),
+      whatsappSentAt: toIsoString(notification.whatsappSentAt),
     },
-    readAt: notification.readAt?.toISOString() ?? null,
-    archivedAt: notification.archivedAt?.toISOString() ?? null,
-    createdAt: notification.createdAt.toISOString(),
-    updatedAt: notification.updatedAt.toISOString(),
+    readAt: toIsoString(notification.readAt),
+    archivedAt: toIsoString(notification.archivedAt),
+    createdAt: toIsoString(notification.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(notification.updatedAt) ?? new Date().toISOString(),
   }
 }
 
 export async function createNotification(input: CreateNotificationInput) {
+  if (usesBlobNotificationStore) {
+    const notifications = await readBlobNotifications()
+    const now = new Date().toISOString()
+    const notification: NotificationRecord = {
+      id: createNotificationId(),
+      recipientRole: input.recipientRole,
+      recipientId: input.recipientId ?? null,
+      actorId: input.actorId ?? null,
+      actorName: input.actorName ?? null,
+      type: input.type,
+      title: input.title,
+      body: input.body,
+      actionUrl: input.actionUrl ?? null,
+      actionLabel: input.actionLabel ?? null,
+      entityType: input.entityType ?? null,
+      entityId: input.entityId ?? null,
+      emailEnabled: input.emailEnabled ?? false,
+      whatsappEnabled: input.whatsappEnabled ?? false,
+      emailSentAt: null,
+      whatsappSentAt: null,
+      readAt: null,
+      archivedAt: null,
+      createdAt: now,
+      updatedAt: now,
+    }
+
+    await writeBlobNotifications([notification, ...notifications])
+
+    return notification
+  }
+
   return prisma.notification.create({
     data: {
       recipientRole: input.recipientRole,
@@ -153,6 +285,116 @@ export async function createNotification(input: CreateNotificationInput) {
       emailEnabled: input.emailEnabled ?? false,
       whatsappEnabled: input.whatsappEnabled ?? false,
     },
+  })
+}
+
+export async function listNotifications(input: {
+  audience: NotificationRecipientRole
+  userId?: string
+  take?: number
+}) {
+  const take = Math.min(Math.max(input.take ?? 80, 1), 120)
+
+  if (usesBlobNotificationStore) {
+    const scopedNotifications = (await readBlobNotifications()).filter((notification) =>
+      matchesNotificationScope(notification, input.audience, input.userId),
+    )
+
+    return {
+      notifications: scopedNotifications.slice(0, take),
+      unreadCount: scopedNotifications.filter((notification) => !notification.readAt).length,
+      totalCount: scopedNotifications.length,
+    }
+  }
+
+  const where = getNotificationWhere(input.audience, input.userId)
+  const [notifications, unreadCount, totalCount] = await Promise.all([
+    prisma.notification.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      take,
+    }),
+    prisma.notification.count({
+      where: {
+        ...where,
+        readAt: null,
+      },
+    }),
+    prisma.notification.count({ where }),
+  ])
+
+  return {
+    notifications,
+    unreadCount,
+    totalCount,
+  }
+}
+
+export async function updateNotifications(input: {
+  audience: NotificationRecipientRole
+  userId?: string
+  action: NotificationAction
+  ids?: string[]
+  all?: boolean
+}) {
+  const ids = input.ids ?? []
+  const now = new Date()
+
+  if (usesBlobNotificationStore) {
+    const nowIso = now.toISOString()
+    const notifications = await readBlobNotifications()
+    const updatedNotifications = notifications.map((notification) => {
+      const inScope = matchesNotificationScope(notification, input.audience, input.userId)
+      const selected = input.all || ids.includes(notification.id)
+
+      if (!inScope || !selected) return notification
+
+      if (input.action === "archive") {
+        return {
+          ...notification,
+          readAt: nowIso,
+          archivedAt: nowIso,
+          updatedAt: nowIso,
+        }
+      }
+
+      return {
+        ...notification,
+        readAt: input.action === "unread" ? null : nowIso,
+        updatedAt: nowIso,
+      }
+    })
+
+    await writeBlobNotifications(updatedNotifications)
+
+    return listNotifications({
+      audience: input.audience,
+      userId: input.userId,
+      take: 80,
+    })
+  }
+
+  const scopeWhere = getNotificationWhere(input.audience, input.userId)
+  const where = {
+    ...scopeWhere,
+    ...(input.all ? {} : { id: { in: ids } }),
+  }
+  const data =
+    input.action === "archive"
+      ? { archivedAt: now, readAt: now }
+      : input.action === "unread"
+        ? { readAt: null }
+        : { readAt: now }
+
+  await prisma.notification.updateMany({
+    where,
+    data,
+  })
+
+  return listNotifications({
+    audience: input.audience,
+    userId: input.userId,
+    take: 80,
   })
 }
 
