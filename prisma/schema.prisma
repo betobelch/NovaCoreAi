@@ -1,0 +1,142 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  company      String?
+  cpf          String   @unique
+  phone        String?
+  email        String   @unique
+  passwordHash String
+  role         String   @default("client")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  projects Project[]
+  invoices Invoice[]
+  messages Message[]
+
+  @@index([role])
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  model       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  userId      String
+  name        String
+  type        String
+  status      String    @default("Aguardando")
+  paymentStatus String  @default("Pendente")
+  value       Int       @default(0)
+  cost        Int       @default(0)
+  dueDate     DateTime?
+  description String?
+  abacateProductId  String?
+  abacateCheckoutId String?
+  abacateCheckoutUrl String?
+  abacateExternalId String? @unique
+  paidAt      DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([paymentStatus])
+  @@index([abacateCheckoutId])
+}
+
+model Invoice {
+  id        String    @id @default(cuid())
+  userId    String
+  title     String
+  value     Int
+  status    String    @default("Pendente")
+  dueDate   DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  userId    String
+  author    String
+  name      String
+  text      String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Notification {
+  id              String    @id @default(cuid())
+  recipientRole   String
+  recipientId     String?
+  actorId         String?
+  actorName       String?
+  type            String
+  title           String
+  body            String
+  actionUrl       String?
+  actionLabel     String?
+  entityType      String?
+  entityId        String?
+  emailEnabled    Boolean   @default(false)
+  whatsappEnabled Boolean   @default(false)
+  emailSentAt     DateTime?
+  whatsappSentAt  DateTime?
+  readAt          DateTime?
+  archivedAt      DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([recipientRole])
+  @@index([recipientId])
+  @@index([type])
+  @@index([readAt])
+  @@index([archivedAt])
+  @@index([createdAt])
+}
+
+model PasswordResetRequest {
+  id            String    @id @default(cuid())
+  email         String
+  code          String
+  expiresAt     DateTime
+  verifiedToken String?   @unique
+  verifiedUntil DateTime?
+  used          Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+
+  @@index([email])
+  @@index([expiresAt])
+}

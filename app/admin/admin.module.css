@@ -1,0 +1,1849 @@
+.adminPage {
+  min-height: 100vh;
+  padding: 96px 0 56px;
+  background:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.1), transparent 34rem),
+    linear-gradient(180deg, var(--background), var(--secondary) 120%);
+  color: var(--foreground);
+}
+
+.shell {
+  width: min(1440px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.topbar,
+.topbarActions,
+.clientHeader,
+.panelHeader,
+.tableHeader,
+.metricCard,
+.projectItem,
+.contactStack span,
+.periodBadge,
+.statusButton,
+.profitValue,
+.inlineClient {
+  display: flex;
+  align-items: center;
+}
+
+.topbar {
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.topbarActions {
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.eyebrow {
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: 6px;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.02;
+}
+
+.periodBadge,
+.statusButton {
+  gap: 8px;
+  min-height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 12px;
+  background: var(--surface);
+  color: var(--foreground);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.notificationCount {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  border: 2px solid var(--surface);
+  border-radius: 999px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 900;
+  padding: 0 5px;
+}
+
+.adminUserMenu {
+  position: relative;
+}
+
+.userMenuTrigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 42px;
+  max-width: 260px;
+  border: 1px solid rgba(103, 232, 249, 0.5);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 900;
+  padding: 0 12px;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.userMenuTrigger span:not(.notificationCount) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.userMenuTrigger:hover {
+  border-color: rgba(103, 232, 249, 0.4);
+  background: rgba(103, 232, 249, 0.08);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.userMenuBell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  color: var(--muted-foreground);
+}
+
+.userMenuBellAlert {
+  background: rgba(239, 68, 68, 0.14);
+  color: var(--danger);
+  animation: notificationPulse 1.35s ease-in-out infinite;
+}
+
+.userMenuBellAlert::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: inherit;
+  background: rgba(239, 68, 68, 0.16);
+  animation: notificationHalo 1.35s ease-in-out infinite;
+}
+
+.userMenuBellAlert svg {
+  position: relative;
+  z-index: 1;
+}
+
+.userMenuChevronOpen {
+  transform: rotate(180deg);
+}
+
+@keyframes notificationPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.12);
+    transform: scale(1.06);
+  }
+}
+
+@keyframes notificationHalo {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scale(0.82);
+  }
+
+  50% {
+    opacity: 0.42;
+    transform: scale(1.18);
+  }
+}
+
+.userMenuPanel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 160;
+  display: grid;
+  gap: 10px;
+  width: min(360px, calc(100vw - 28px));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-strong);
+  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.26);
+  padding: 12px;
+}
+
+.userMenuLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-align: left;
+  padding: 0 10px;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.userMenuLink:hover {
+  background: var(--subtle-hover);
+  color: var(--primary);
+}
+
+.userMenuLogout {
+  color: var(--danger);
+}
+
+.userMenuNotifications {
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 0;
+}
+
+.userMenuNotificationsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.userMenuNotificationsHeader span {
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.userMenuNotificationsHeader button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 900;
+  padding: 0 9px;
+}
+
+.userMenuNotification {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 9px;
+  text-align: left;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+
+.userMenuNotification:hover,
+.userMenuNotificationUnread {
+  border-color: rgba(103, 232, 249, 0.24);
+  background: rgba(103, 232, 249, 0.08);
+}
+
+.userMenuNotificationIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--primary);
+}
+
+.userMenuNotificationSvg {
+  width: 17px;
+  height: 17px;
+}
+
+.userMenuNotificationMessage {
+  background: var(--info-soft);
+  color: var(--info);
+}
+
+.userMenuNotificationWarning {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.userMenuNotificationSuccess {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.userMenuNotificationDanger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.userMenuNotificationProject {
+  background: var(--violet-soft);
+  color: var(--violet);
+}
+
+.userMenuNotificationDefault {
+  background: rgba(103, 232, 249, 0.12);
+  color: var(--primary);
+}
+
+.userMenuNotificationText {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.userMenuNotificationText strong,
+.userMenuNotificationText span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.userMenuNotificationText strong {
+  color: var(--foreground);
+  font-size: 0.86rem;
+  font-weight: 950;
+}
+
+.userMenuNotificationText span {
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+}
+
+.userMenuNotificationText small {
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.userMenuEmpty {
+  margin: 0;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+  font-weight: 800;
+  padding: 12px;
+  text-align: center;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.metricCard {
+  gap: 14px;
+  min-height: 132px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 18px;
+  box-shadow: var(--panel-shadow);
+}
+
+.authState {
+  display: grid;
+  place-items: center;
+  gap: 14px;
+  min-height: 360px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted-foreground);
+  font-weight: 800;
+  text-align: center;
+}
+
+.metricIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(103, 232, 249, 0.24);
+  border-radius: 8px;
+  background: rgba(103, 232, 249, 0.1);
+  color: var(--primary);
+}
+
+.metricSvg {
+  width: 22px;
+  height: 22px;
+}
+
+.metricCard p,
+.metricCard strong,
+.metricCard span {
+  display: block;
+}
+
+.metricCard p {
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.metricCard strong {
+  margin-top: 5px;
+  color: var(--foreground);
+  font-size: clamp(1.35rem, 2vw, 1.9rem);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.metricCard span {
+  margin-top: 7px;
+  color: var(--success);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.notificationCenter {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--panel-shadow);
+  padding: 16px;
+}
+
+.notificationCenterHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.notificationCenterHeader h2 {
+  margin-top: 4px;
+  color: var(--foreground);
+  font-size: 1.08rem;
+  font-weight: 950;
+}
+
+.notificationCenterHeader p {
+  margin-top: 4px;
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+}
+
+.notificationCenterHeader button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-strong);
+  color: var(--foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 900;
+  padding: 0 12px;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.notificationCenterHeader button:hover {
+  border-color: rgba(103, 232, 249, 0.4);
+  background: rgba(103, 232, 249, 0.08);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.notificationCenterHeader button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+  transform: none;
+}
+
+.notificationCenterSummary {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.notificationCenterSummary div {
+  display: grid;
+  gap: 7px;
+  min-height: 92px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  padding: 12px;
+}
+
+.notificationCenterSummary span {
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.notificationCenterSummary strong {
+  overflow-wrap: anywhere;
+  color: var(--foreground);
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.notificationList {
+  display: grid;
+  gap: 10px;
+  max-height: 430px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.notificationItem {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  padding: 12px;
+}
+
+.notificationItemUnread {
+  border-color: rgba(103, 232, 249, 0.36);
+  background: rgba(103, 232, 249, 0.08);
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+
+.notificationTypeIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--primary);
+}
+
+.notificationTypeSvg {
+  width: 20px;
+  height: 20px;
+}
+
+.notificationTypeMessage {
+  background: var(--info-soft);
+  color: var(--info);
+}
+
+.notificationTypePaymentDue {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.notificationTypePaymentPaid {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.notificationTypePayment {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.notificationTypeProject {
+  background: var(--violet-soft);
+  color: var(--violet);
+}
+
+.notificationTypeDefault {
+  background: rgba(103, 232, 249, 0.12);
+  color: var(--primary);
+}
+
+.notificationContent {
+  min-width: 0;
+}
+
+.notificationMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted-foreground);
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.notificationMeta time {
+  font-size: 0.74rem;
+  text-transform: none;
+}
+
+.notificationContent h3 {
+  margin-top: 6px;
+  overflow-wrap: anywhere;
+  color: var(--foreground);
+  font-size: 0.96rem;
+  font-weight: 950;
+  line-height: 1.25;
+}
+
+.notificationContent p {
+  margin-top: 6px;
+  color: var(--muted-foreground);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.notificationChannels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.notificationChannels span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border-radius: 999px;
+  background: var(--subtle-hover);
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 4px 8px;
+}
+
+.notificationChannels span:first-child,
+.notificationChannels .channelEnabled {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.notificationActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.notificationIconButton,
+.notificationActionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 900;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.notificationIconButton {
+  width: 38px;
+  height: 38px;
+}
+
+.notificationActionButton {
+  min-height: 38px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.notificationIconButton:hover,
+.notificationActionButton:hover {
+  border-color: rgba(103, 232, 249, 0.4);
+  background: rgba(103, 232, 249, 0.08);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 350px minmax(0, 1fr);
+  gap: 18px;
+}
+
+.clientsPanel,
+.detailPanel,
+.conversationPanel,
+.projectsPanel,
+.productCatalogSection,
+.tableSection {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--panel-shadow);
+}
+
+.clientsPanel {
+  height: fit-content;
+  padding: 16px;
+}
+
+.panelHeader,
+.tableHeader {
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panelHeader h2,
+.tableHeader h2 {
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+.panelHeader p,
+.tableHeader p {
+  margin-top: 4px;
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+}
+
+.searchBox {
+  position: relative;
+  display: block;
+  margin: 16px 0;
+}
+
+.searchBox input,
+.composer textarea,
+.projectForm input,
+.projectForm select,
+.productCatalogForm input,
+.productCatalogForm select,
+.productCatalogForm textarea,
+.filterSelect,
+.statusSelect {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-strong);
+  color: var(--foreground);
+  font: inherit;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.searchBox input {
+  min-height: 44px;
+  padding: 0 14px 0 42px;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  width: 17px;
+  height: 17px;
+  color: var(--muted-foreground);
+  transform: translateY(-50%);
+}
+
+.searchBox input:focus,
+.composer textarea:focus,
+.projectForm input:focus,
+.projectForm select:focus,
+.productCatalogForm input:focus,
+.productCatalogForm select:focus,
+.productCatalogForm textarea:focus,
+.filterSelect:focus,
+.statusSelect:focus {
+  border-color: rgba(103, 232, 249, 0.58);
+  background: var(--surface-strong);
+  box-shadow: 0 0 0 4px rgba(103, 232, 249, 0.12);
+}
+
+.clientList {
+  display: grid;
+  gap: 10px;
+}
+
+.clientButton {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--surface-soft);
+  color: inherit;
+  cursor: pointer;
+  padding: 12px;
+  text-align: left;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.clientButton:hover,
+.clientButtonActive {
+  border-color: rgba(103, 232, 249, 0.34);
+  background: rgba(103, 232, 249, 0.08);
+}
+
+.clientButtonActive {
+  transform: translateY(-1px);
+}
+
+.avatar,
+.largeAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #2563eb, #0891b2);
+  color: #fff;
+  font-weight: 900;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  font-size: 0.9rem;
+}
+
+.largeAvatar {
+  width: 58px;
+  height: 58px;
+  font-size: 1.05rem;
+}
+
+.clientInfo,
+.clientInfo span,
+.messageMeta,
+.projectItem h3,
+.projectItem p,
+.tableWrap td span {
+  min-width: 0;
+}
+
+.clientInfo {
+  display: grid;
+  gap: 4px;
+}
+
+.clientTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.clientTopline strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clientInfo span:not(.clientTopline):not(.clientActive):not(.clientLead) {
+  overflow: hidden;
+  color: var(--muted-foreground);
+  font-size: 0.86rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clientMeta {
+  color: var(--success) !important;
+  font-weight: 800;
+}
+
+.clientActive,
+.clientLead,
+.statusActive,
+.statusDone,
+.statusWaiting,
+.statusPaused,
+.statusCanceled {
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.clientActive,
+.clientLead {
+  flex-shrink: 0;
+  padding: 4px 8px;
+}
+
+.clientActive,
+.statusActive {
+  background: var(--info-soft);
+  color: var(--info);
+}
+
+.clientLead,
+.statusWaiting {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.statusDone {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.statusPaused {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.statusCanceled {
+  background: rgba(148, 163, 184, 0.14);
+  color: var(--muted-foreground);
+}
+
+.paymentChip {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 24px;
+  margin-top: 8px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.detailPanel {
+  min-width: 0;
+  padding: 18px;
+}
+
+.clientHeader {
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.clientIdentity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.clientIdentity h2 {
+  margin-top: 4px;
+  font-size: clamp(1.45rem, 3vw, 2.1rem);
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.clientIdentity p {
+  margin-top: 5px;
+  color: var(--muted-foreground);
+}
+
+.contactStack {
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.contactStack span {
+  gap: 8px;
+  max-width: 360px;
+  overflow: hidden;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+  gap: 18px;
+}
+
+.conversationPanel,
+.projectsPanel {
+  min-width: 0;
+  padding: 16px;
+}
+
+.statusButton {
+  cursor: pointer;
+}
+
+.messageList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 414px;
+  margin: 16px 0;
+  overflow-y: auto;
+  padding: 4px 2px;
+}
+
+.messageRow {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.messageRowAdmin {
+  justify-content: flex-end;
+}
+
+.messageBubble {
+  max-width: min(480px, 86%);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  padding: 13px 14px;
+}
+
+.messageBubbleAdmin {
+  border-color: rgba(103, 232, 249, 0.32);
+  background: rgba(8, 145, 178, 0.18);
+}
+
+.messageMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+}
+
+.messageBubble p {
+  margin: 0;
+  line-height: 1.56;
+}
+
+.messageAttachments {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.messageAttachment {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--subtle-hover);
+  padding: 9px 10px;
+}
+
+.messageAttachment span {
+  overflow: hidden;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.messageAttachment small {
+  color: currentColor;
+  font-size: 0.74rem;
+  opacity: 0.72;
+  white-space: nowrap;
+}
+
+.composer {
+  display: grid;
+  gap: 10px;
+}
+
+.composerRow {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  gap: 10px;
+}
+
+.composer textarea {
+  min-height: 52px;
+  resize: vertical;
+  padding: 12px 13px;
+}
+
+.attachmentPreview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.attachmentChip {
+  display: inline-grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto 24px;
+  align-items: center;
+  gap: 8px;
+  max-width: min(100%, 360px);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--foreground);
+  padding: 6px 6px 6px 10px;
+}
+
+.attachmentChip span {
+  overflow: hidden;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attachmentChip small {
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.attachmentChip button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--subtle-hover);
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.attachButton,
+.composerRow > button,
+.projectForm button,
+.productCatalogForm button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  border: 1px solid rgba(103, 232, 249, 0.5);
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.attachButton {
+  background: var(--surface-strong);
+  color: var(--foreground);
+}
+
+.fileInput {
+  display: none;
+}
+
+.attachButton:hover,
+.composerRow > button:hover,
+.projectForm button:hover,
+.productCatalogForm button:hover {
+  background: color-mix(in srgb, var(--primary) 88%, black);
+  transform: translateY(-1px);
+}
+
+.projectList {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.projectItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 152px 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 78px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  padding: 12px;
+}
+
+.deleteProjectButton,
+.tableActionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(239, 68, 68, 0.26);
+  border-radius: 8px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.deleteProjectButton:hover,
+.tableActionButton:hover {
+  border-color: rgba(239, 68, 68, 0.46);
+  background: rgba(239, 68, 68, 0.18);
+  transform: translateY(-1px);
+}
+
+.tableActionButton {
+  width: 36px;
+  height: 36px;
+}
+
+.deleteModalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: rgba(2, 6, 23, 0.58);
+  padding: 20px;
+  backdrop-filter: blur(16px);
+}
+
+.deleteModal {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  width: min(100%, 520px);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-strong);
+  box-shadow: 0 34px 90px rgba(2, 6, 23, 0.34);
+  padding: 24px;
+}
+
+.deleteModalClose {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.deleteModalClose:hover {
+  border-color: rgba(239, 68, 68, 0.34);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.deleteModalClose:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.deleteModalIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  border-radius: 10px;
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.deleteModalContent {
+  display: grid;
+  gap: 10px;
+  padding-right: 28px;
+}
+
+.deleteModalContent h2 {
+  color: var(--foreground);
+  font-size: 1.45rem;
+  font-weight: 950;
+  line-height: 1.1;
+}
+
+.deleteModalContent p {
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.deleteModalContent p strong {
+  color: var(--foreground);
+}
+
+.deleteProjectSummary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.deleteProjectSummary div {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  padding: 12px;
+}
+
+.deleteProjectSummary span {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.deleteProjectSummary strong {
+  display: block;
+  margin-top: 6px;
+  overflow: hidden;
+  color: var(--foreground);
+  font-size: 0.88rem;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deleteModalError {
+  border: 1px solid rgba(239, 68, 68, 0.24);
+  border-radius: 8px;
+  background: var(--danger-soft);
+  color: var(--danger) !important;
+  font-weight: 800;
+  padding: 10px 12px;
+}
+
+.deleteModalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.deleteModalActions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 900;
+  padding: 0 14px;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.deleteModalActions button:first-child {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+.deleteModalActions button:last-child {
+  border: 1px solid rgba(239, 68, 68, 0.42);
+  background: var(--danger);
+  color: white;
+}
+
+.deleteModalActions button:hover {
+  transform: translateY(-1px);
+}
+
+.deleteModalActions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+  transform: none;
+}
+
+.projectItem h3 {
+  overflow: hidden;
+  font-size: 0.96rem;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.projectItem p {
+  margin-top: 6px;
+  overflow: hidden;
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.projectMoney {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+}
+
+.projectMoney strong {
+  color: var(--success);
+  font-size: 0.95rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.projectMoney span {
+  color: var(--muted-foreground);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.emptyState {
+  display: grid;
+  min-height: 92px;
+  place-items: center;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-align: center;
+  padding: 16px;
+}
+
+.statusSelect {
+  min-height: 40px;
+  padding: 0 10px;
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.projectForm {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.projectForm h3 {
+  font-size: 0.96rem;
+  font-weight: 900;
+}
+
+.projectField {
+  display: grid;
+  gap: 7px;
+}
+
+.projectField span {
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.projectForm input,
+.projectForm select {
+  min-height: 44px;
+  padding: 0 12px;
+}
+
+.productCatalogSection {
+  margin-top: 18px;
+  padding: 16px;
+}
+
+.productCatalogLayout {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.productCatalogForm {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  padding: 16px;
+}
+
+.productCatalogForm input,
+.productCatalogForm select {
+  min-height: 44px;
+  padding: 0 12px;
+}
+
+.productCatalogForm textarea {
+  min-height: 96px;
+  resize: vertical;
+  padding: 12px;
+}
+
+.productCatalogList {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.productCatalogCard {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  padding: 14px;
+}
+
+.productCatalogCard h3 {
+  overflow: hidden;
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.productCatalogCard p {
+  margin-top: 5px;
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.productCatalogCard span {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 9px;
+  border-radius: 999px;
+  background: var(--violet-soft);
+  color: var(--violet);
+  font-size: 0.76rem;
+  font-weight: 900;
+  padding: 5px 9px;
+}
+
+.productCatalogCard button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  border-radius: 8px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  cursor: pointer;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tableSection {
+  margin-top: 18px;
+  padding: 16px;
+}
+
+.filterSelect {
+  width: 170px;
+  min-height: 42px;
+  padding: 0 12px;
+  font-weight: 800;
+}
+
+.tableWrap {
+  margin-top: 16px;
+  overflow-x: auto;
+}
+
+.tableWrap table {
+  width: 100%;
+  min-width: 920px;
+  border-collapse: collapse;
+}
+
+.tableWrap th,
+.tableWrap td {
+  border-bottom: 1px solid var(--border);
+  padding: 14px 12px;
+  text-align: left;
+}
+
+.tableWrap th {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.tableWrap td {
+  color: var(--foreground);
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.tableWrap td strong,
+.tableWrap td span {
+  display: block;
+}
+
+.tableWrap td span {
+  margin-top: 5px;
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+}
+
+.inlineClient,
+.profitValue {
+  gap: 8px;
+  color: var(--foreground) !important;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.profitValue {
+  color: var(--success) !important;
+}
+
+.smallIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1180px) {
+  .metricsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .notificationCenterSummary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .workspace,
+  .detailGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .clientsPanel {
+    position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .adminPage {
+    padding-top: 88px;
+  }
+
+  .shell {
+    width: min(100% - 24px, 1440px);
+  }
+
+  .topbar,
+  .topbarActions,
+  .clientHeader,
+  .tableHeader,
+  .notificationCenterHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .detailPanel,
+  .clientsPanel,
+  .conversationPanel,
+  .projectsPanel,
+  .notificationCenter,
+  .productCatalogSection,
+  .tableSection {
+    padding: 14px;
+  }
+
+  .notificationCenterSummary {
+    grid-template-columns: 1fr;
+  }
+
+  .notificationItem {
+    grid-template-columns: 1fr;
+  }
+
+  .notificationActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .notificationIconButton,
+  .notificationActionButton,
+  .notificationCenterHeader button {
+    width: 100%;
+  }
+
+  .productCatalogLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .contactStack {
+    justify-items: start;
+    width: 100%;
+  }
+
+  .contactStack span {
+    max-width: 100%;
+  }
+
+  .projectItem {
+    grid-template-columns: 1fr;
+  }
+
+  .deleteProjectButton {
+    width: 100%;
+  }
+
+  .deleteModal {
+    padding: 20px;
+  }
+
+  .deleteModalContent {
+    padding-right: 0;
+  }
+
+  .deleteProjectSummary {
+    grid-template-columns: 1fr;
+  }
+
+  .deleteModalActions {
+    flex-direction: column;
+  }
+
+  .deleteModalActions button {
+    width: 100%;
+  }
+
+  .productCatalogCard {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .productCatalogCard button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .projectMoney {
+    justify-items: start;
+  }
+
+  .formGrid,
+  .composerRow {
+    grid-template-columns: 1fr;
+  }
+
+  .attachButton,
+  .composerRow > button,
+  .projectForm button,
+  .productCatalogForm button,
+  .filterSelect {
+    width: 100%;
+  }
+
+  .messageList {
+    height: 360px;
+  }
+
+  .messageBubble {
+    max-width: 92%;
+  }
+}
+
+@media (max-width: 460px) {
+  .clientButton {
+    grid-template-columns: 1fr;
+  }
+
+  .avatar,
+  .largeAvatar {
+    width: 42px;
+    height: 42px;
+  }
+
+  .clientIdentity {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

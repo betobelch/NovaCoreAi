@@ -1,0 +1,16 @@
+
+> my-project@0.1.0 dev
+> next dev --port 3000
+
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://26.212.31.29:3000
+- Environments: .env
+✓ Ready in 617ms
+Creating turbopack project {
+  dir: 'C:\\Users\\Rober\\Downloads\\site-nova-core-ai',
+  testMode: true
+}
+
+ GET /api/projects 200 in 367ms (next.js: 298ms, application-code: 69ms)
+[?25h
