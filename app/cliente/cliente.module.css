@@ -31,8 +31,7 @@
 
 .clientBrand,
 .clientNavLinks a,
-.clientSiteLink,
-.clientLogoutButton {
+.clientSiteLink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -108,8 +107,7 @@
   min-width: 0;
 }
 
-.clientSiteLink,
-.clientLogoutButton {
+.clientSiteLink {
   gap: 9px;
   min-height: 40px;
   border-radius: 10px;
@@ -211,38 +209,6 @@
   border-color: rgba(59, 130, 246, 0.45);
   background: var(--surface-hover);
   transform: translateY(-1px);
-}
-
-.userMenuBell {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  border-radius: 999px;
-  color: var(--muted-foreground);
-}
-
-.userMenuBellAlert {
-  background: rgba(239, 68, 68, 0.14);
-  color: var(--danger);
-  animation: notificationPulse 1.35s ease-in-out infinite;
-}
-
-.userMenuBellAlert::after {
-  content: "";
-  position: absolute;
-  inset: -5px;
-  border-radius: inherit;
-  background: rgba(239, 68, 68, 0.16);
-  animation: notificationHalo 1.35s ease-in-out infinite;
-}
-
-.userMenuBellAlert svg {
-  position: relative;
-  z-index: 1;
 }
 
 .userMenuChevronOpen {
@@ -486,22 +452,9 @@
   text-align: center;
 }
 
-.clientLogoutButton {
-  border: 1px solid rgba(239, 68, 68, 0.28);
-  background: var(--danger-soft);
-  color: var(--danger);
-  cursor: pointer;
-}
-
 .themeToggle {
   height: 40px;
   width: 40px;
-}
-
-.clientLogoutButton:hover {
-  border-color: rgba(239, 68, 68, 0.42);
-  background: rgba(239, 68, 68, 0.14);
-  transform: translateY(-1px);
 }
 
 .clientSection {
@@ -560,10 +513,7 @@
   line-height: 1.7;
 }
 
-.backLink,
-.primaryButton,
-.secondaryButton,
-.logoutButton {
+.primaryButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -578,34 +528,6 @@
   transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
-.backLink {
-  width: fit-content;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--foreground);
-}
-
-.heroActions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.backLink:hover,
-.logoutButton:hover {
-  border-color: rgba(59, 130, 246, 0.45);
-  background: var(--surface-hover);
-  transform: translateY(-1px);
-}
-
-.logoutButton {
-  width: fit-content;
-  border: 1px solid rgba(239, 68, 68, 0.28);
-  background: var(--danger-soft);
-  color: var(--danger);
-  cursor: pointer;
-}
-
 .primaryButton {
   width: fit-content;
   border: 1px solid rgba(59, 130, 246, 0.75);
@@ -614,23 +536,9 @@
   box-shadow: 0 16px 34px rgba(59, 130, 246, 0.22);
 }
 
-.secondaryButton {
-  width: fit-content;
-  border: 1px solid var(--border);
-  background: var(--surface-strong);
-  color: var(--foreground);
-}
-
 .primaryButton:hover {
   transform: translateY(-1px);
   box-shadow: 0 20px 42px rgba(59, 130, 246, 0.3);
-}
-
-.secondaryButton:hover {
-  border-color: rgba(59, 130, 246, 0.45);
-  background: var(--surface-hover);
-  color: var(--primary);
-  transform: translateY(-1px);
 }
 
 .primaryButton:disabled {
@@ -699,21 +607,6 @@
   box-shadow: 0 14px 32px rgba(59, 130, 246, 0.24);
 }
 
-.tabBadge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 22px;
-  height: 22px;
-  margin-left: auto;
-  border-radius: 999px;
-  background: var(--danger);
-  color: #fff;
-  font-size: 0.72rem;
-  font-weight: 900;
-  padding: 0 6px;
-}
-
 .tabIcon,
 .smallIcon {
   width: 16px;
@@ -725,12 +618,6 @@
   min-height: 560px;
   border-radius: 22px;
   padding: 32px;
-}
-
-.contactGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
-  gap: 32px;
 }
 
 .chatLayout {
@@ -1141,71 +1028,6 @@
   line-height: 1.7;
 }
 
-.form {
-  display: grid;
-  gap: 18px;
-  margin-top: 26px;
-}
-
-.formGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.field {
-  display: grid;
-  gap: 8px;
-}
-
-.label {
-  display: block;
-  color: var(--foreground);
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.input,
-.textarea {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface-strong);
-  color: var(--foreground);
-  font: inherit;
-  outline: none;
-  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
-}
-
-.input {
-  min-height: 48px;
-  padding: 0 14px;
-}
-
-.textarea {
-  resize: vertical;
-  min-height: 150px;
-  padding: 14px;
-}
-
-.input::placeholder,
-.textarea::placeholder {
-  color: var(--muted-foreground);
-}
-
-.input:focus,
-.textarea:focus {
-  border-color: rgba(59, 130, 246, 0.85);
-  background: var(--surface-strong);
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.16);
-}
-
-.contactCards,
-.projectsGrid {
-  display: grid;
-  gap: 16px;
-}
-
 .clientProjectsSection {
   display: grid;
   gap: 16px;
@@ -1372,24 +1194,6 @@
   box-shadow: 0 16px 30px rgba(59, 130, 246, 0.24);
 }
 
-.infoCard,
-.projectCard {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--surface-soft);
-  padding: 20px;
-}
-
-.infoCard {
-  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
-}
-
-.infoCard:hover,
-.projectCard:hover {
-  border-color: rgba(59, 130, 246, 0.35);
-  background: var(--surface-hover);
-}
-
 .iconBox {
   display: flex;
   align-items: center;
@@ -1405,21 +1209,6 @@
 .infoIcon {
   width: 20px;
   height: 20px;
-}
-
-.projectsGrid {
-  margin-top: 24px;
-}
-
-.projectCard {
-  transition: border-color 180ms ease, background 180ms ease;
-}
-
-.cardTop {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
 }
 
 .cardTitle {
@@ -1738,265 +1527,6 @@
   -webkit-line-clamp: 2;
 }
 
-.profileActions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 10px;
-  border-top: 1px solid var(--border);
-  padding-top: 18px;
-}
-
-.notificationsTab {
-  display: grid;
-  gap: 20px;
-}
-
-.notificationsHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.notificationsHeader .secondaryButton:disabled {
-  cursor: not-allowed;
-  opacity: 0.58;
-  transform: none;
-}
-
-.notificationSummaryGrid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.notificationSummaryCard {
-  display: grid;
-  gap: 8px;
-  min-height: 110px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--surface-soft);
-  padding: 16px;
-}
-
-.notificationSummaryCard span {
-  color: var(--muted-foreground);
-  font-size: 0.78rem;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.notificationSummaryCard strong {
-  color: var(--foreground);
-  font-size: clamp(1.25rem, 2vw, 1.7rem);
-  font-weight: 900;
-  line-height: 1.1;
-}
-
-.notificationChannelGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.notificationChannelGrid div {
-  display: grid;
-  grid-template-columns: 18px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 10px;
-  min-height: 54px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--surface-soft);
-  padding: 12px;
-}
-
-.notificationChannelGrid span {
-  color: var(--foreground);
-  font-size: 0.9rem;
-  font-weight: 900;
-}
-
-.notificationChannelGrid strong {
-  color: var(--muted-foreground);
-  font-size: 0.78rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.notificationList {
-  display: grid;
-  gap: 12px;
-}
-
-.notificationItem {
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) auto;
-  align-items: flex-start;
-  gap: 14px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--surface-soft);
-  padding: 16px;
-}
-
-.notificationItemUnread {
-  border-color: rgba(59, 130, 246, 0.38);
-  background: rgba(59, 130, 246, 0.08);
-  box-shadow: inset 3px 0 0 var(--primary);
-}
-
-.notificationTypeIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: var(--surface);
-  color: var(--primary);
-}
-
-.notificationTypeSvg {
-  width: 20px;
-  height: 20px;
-}
-
-.notificationTypeMessage {
-  background: var(--info-soft);
-  color: var(--info);
-}
-
-.notificationTypePaymentDue {
-  background: var(--warning-soft);
-  color: var(--warning);
-}
-
-.notificationTypePaymentPaid {
-  background: var(--success-soft);
-  color: var(--success);
-}
-
-.notificationTypePayment {
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-
-.notificationTypeProject {
-  background: var(--violet-soft);
-  color: var(--violet);
-}
-
-.notificationTypeDefault {
-  background: rgba(59, 130, 246, 0.12);
-  color: var(--primary);
-}
-
-.notificationContent {
-  min-width: 0;
-}
-
-.notificationMeta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--muted-foreground);
-  font-size: 0.78rem;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.notificationMeta time {
-  font-size: 0.76rem;
-  text-transform: none;
-}
-
-.notificationContent h3 {
-  margin-top: 6px;
-  overflow-wrap: anywhere;
-  color: var(--foreground);
-  font-size: 1rem;
-  font-weight: 900;
-  line-height: 1.25;
-}
-
-.notificationContent p {
-  margin-top: 6px;
-  color: var(--muted-foreground);
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
-
-.notificationChannels {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 12px;
-}
-
-.notificationChannels span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 24px;
-  border-radius: 999px;
-  background: var(--subtle-hover);
-  color: var(--muted-foreground);
-  font-size: 0.74rem;
-  font-weight: 900;
-  padding: 4px 9px;
-}
-
-.notificationChannels span:first-child,
-.notificationChannels .channelEnabled {
-  background: var(--success-soft);
-  color: var(--success);
-}
-
-.notificationActions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.notificationIconButton,
-.notificationActionButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
-  color: var(--foreground);
-  cursor: pointer;
-  font: inherit;
-  font-size: 0.84rem;
-  font-weight: 900;
-  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
-}
-
-.notificationIconButton {
-  width: 38px;
-  height: 38px;
-}
-
-.notificationActionButton {
-  min-height: 38px;
-  padding: 0 12px;
-  white-space: nowrap;
-}
-
-.notificationIconButton:hover,
-.notificationActionButton:hover {
-  border-color: rgba(59, 130, 246, 0.45);
-  background: var(--surface-hover);
-  color: var(--primary);
-  transform: translateY(-1px);
-}
-
 .statusPill,
 .paymentStatus {
   display: inline-flex;
@@ -2024,69 +1554,6 @@
 .statusBlocked {
   background: var(--warning-soft);
   color: var(--warning);
-}
-
-.productDetails {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 22px;
-}
-
-.productDetail {
-  min-height: 92px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--subtle-hover);
-  padding: 14px;
-}
-
-.productDetail span {
-  display: block;
-  color: var(--muted-foreground);
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.productDetail strong {
-  display: block;
-  margin-top: 8px;
-  color: var(--foreground);
-  font-size: 0.95rem;
-  line-height: 1.35;
-}
-
-.progressBlock {
-  margin-top: 22px;
-}
-
-.progressMeta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 9px;
-  color: var(--muted-foreground);
-  font-size: 0.9rem;
-}
-
-.progressMeta span:last-child {
-  color: var(--foreground);
-  font-weight: 800;
-}
-
-.progressTrack {
-  height: 9px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--muted);
-}
-
-.progressBar {
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--primary), #06b6d4);
-  box-shadow: 0 0 22px rgba(59, 130, 246, 0.38);
 }
 
 .invoiceList {
@@ -2177,20 +1644,6 @@
   padding-top: 24px;
 }
 
-.invoiceRow {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  align-items: center;
-  gap: 18px;
-  padding: 20px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface-soft);
-}
-
-.invoiceRow:last-child {
-  border-bottom: 0;
-}
-
 .invoiceValue {
   color: var(--foreground);
   font-weight: 800;
@@ -2261,10 +1714,6 @@
     justify-content: center;
   }
 
-  .contactGrid {
-    grid-template-columns: 1fr;
-  }
-
   .chatLayout {
     grid-template-columns: 1fr;
   }
@@ -2277,12 +1726,7 @@
     grid-template-columns: 1fr;
   }
 
-  .productDetails {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .profileSummaryGrid,
-  .notificationSummaryGrid {
+  .profileSummaryGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2312,8 +1756,7 @@
     font-size: 1.05rem;
   }
 
-  .clientSiteLink,
-  .clientLogoutButton {
+  .clientSiteLink {
     min-height: 38px;
     padding: 0 11px;
     font-size: 0.84rem;
@@ -2343,10 +1786,7 @@
     border-radius: 18px;
   }
 
-  .tabList,
-  .formGrid,
-  .notificationSummaryGrid,
-  .notificationChannelGrid {
+  .tabList {
     grid-template-columns: 1fr;
   }
 
@@ -2354,23 +1794,9 @@
     justify-content: flex-start;
   }
 
-  .cardTop,
-  .invoiceRow,
-  .paymentProjectOption,
-  .notificationItem {
+  .paymentProjectOption {
     grid-template-columns: 1fr;
     align-items: flex-start;
-  }
-
-  .notificationsHeader,
-  .notificationActions {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .notificationIconButton,
-  .notificationActionButton {
-    width: 100%;
   }
 
   .paymentProjectOption {
@@ -2381,23 +1807,7 @@
     align-self: flex-start;
   }
 
-  .cardTop {
-    flex-direction: column;
-  }
-
-  .productDetails {
-    grid-template-columns: 1fr;
-  }
-
-  .heroActions {
-    width: 100%;
-    flex-direction: column;
-  }
-
-  .primaryButton,
-  .secondaryButton,
-  .backLink,
-  .logoutButton {
+  .primaryButton {
     width: 100%;
   }
 
@@ -2418,10 +1828,6 @@
 
   .profilePhoneForm {
     grid-template-columns: 1fr;
-  }
-
-  .profileActions {
-    flex-direction: column;
   }
 
   .clientProjectsHeader,
@@ -2465,14 +1871,12 @@
     display: none;
   }
 
-  .clientSiteLink,
-  .clientLogoutButton {
+  .clientSiteLink {
     width: 40px;
     padding: 0;
   }
 
-  .clientSiteLink span,
-  .clientLogoutButton span {
+  .clientSiteLink span {
     display: none;
   }
 }
@@ -3308,7 +2712,6 @@
 
 .profilePhoneForm button,
 .primaryButton,
-.secondaryButton,
 .purchaseButton,
 .sendButton,
 .attachButton {
@@ -3340,7 +2743,6 @@
   white-space: nowrap;
 }
 
-.secondaryButton,
 .attachButton {
   border: 1px solid rgba(148, 163, 184, 0.18);
   background: rgba(255, 255, 255, 0.045);
@@ -3348,7 +2750,6 @@
 }
 
 .primaryButton,
-.secondaryButton,
 .purchaseButton {
   min-height: 46px;
   padding: 0 16px;
@@ -3356,7 +2757,6 @@
 
 .profilePhoneForm button:hover,
 .primaryButton:hover,
-.secondaryButton:hover,
 .purchaseButton:hover,
 .sendButton:hover,
 .attachButton:hover {
@@ -3418,14 +2818,6 @@
   margin-bottom: 0;
   color: var(--client-muted);
   line-height: 1.55;
-}
-
-.profileActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: flex-end;
-  margin-top: 16px;
 }
 
 .chatLayout {
@@ -3604,7 +2996,6 @@
   align-content: start;
 }
 
-.infoCard,
 .quickTopics {
   border-radius: 8px;
   padding: 18px;
@@ -4196,7 +3587,6 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
-:global(:root:not(.dark):not([data-theme="dark"])) .secondaryButton,
 :global(:root:not(.dark):not([data-theme="dark"])) .attachButton {
   border-color: rgba(37, 99, 235, 0.16);
   background: rgba(255, 255, 255, 0.68);
@@ -4347,15 +3737,13 @@
     grid-template-columns: 1fr;
   }
 
-  .profileActions,
   .paymentActions {
     align-items: stretch;
     flex-direction: column;
   }
 
   .primaryButton,
-  .secondaryButton,
-  .purchaseButton {
+.purchaseButton {
     width: 100%;
   }
 

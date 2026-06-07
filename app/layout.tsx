@@ -20,9 +20,12 @@ export const metadata: Metadata = {
   keywords: ['automacao', 'inteligencia artificial', 'chatbots', 'agentes de IA', 'automacao de processos'],
   generator: 'v0.app',
   icons: {
-    icon: '/novacore-ai-icon.png',
-    shortcut: '/novacore-ai-icon.png',
-    apple: '/novacore-ai-icon.png',
+    icon: [
+      { url: '/novacore-ai-icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    shortcut: '/favicon-32x32.png',
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
 }
 
