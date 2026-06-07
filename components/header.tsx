@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Bell, CheckCheck, ChevronDown, CreditCard, FileText, LayoutDashboard, LogIn, LogOut, Menu, MessageCircle, Sparkles, User, UserPlus, X } from "lucide-react"
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { clearClientAuth, ClientAuthUser, getClientAuth } from "@/lib/client-auth"
 import { ThemeToggle } from "@/components/theme-toggle"
 
@@ -52,6 +52,7 @@ function NotificationIcon({ type }: { type: string }) {
 
 export function Header() {
   const router = useRouter()
+  const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [notificationMenuOpen, setNotificationMenuOpen] = useState(false)
@@ -60,8 +61,20 @@ export function Header() {
   const [unreadNotifications, setUnreadNotifications] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
   const { scrollY } = useScroll()
+  const isAuthPage = pathname === "/login" || pathname === "/cliente/cadastrar"
   const dashboardHref = clientUser?.role === "admin" ? "/admin" : "/cliente"
   const dashboardLabel = clientUser?.role === "admin" ? "Painel Admin" : "Area do Cliente"
+  const headerClassName = isAuthPage
+    ? `fixed left-3 right-3 top-3 z-50 rounded-2xl border transition-all duration-300 ${
+        isScrolled
+          ? "border-blue-300/[0.45] bg-white/[0.72] shadow-[0_22px_72px_rgba(37,99,235,0.18)] backdrop-blur-2xl dark:border-primary/25 dark:bg-background/[0.76]"
+          : "border-white/[0.55] bg-white/[0.54] shadow-[0_18px_58px_rgba(37,99,235,0.13)] backdrop-blur-2xl dark:border-white/10 dark:bg-background/[0.54]"
+      }`
+    : `fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
+        isScrolled
+          ? "border-primary/20 bg-background/72 shadow-[0_18px_70px_rgba(37,99,235,0.14)] backdrop-blur-2xl"
+          : "border-transparent bg-background/38 backdrop-blur-md"
+      }`
 
   useEffect(() => {
     setClientUser(getClientAuth())
@@ -163,11 +176,7 @@ export function Header() {
       initial={{ opacity: 0, y: -18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
-        isScrolled
-          ? "border-primary/20 bg-background/72 shadow-[0_18px_70px_rgba(37,99,235,0.14)] backdrop-blur-2xl"
-          : "border-transparent bg-background/38 backdrop-blur-md"
-      }`}
+      className={headerClassName}
     >
       <div
         className={`pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent transition-opacity duration-300 ${

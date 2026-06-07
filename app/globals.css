@@ -487,6 +487,596 @@
   }
 }
 
+.login-os-shell {
+  --login-mouse-x: 64%;
+  --login-mouse-y: 28%;
+  background:
+    radial-gradient(42rem 32rem at var(--login-mouse-x) var(--login-mouse-y), rgba(56, 189, 248, 0.28), transparent 64%),
+    radial-gradient(46rem 36rem at 13% 18%, rgba(37, 99, 235, 0.24), transparent 66%),
+    radial-gradient(44rem 34rem at 88% 18%, rgba(168, 85, 247, 0.2), transparent 68%),
+    radial-gradient(36rem 30rem at 64% 92%, rgba(45, 212, 191, 0.13), transparent 72%),
+    linear-gradient(135deg, #e7f7ff 0%, #fbfdff 43%, #f6efff 100%);
+}
+
+.login-os-shell::before,
+.login-os-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.login-os-shell::before {
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.13) 1px, transparent 1px),
+    linear-gradient(rgba(124, 58, 237, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.07) 1px, transparent 1px);
+  background-position: 0 0;
+  background-size: 56px 56px, 56px 56px, 18px 18px, 18px 18px;
+  mask-image: radial-gradient(circle at 50% 48%, #000 0%, #000 54%, transparent 82%);
+  opacity: 0.62;
+  animation: login-grid-drift 24s linear infinite;
+}
+
+.login-os-shell::after {
+  background:
+    radial-gradient(circle at var(--login-mouse-x) var(--login-mouse-y), rgba(255, 255, 255, 0.74), transparent 18rem),
+    radial-gradient(circle at calc(var(--login-mouse-x) + 10%) calc(var(--login-mouse-y) + 12%), rgba(59, 130, 246, 0.18), transparent 22rem);
+  mix-blend-mode: screen;
+  opacity: 0.72;
+}
+
+.login-energy-orbit {
+  z-index: 1;
+  background:
+    linear-gradient(118deg, transparent 6%, rgba(37, 99, 235, 0.18) 34%, transparent 50%),
+    linear-gradient(62deg, transparent 40%, rgba(45, 212, 191, 0.16) 56%, transparent 72%),
+    linear-gradient(145deg, transparent 58%, rgba(168, 85, 247, 0.14) 72%, transparent 88%);
+  filter: blur(1px);
+  opacity: 0.52;
+  animation: login-energy-drift 16s ease-in-out infinite;
+}
+
+.login-scan-beam {
+  z-index: 1;
+  background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.16), transparent);
+  opacity: 0.62;
+  animation: login-scan-sweep 9s ease-in-out infinite;
+}
+
+.login-particle {
+  z-index: 2;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.78);
+  box-shadow:
+    0 0 18px rgba(37, 99, 235, 0.42),
+    0 0 34px rgba(34, 211, 238, 0.2);
+  animation: login-particle-float var(--login-particle-duration, 7s) ease-in-out var(--login-particle-delay, 0s) infinite;
+  will-change: transform, opacity;
+}
+
+.login-card,
+.login-side-panel {
+  transform-style: preserve-3d;
+  animation: login-panel-float 8s ease-in-out infinite;
+}
+
+.login-side-panel {
+  animation-delay: -2s;
+}
+
+.login-card::before,
+.login-side-panel::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(59, 130, 246, 0.25) 34%, rgba(168, 85, 247, 0.2) 72%, rgba(255, 255, 255, 0.64)),
+    radial-gradient(circle at var(--login-mouse-x) var(--login-mouse-y), rgba(56, 189, 248, 0.32), transparent 26rem);
+  opacity: 0.8;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  padding: 1px;
+}
+
+.login-card::after,
+.login-side-panel::after {
+  content: "";
+  position: absolute;
+  inset: -25% -18% auto;
+  height: 16rem;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.78), transparent 72%);
+  opacity: 0.42;
+  transform: rotate(-8deg);
+  transition: opacity 220ms ease;
+}
+
+.login-card:hover,
+.login-side-panel:hover {
+  box-shadow: 0 42px 140px rgba(37, 99, 235, 0.25);
+}
+
+.login-card:hover::after,
+.login-side-panel:hover::after {
+  opacity: 0.64;
+}
+
+.login-holo-icon {
+  position: relative;
+}
+
+.login-holo-icon::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 1.35rem;
+  background: conic-gradient(from 120deg, transparent, rgba(255, 255, 255, 0.7), transparent 34%);
+  opacity: 0.48;
+  filter: blur(8px);
+  animation: login-holo-spin 7s linear infinite;
+}
+
+.login-input {
+  backdrop-filter: blur(22px);
+}
+
+.login-input:focus {
+  box-shadow:
+    0 0 0 1px rgba(37, 99, 235, 0.24),
+    0 16px 42px rgba(37, 99, 235, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.login-google-button {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease;
+}
+
+.login-google-button:hover {
+  transform: translateY(-1px);
+}
+
+.login-primary-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.login-primary-button::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--login-mouse-x) var(--login-mouse-y), rgba(255, 255, 255, 0.72), transparent 24rem);
+  opacity: 0;
+  filter: blur(18px);
+  transition: opacity 180ms ease;
+}
+
+.login-primary-button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  bottom: -50%;
+  left: -28%;
+  width: 24%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.58), transparent);
+  transform: translateX(-140%) skewX(-18deg);
+  animation: login-button-shine 3.4s ease-in-out infinite;
+}
+
+.login-primary-button:hover::before {
+  opacity: 1;
+}
+
+.login-signal-bar {
+  min-width: 0.45rem;
+  transform-origin: bottom;
+  animation: login-signal-pulse 3.2s ease-in-out var(--login-bar-delay, 0s) infinite;
+}
+
+@keyframes login-grid-drift {
+  to {
+    background-position: 56px 56px;
+  }
+}
+
+@keyframes login-energy-drift {
+  0%,
+  100% {
+    transform: translate3d(-2%, -1%, 0) rotate(-2deg);
+  }
+  50% {
+    transform: translate3d(2%, 2%, 0) rotate(2deg);
+  }
+}
+
+@keyframes login-scan-sweep {
+  0%,
+  100% {
+    transform: translateY(-120%);
+  }
+  46% {
+    transform: translateY(520%);
+  }
+}
+
+@keyframes login-particle-float {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: translate3d(0, 0, 0) scale(0.88);
+  }
+  50% {
+    opacity: 0.92;
+    transform: translate3d(10px, calc(var(--login-particle-drift, 22px) * -1), 0) scale(1);
+  }
+}
+
+@keyframes login-panel-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes login-holo-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes login-button-shine {
+  0%,
+  48% {
+    transform: translateX(-140%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(560%) skewX(-18deg);
+  }
+}
+
+@keyframes login-signal-pulse {
+  0%,
+  100% {
+    opacity: 0.56;
+    transform: scaleY(0.86);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1.05);
+  }
+}
+
+.signup-os-shell {
+  --signup-mouse-x: 58%;
+  --signup-mouse-y: 24%;
+  background:
+    radial-gradient(44rem 34rem at var(--signup-mouse-x) var(--signup-mouse-y), rgba(59, 130, 246, 0.24), transparent 66%),
+    radial-gradient(48rem 34rem at 12% 16%, rgba(34, 211, 238, 0.18), transparent 66%),
+    radial-gradient(44rem 34rem at 88% 20%, rgba(168, 85, 247, 0.24), transparent 68%),
+    linear-gradient(135deg, #eef9ff 0%, #ffffff 42%, #f5edff 100%);
+}
+
+:root.dark .signup-os-shell,
+:root[data-theme="dark"] .signup-os-shell {
+  background:
+    radial-gradient(40rem 30rem at var(--signup-mouse-x) var(--signup-mouse-y), rgba(59, 130, 246, 0.24), transparent 68%),
+    radial-gradient(48rem 36rem at 10% 14%, rgba(34, 211, 238, 0.13), transparent 70%),
+    radial-gradient(44rem 34rem at 88% 22%, rgba(168, 85, 247, 0.18), transparent 70%),
+    linear-gradient(135deg, #020617 0%, #07111f 48%, #120a24 100%);
+}
+
+.signup-os-shell::before,
+.signup-os-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.signup-os-shell::before {
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.13) 1px, transparent 1px),
+    linear-gradient(rgba(124, 58, 237, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.07) 1px, transparent 1px);
+  background-size: 58px 58px, 58px 58px, 19px 19px, 19px 19px;
+  mask-image: radial-gradient(circle at 50% 45%, #000 0%, #000 58%, transparent 84%);
+  opacity: 0.62;
+  animation: signup-grid-drift 26s linear infinite;
+}
+
+.signup-os-shell::after {
+  background:
+    radial-gradient(circle at var(--signup-mouse-x) var(--signup-mouse-y), rgba(255, 255, 255, 0.72), transparent 18rem),
+    radial-gradient(circle at calc(var(--signup-mouse-x) + 12%) calc(var(--signup-mouse-y) + 10%), rgba(168, 85, 247, 0.16), transparent 24rem);
+  mix-blend-mode: screen;
+  opacity: 0.74;
+}
+
+:root.dark .signup-os-shell::before,
+:root[data-theme="dark"] .signup-os-shell::before {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(168, 85, 247, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.08) 1px, transparent 1px);
+  opacity: 0.5;
+}
+
+:root.dark .signup-os-shell::after,
+:root[data-theme="dark"] .signup-os-shell::after {
+  background:
+    radial-gradient(circle at var(--signup-mouse-x) var(--signup-mouse-y), rgba(56, 189, 248, 0.16), transparent 18rem),
+    radial-gradient(circle at calc(var(--signup-mouse-x) + 12%) calc(var(--signup-mouse-y) + 10%), rgba(168, 85, 247, 0.18), transparent 24rem);
+  opacity: 0.72;
+}
+
+.signup-depth-lines {
+  z-index: 1;
+  background:
+    linear-gradient(116deg, transparent 6%, rgba(37, 99, 235, 0.18) 34%, transparent 50%),
+    linear-gradient(64deg, transparent 42%, rgba(45, 212, 191, 0.14) 56%, transparent 74%),
+    linear-gradient(148deg, transparent 58%, rgba(168, 85, 247, 0.16) 74%, transparent 90%);
+  filter: blur(1px);
+  opacity: 0.52;
+  animation: signup-depth-drift 18s ease-in-out infinite;
+}
+
+.signup-noise-layer {
+  z-index: 2;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, rgba(37, 99, 235, 0.12) 0 1px, transparent 1px);
+  background-size: 18px 18px, 27px 27px;
+  opacity: 0.42;
+  mix-blend-mode: overlay;
+}
+
+.signup-scan-beam {
+  z-index: 2;
+  background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.14), transparent);
+  opacity: 0.58;
+  animation: signup-scan-sweep 9.4s ease-in-out infinite;
+}
+
+.signup-particle {
+  z-index: 3;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.78);
+  box-shadow:
+    0 0 18px rgba(37, 99, 235, 0.42),
+    0 0 34px rgba(34, 211, 238, 0.2);
+  animation: signup-particle-float var(--signup-particle-duration, 7s) ease-in-out var(--signup-particle-delay, 0s) infinite;
+  will-change: transform, opacity;
+}
+
+:root.dark .signup-particle,
+:root[data-theme="dark"] .signup-particle {
+  background: rgba(56, 189, 248, 0.82);
+}
+
+.signup-card,
+.signup-orchestration-panel {
+  transform-style: preserve-3d;
+  animation: signup-panel-float 8.4s ease-in-out infinite;
+}
+
+.signup-orchestration-panel {
+  animation-delay: -2.2s;
+}
+
+.signup-card::before,
+.signup-orchestration-panel::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(59, 130, 246, 0.26) 34%, rgba(168, 85, 247, 0.24) 74%, rgba(255, 255, 255, 0.62)),
+    radial-gradient(circle at var(--signup-mouse-x) var(--signup-mouse-y), rgba(56, 189, 248, 0.3), transparent 26rem);
+  opacity: 0.82;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  padding: 1px;
+}
+
+:root.dark .signup-card::before,
+:root.dark .signup-orchestration-panel::before,
+:root[data-theme="dark"] .signup-card::before,
+:root[data-theme="dark"] .signup-orchestration-panel::before {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(56, 189, 248, 0.32) 34%, rgba(168, 85, 247, 0.3) 74%, rgba(255, 255, 255, 0.12)),
+    radial-gradient(circle at var(--signup-mouse-x) var(--signup-mouse-y), rgba(56, 189, 248, 0.28), transparent 26rem);
+}
+
+.signup-card::after,
+.signup-orchestration-panel::after {
+  content: "";
+  position: absolute;
+  inset: -24% -18% auto;
+  height: 17rem;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.76), transparent 72%);
+  opacity: 0.42;
+  transform: rotate(-8deg);
+  transition: opacity 220ms ease;
+}
+
+:root.dark .signup-card::after,
+:root.dark .signup-orchestration-panel::after,
+:root[data-theme="dark"] .signup-card::after,
+:root[data-theme="dark"] .signup-orchestration-panel::after {
+  background: radial-gradient(closest-side, rgba(56, 189, 248, 0.22), transparent 72%);
+  opacity: 0.5;
+}
+
+.signup-card:hover,
+.signup-orchestration-panel:hover {
+  box-shadow: 0 44px 150px rgba(37, 99, 235, 0.26);
+}
+
+.signup-holo-icon {
+  position: relative;
+}
+
+.signup-holo-icon::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 1.35rem;
+  background: conic-gradient(from 120deg, transparent, rgba(255, 255, 255, 0.72), transparent 34%);
+  opacity: 0.48;
+  filter: blur(8px);
+  animation: signup-holo-spin 7s linear infinite;
+}
+
+.signup-input {
+  backdrop-filter: blur(22px);
+}
+
+.signup-input:focus {
+  box-shadow:
+    0 0 0 1px rgba(37, 99, 235, 0.24),
+    0 16px 42px rgba(37, 99, 235, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+:root.dark .signup-input:focus,
+:root[data-theme="dark"] .signup-input:focus {
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.28),
+    0 16px 42px rgba(56, 189, 248, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.11);
+}
+
+.signup-google-button {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease;
+}
+
+.signup-google-button:hover {
+  transform: translateY(-1px);
+}
+
+.signup-primary-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.signup-primary-button::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--signup-mouse-x) var(--signup-mouse-y), rgba(255, 255, 255, 0.72), transparent 24rem);
+  opacity: 0;
+  filter: blur(18px);
+  transition: opacity 180ms ease;
+}
+
+.signup-primary-button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  bottom: -50%;
+  left: -28%;
+  width: 24%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.58), transparent);
+  transform: translateX(-140%) skewX(-18deg);
+  animation: signup-button-shine 3.4s ease-in-out infinite;
+}
+
+.signup-primary-button:hover::before {
+  opacity: 1;
+}
+
+@keyframes signup-grid-drift {
+  to {
+    background-position: 58px 58px;
+  }
+}
+
+@keyframes signup-depth-drift {
+  0%,
+  100% {
+    transform: translate3d(-2%, -1%, 0) rotate(-2deg);
+  }
+  50% {
+    transform: translate3d(2%, 2%, 0) rotate(2deg);
+  }
+}
+
+@keyframes signup-scan-sweep {
+  0%,
+  100% {
+    transform: translateY(-120%);
+  }
+  46% {
+    transform: translateY(520%);
+  }
+}
+
+@keyframes signup-particle-float {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: translate3d(0, 0, 0) scale(0.88);
+  }
+  50% {
+    opacity: 0.92;
+    transform: translate3d(10px, calc(var(--signup-particle-drift, 22px) * -1), 0) scale(1);
+  }
+}
+
+@keyframes signup-panel-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes signup-holo-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes signup-button-shine {
+  0%,
+  48% {
+    transform: translateX(-140%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(560%) skewX(-18deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .novacore-cinematic-grid,
   .novacore-aurora-layer,
@@ -496,7 +1086,24 @@
   .cinematic-cta::after,
   .nova-logo-mark::after,
   .ai-thinking-dot,
-  .data-flow-line {
+  .data-flow-line,
+  .login-os-shell::before,
+  .login-energy-orbit,
+  .login-scan-beam,
+  .login-particle,
+  .login-card,
+  .login-side-panel,
+  .login-holo-icon::before,
+  .login-primary-button::after,
+  .login-signal-bar,
+  .signup-os-shell::before,
+  .signup-depth-lines,
+  .signup-scan-beam,
+  .signup-particle,
+  .signup-card,
+  .signup-orchestration-panel,
+  .signup-holo-icon::before,
+  .signup-primary-button::after {
     animation: none;
   }
 }

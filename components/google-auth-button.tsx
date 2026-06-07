@@ -1,16 +1,22 @@
 "use client"
 
+import { cn } from "@/lib/utils"
+
 type GoogleAuthButtonProps = {
   label: string
   onUnavailable?: () => void
+  className?: string
 }
 
-export function GoogleAuthButton({ label, onUnavailable }: GoogleAuthButtonProps) {
+export function GoogleAuthButton({ label, onUnavailable, className }: GoogleAuthButtonProps) {
   return (
     <button
       type="button"
       onClick={onUnavailable}
-      className="flex w-full items-center justify-center gap-3 rounded-lg border border-border bg-background px-6 py-3 font-medium text-foreground transition-colors hover:bg-muted"
+      className={cn(
+        "flex w-full items-center justify-center gap-3 rounded-lg border border-border bg-background px-6 py-3 font-medium text-foreground transition-colors hover:bg-muted",
+        className,
+      )}
     >
       <span className="flex h-5 w-5 items-center justify-center" aria-hidden="true">
         <svg viewBox="0 0 24 24" className="h-5 w-5">
