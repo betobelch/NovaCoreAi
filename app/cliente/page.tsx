@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEvent, KeyboardEvent, PointerEvent, useEffect, useState } from "react"
+import { FormEvent, KeyboardEvent, PointerEvent, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
@@ -1118,6 +1118,19 @@ function ProfileTab({
 function ContactTab({ messages, onSendMessage }: ContactTabProps) {
   const [message, setMessage] = useState("")
   const [attachments, setAttachments] = useState<ChatAttachment[]>([])
+  const messageListRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const frameId = window.requestAnimationFrame(() => {
+      const messageList = messageListRef.current
+
+      if (!messageList) return
+
+      messageList.scrollTop = messageList.scrollHeight
+    })
+
+    return () => window.cancelAnimationFrame(frameId)
+  }, [messages])
 
   async function submitContactMessage() {
     const trimmedMessage = message.trim()
@@ -1156,7 +1169,7 @@ function ContactTab({ messages, onSendMessage }: ContactTabProps) {
       <div className={styles.chatPanel}>
         <div className={styles.chatHeader}>
           <div>
-            <h2 className={styles.sectionTitle}>Conversa com a equipe</h2>
+            <h2 className={styles.sectionTitle}>Suporte</h2>
             <p className={styles.sectionIntro}>
               Troque mensagens sobre produto, suporte e pagamento direto nesta pagina.
             </p>
@@ -1164,7 +1177,7 @@ function ContactTab({ messages, onSendMessage }: ContactTabProps) {
           <span className={styles.onlineBadge}>Atendimento online</span>
         </div>
 
-        <div className={styles.messageList}>
+        <div className={styles.messageList} ref={messageListRef}>
           {messages.length > 0 ? (
             messages.map((item) => (
               <div
@@ -1283,13 +1296,6 @@ function ContactTab({ messages, onSendMessage }: ContactTabProps) {
       </div>
 
       <div className={styles.chatSidebar}>
-        <div className={styles.infoCard}>
-          <div className={styles.iconBox}>
-            <MessageCircle className={styles.infoIcon} />
-          </div>
-          <h3 className={styles.cardTitle}>Canal direto</h3>
-          <p className={styles.cardMeta}>Todas as conversas ficam concentradas aqui dentro da area do cliente.</p>
-        </div>
         <div className={styles.quickTopics}>
           <h3 className={styles.cardTitle}>Assuntos rapidos</h3>
           <button type="button" onClick={() => setMessage("Quero falar sobre o andamento do meu produto.")}>
@@ -1320,6 +1326,41 @@ function ProductsTab({ products, projects, onAiPurchaseRequest }: ProductsTabPro
       <p className={styles.sectionIntro}>
         Acompanhe os projetos cadastrados pela equipe e solicite novos produtos com I.A quando precisar.
       </p>
+
+      <div className={styles.aiPurchaseSection}>
+        <div>
+          <span className={styles.eyebrow}>Comprar I.A</span>
+          <h3 className={styles.purchaseTitle}>Solicitar novo produto com I.A</h3>
+          <p className={styles.cardMeta}>
+            Escolha uma opcao para abrir uma solicitacao direta com nossa equipe dentro da conversa.
+          </p>
+        </div>
+
+        <div className={styles.aiPurchaseGrid}>
+          {products.length > 0 ? (
+            products.map((option) => (
+              <div key={option.id} className={styles.aiPurchaseCard}>
+                <div className={styles.iconBox}>
+                  <Bot className={styles.infoIcon} />
+                </div>
+                <h4 className={styles.cardTitle}>{option.name}</h4>
+                <p className={styles.cardMeta}>{option.description}</p>
+                <span className={styles.purchaseModel}>{option.model}</span>
+                <button
+                  type="button"
+                  onClick={() => onAiPurchaseRequest(option.name)}
+                  className={styles.purchaseButton}
+                >
+                  <MessageCircle className={styles.smallIcon} />
+                  Solicitar compra
+                </button>
+              </div>
+            ))
+          ) : (
+            <div className={styles.emptyState}>Nenhum produto cadastrado no banco.</div>
+          )}
+        </div>
+      </div>
 
       <div className={styles.clientProjectsSection}>
         <div className={styles.clientProjectsHeader}>
@@ -1382,41 +1423,6 @@ function ProductsTab({ products, projects, onAiPurchaseRequest }: ProductsTabPro
         ) : (
           <div className={styles.emptyState}>Nenhum projeto cadastrado para o seu perfil.</div>
         )}
-      </div>
-
-      <div className={styles.aiPurchaseSection}>
-        <div>
-          <span className={styles.eyebrow}>Comprar I.A</span>
-          <h3 className={styles.purchaseTitle}>Solicitar novo produto com I.A</h3>
-          <p className={styles.cardMeta}>
-            Escolha uma opcao para abrir uma solicitacao direta com nossa equipe dentro da conversa.
-          </p>
-        </div>
-
-        <div className={styles.aiPurchaseGrid}>
-          {products.length > 0 ? (
-            products.map((option) => (
-              <div key={option.id} className={styles.aiPurchaseCard}>
-                <div className={styles.iconBox}>
-                  <Bot className={styles.infoIcon} />
-                </div>
-                <h4 className={styles.cardTitle}>{option.name}</h4>
-                <p className={styles.cardMeta}>{option.description}</p>
-                <span className={styles.purchaseModel}>{option.model}</span>
-                <button
-                  type="button"
-                  onClick={() => onAiPurchaseRequest(option.name)}
-                  className={styles.purchaseButton}
-                >
-                  <MessageCircle className={styles.smallIcon} />
-                  Solicitar compra
-                </button>
-              </div>
-            ))
-          ) : (
-            <div className={styles.emptyState}>Nenhum produto cadastrado no banco.</div>
-          )}
-        </div>
       </div>
     </div>
   )
