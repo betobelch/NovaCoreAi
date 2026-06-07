@@ -661,7 +661,6 @@ export default function ClientePage() {
                   messages={messages}
                   clientProjects={clientProjects}
                   paymentProjects={paymentProjects}
-                  onOpenTab={setActiveTab}
                   onClientUserUpdate={handleClientUserUpdate}
                 />
               )}
@@ -772,7 +771,6 @@ type ProfileTabProps = {
   messages: ChatMessage[]
   clientProjects: PaymentProject[]
   paymentProjects: PaymentProject[]
-  onOpenTab: (tabId: ClientTabId) => void
   onClientUserUpdate: (user: ClientAuthUser) => void
 }
 
@@ -932,7 +930,6 @@ function ProfileTab({
   messages,
   clientProjects,
   paymentProjects,
-  onOpenTab,
   onClientUserUpdate,
 }: ProfileTabProps) {
   const [showCpf, setShowCpf] = useState(false)
@@ -1113,21 +1110,6 @@ function ProfileTab({
             </div>
           </div>
         </section>
-      </div>
-
-      <div className={styles.profileActions}>
-        <button type="button" onClick={() => onOpenTab("produtos")} className={styles.primaryButton}>
-          <FileText className={styles.smallIcon} />
-          Ver produtos
-        </button>
-        <button type="button" onClick={() => onOpenTab("pagamento")} className={styles.secondaryButton}>
-          <CreditCard className={styles.smallIcon} />
-          Ver pagamentos
-        </button>
-        <button type="button" onClick={() => onOpenTab("contato")} className={styles.secondaryButton}>
-          <MessageCircle className={styles.smallIcon} />
-          Falar com a equipe
-        </button>
       </div>
     </div>
   )

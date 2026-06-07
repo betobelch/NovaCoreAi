@@ -3263,12 +3263,12 @@
 
 .profilePhoneForm {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
+  grid-template-columns: minmax(220px, 1fr) minmax(152px, auto);
+  gap: 14px;
   align-items: end;
   border: 1px solid rgba(56, 189, 248, 0.16);
   border-radius: 8px;
-  padding: 14px;
+  padding: 16px;
   background: rgba(56, 189, 248, 0.045);
 }
 
@@ -3297,7 +3297,7 @@
 
 .profilePhoneForm input {
   min-height: 46px;
-  padding: 0 14px;
+  padding: 0 18px;
 }
 
 .profilePhoneForm input:focus,
@@ -3335,7 +3335,9 @@
 
 .profilePhoneForm button {
   min-height: 46px;
-  padding: 0 16px;
+  min-width: 152px;
+  padding: 0 20px;
+  white-space: nowrap;
 }
 
 .secondaryButton,
