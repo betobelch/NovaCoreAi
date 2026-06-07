@@ -872,6 +872,53 @@
   white-space: nowrap;
 }
 
+.messageImageAttachment {
+  display: grid;
+  overflow: hidden;
+  max-width: min(100%, 320px);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--subtle-hover);
+  color: inherit;
+  text-decoration: none;
+}
+
+.messageImageAttachment[href]:hover {
+  border-color: rgba(59, 130, 246, 0.55);
+  background: var(--surface-soft);
+}
+
+.messageImagePreview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 220px;
+  object-fit: cover;
+  background: var(--surface-strong);
+}
+
+.messageImageMeta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px 10px;
+}
+
+.messageImageMeta span {
+  overflow: hidden;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.messageImageMeta small {
+  font-size: 0.74rem;
+  opacity: 0.72;
+  white-space: nowrap;
+}
+
 .chatComposer {
   display: grid;
   gap: 12px;
@@ -888,6 +935,7 @@
 
 .attachmentPreview {
   display: flex;
+  align-items: flex-start;
   flex-wrap: wrap;
   gap: 8px;
 }
@@ -925,6 +973,61 @@
   justify-content: center;
   width: 24px;
   height: 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--subtle-hover);
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.attachmentImagePreview {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 380px);
+  min-height: 74px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  color: var(--foreground);
+  padding: 8px;
+}
+
+.attachmentImagePreview img {
+  width: 72px;
+  height: 56px;
+  border-radius: 6px;
+  background: var(--surface-strong);
+  object-fit: cover;
+}
+
+.attachmentImageInfo {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.attachmentImageInfo span {
+  overflow: hidden;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attachmentImageInfo small {
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.attachmentImagePreview button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
   border: 0;
   border-radius: 999px;
   background: var(--subtle-hover);

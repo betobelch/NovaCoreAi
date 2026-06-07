@@ -250,6 +250,10 @@ function formatFileSize(size: number) {
   return `${(size / (1024 * 1024)).toFixed(1)} MB`
 }
 
+function isImageAttachment(attachment: AdminAttachment) {
+  return attachment.type.toLowerCase().startsWith("image/") || Boolean(attachment.dataUrl?.startsWith("data:image/"))
+}
+
 function createProjectDraft(clientId: string): ProjectDraft {
   return {
     clientId,
@@ -970,7 +974,22 @@ export default function AdminPage() {
                             {message.attachments && message.attachments.length > 0 && (
                               <div className={styles.messageAttachments}>
                                 {message.attachments.map((attachment) =>
-                                  attachment.dataUrl ? (
+                                  attachment.dataUrl && isImageAttachment(attachment) ? (
+                                    <a
+                                      key={attachment.id}
+                                      className={styles.messageImageAttachment}
+                                      href={attachment.dataUrl}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      aria-label={`Abrir ${attachment.name}`}
+                                    >
+                                      <img className={styles.messageImagePreview} src={attachment.dataUrl} alt={attachment.name} />
+                                      <span className={styles.messageImageMeta}>
+                                        <span>{attachment.name}</span>
+                                        <small>{formatFileSize(attachment.size)}</small>
+                                      </span>
+                                    </a>
+                                  ) : attachment.dataUrl ? (
                                     <a
                                       key={attachment.id}
                                       className={styles.messageAttachment}
@@ -1004,20 +1023,37 @@ export default function AdminPage() {
                     <form className={styles.composer} onSubmit={handleReplySubmit}>
                       {replyAttachments.length > 0 && (
                         <div className={styles.attachmentPreview}>
-                          {replyAttachments.map((attachment) => (
-                            <div key={attachment.id} className={styles.attachmentChip}>
-                              <FileText className={styles.smallIcon} />
-                              <span>{attachment.name}</span>
-                              <small>{formatFileSize(attachment.size)}</small>
-                              <button
-                                type="button"
-                                onClick={() => removeReplyAttachment(attachment.id)}
-                                aria-label={`Remover ${attachment.name}`}
-                              >
-                                <X className={styles.smallIcon} />
-                              </button>
-                            </div>
-                          ))}
+                          {replyAttachments.map((attachment) =>
+                            attachment.dataUrl && isImageAttachment(attachment) ? (
+                              <div key={attachment.id} className={styles.attachmentImagePreview}>
+                                <img src={attachment.dataUrl} alt={attachment.name} />
+                                <div className={styles.attachmentImageInfo}>
+                                  <span>{attachment.name}</span>
+                                  <small>{formatFileSize(attachment.size)}</small>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => removeReplyAttachment(attachment.id)}
+                                  aria-label={`Remover ${attachment.name}`}
+                                >
+                                  <X className={styles.smallIcon} />
+                                </button>
+                              </div>
+                            ) : (
+                              <div key={attachment.id} className={styles.attachmentChip}>
+                                <FileText className={styles.smallIcon} />
+                                <span>{attachment.name}</span>
+                                <small>{formatFileSize(attachment.size)}</small>
+                                <button
+                                  type="button"
+                                  onClick={() => removeReplyAttachment(attachment.id)}
+                                  aria-label={`Remover ${attachment.name}`}
+                                >
+                                  <X className={styles.smallIcon} />
+                                </button>
+                              </div>
+                            ),
+                          )}
                         </div>
                       )}
                       <div className={styles.composerRow}>
