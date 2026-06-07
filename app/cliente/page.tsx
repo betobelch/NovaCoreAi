@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEvent, KeyboardEvent, useEffect, useState } from "react"
+import { FormEvent, KeyboardEvent, PointerEvent, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
@@ -569,8 +569,15 @@ export default function ClientePage() {
     setActiveTab("contato")
   }
 
+  function handlePagePointerMove(event: PointerEvent<HTMLElement>) {
+    const rect = event.currentTarget.getBoundingClientRect()
+
+    event.currentTarget.style.setProperty("--mouse-x", `${event.clientX - rect.left}px`)
+    event.currentTarget.style.setProperty("--mouse-y", `${event.clientY - rect.top}px`)
+  }
+
   return (
-    <main className={styles.clientPage}>
+    <main className={styles.clientPage} onPointerMove={handlePagePointerMove}>
       <ClientNavbar
         clientName={clientUser?.name}
         notifications={notifications}
@@ -600,18 +607,33 @@ export default function ClientePage() {
         <div className={styles.shell}>
           <div className={styles.hero}>
             <div>
-              <span className={styles.eyebrow}>Area do cliente</span>
+              <span className={styles.eyebrow}>NovaCore AI Client OS</span>
               <h1 className={styles.title}>
-                {clientUser ? `Ola, ${clientUser.name}` : "Controle seus produtos com a NovaCore AI"}
+                {clientUser ? `Central premium de ${clientUser.name}` : "Controle seus produtos com a NovaCore AI"}
               </h1>
               <p className={styles.subtitle}>
-                Acompanhe o que foi comprado, fale direto com nossa equipe e consulte pagamentos em um unico painel.
+                Projetos, conversa direta, pagamentos e contexto operacional reunidos em um painel de I.A elegante,
+                rapido e cinematografico.
               </p>
+            </div>
+            <div className={styles.heroSignal} aria-hidden="true">
+              <span className={styles.heroSignalPing} />
+              <div>
+                <strong>AI Workspace</strong>
+                <span>Atendimento online</span>
+              </div>
             </div>
           </div>
 
           <div id="painel" className={styles.dashboard}>
             <aside className={styles.sidebar}>
+              <div className={styles.sidebarProfile}>
+                <div className={styles.sidebarAvatar}>{getInitials(clientUser?.name)}</div>
+                <div>
+                  <strong>{clientUser?.name ?? "Cliente"}</strong>
+                  <span>{clientUser?.company || "NovaCore AI"}</span>
+                </div>
+              </div>
               <div className={styles.tabList}>
                 {tabs.map((tab) => {
                   const Icon = tab.icon

@@ -2476,3 +2476,1626 @@
     display: none;
   }
 }
+
+/* Premium client dashboard refresh */
+.clientPage {
+  --background: #050505;
+  --foreground: #f8fbff;
+  --card: rgba(9, 13, 24, 0.82);
+  --card-foreground: #f8fbff;
+  --surface: rgba(10, 14, 25, 0.68);
+  --surface-strong: rgba(5, 5, 5, 0.82);
+  --surface-soft: rgba(255, 255, 255, 0.045);
+  --surface-hover: rgba(255, 255, 255, 0.075);
+  --border: rgba(147, 197, 253, 0.18);
+  --input: rgba(147, 197, 253, 0.22);
+  --primary: #38bdf8;
+  --accent: #a855f7;
+  --muted: rgba(255, 255, 255, 0.07);
+  --muted-foreground: #99a7ba;
+  --success: #39ffb6;
+  --success-soft: rgba(57, 255, 182, 0.12);
+  --warning: #fb7185;
+  --warning-soft: rgba(127, 29, 29, 0.34);
+  --danger: #f87171;
+  --danger-soft: rgba(127, 29, 29, 0.3);
+  --info: #67e8f9;
+  --info-soft: rgba(103, 232, 249, 0.12);
+  --violet: #c084fc;
+  --violet-soft: rgba(168, 85, 247, 0.14);
+  --client-bg: #050505;
+  --client-panel: rgba(8, 12, 24, 0.76);
+  --client-panel-strong: rgba(11, 16, 31, 0.9);
+  --client-line: rgba(148, 163, 184, 0.16);
+  --client-line-strong: rgba(56, 189, 248, 0.34);
+  --client-text: #f8fbff;
+  --client-muted: #96a3b8;
+  --client-blue: #38bdf8;
+  --client-blue-strong: #2563eb;
+  --client-purple: #a855f7;
+  --client-green: #39ffb6;
+  --client-red: #7f1d1d;
+  --mouse-x: 50%;
+  --mouse-y: 18%;
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  overflow-x: clip;
+  padding: 96px 0 56px;
+  background:
+    radial-gradient(42rem 32rem at 17% 10%, rgba(37, 99, 235, 0.18), transparent 68%),
+    radial-gradient(38rem 28rem at 88% 0%, rgba(168, 85, 247, 0.16), transparent 70%),
+    linear-gradient(180deg, #050505 0%, #07080d 48%, #050505 100%);
+  color: var(--client-text);
+  color-scheme: dark;
+  font-family: var(--font-space), var(--font-inter), Inter, system-ui, sans-serif;
+}
+
+.clientPage::before,
+.clientPage::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.clientPage::before {
+  z-index: 0;
+  background:
+    radial-gradient(360px circle at var(--mouse-x) var(--mouse-y), rgba(56, 189, 248, 0.18), transparent 68%),
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: auto, 78px 78px, 78px 78px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 86%);
+}
+
+.clientPage::after {
+  z-index: 1;
+  background:
+    radial-gradient(52rem 20rem at 50% -10%, rgba(56, 189, 248, 0.12), transparent 70%),
+    linear-gradient(180deg, transparent 0%, rgba(5, 5, 5, 0.52) 100%);
+}
+
+.clientNavbar {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  background: rgba(5, 5, 5, 0.78);
+  backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.32);
+}
+
+.clientNavInner {
+  max-width: 1360px;
+  min-height: 76px;
+  padding: 0 24px;
+}
+
+.clientBrand {
+  gap: 12px;
+  color: #ffffff;
+  letter-spacing: 0;
+}
+
+.clientBrandIcon {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(125, 211, 252, 0.34);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.34), transparent 28%),
+    linear-gradient(135deg, #0ea5e9 0%, #2563eb 46%, #a855f7 100%);
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.clientBrandSvg {
+  width: 20px;
+  height: 20px;
+}
+
+.clientBrandText {
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+.clientBrandText span {
+  color: #67e8f9;
+  text-shadow: 0 0 18px rgba(103, 232, 249, 0.55);
+}
+
+.clientNavLinks {
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 8px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.clientNavLinks a,
+.clientSiteLink,
+.userMenuTrigger,
+.notificationNavbarButton,
+.themeToggle {
+  border-color: rgba(148, 163, 184, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+  color: #dbeafe;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.clientNavLinks a {
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 0.84rem;
+}
+
+.clientNavLinks a:hover,
+.clientSiteLink:hover,
+.userMenuTrigger:hover,
+.notificationNavbarButton:hover,
+.themeToggle:hover {
+  border-color: rgba(56, 189, 248, 0.48);
+  background: rgba(56, 189, 248, 0.1);
+  color: #ffffff;
+  box-shadow: 0 0 26px rgba(56, 189, 248, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.clientSiteLink {
+  min-height: 42px;
+  padding: 0 14px;
+  color: #f8fbff;
+}
+
+.clientNavActions {
+  gap: 10px;
+}
+
+.notificationNavbarButton,
+.themeToggle {
+  width: 42px;
+  height: 42px;
+}
+
+.notificationNavbarButtonAlert {
+  border-color: rgba(248, 113, 113, 0.45);
+  background: rgba(127, 29, 29, 0.42);
+  color: #fecaca;
+}
+
+.notificationCount {
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: linear-gradient(135deg, #ef4444, #7f1d1d);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.44);
+}
+
+.userMenuTrigger {
+  min-height: 42px;
+  max-width: 220px;
+  padding: 0 12px;
+  font-weight: 800;
+}
+
+.userMenuPanel {
+  right: 0;
+  min-width: 292px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(14, 20, 37, 0.96), rgba(5, 5, 5, 0.96)),
+    rgba(5, 5, 5, 0.94);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.44), 0 0 50px rgba(56, 189, 248, 0.08);
+  backdrop-filter: blur(22px) saturate(150%);
+}
+
+.userMenuLink,
+.userMenuNotification {
+  border-color: rgba(148, 163, 184, 0.12);
+  background: transparent;
+  color: #e5eefb;
+}
+
+.userMenuLink:hover,
+.userMenuNotification:hover {
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.userMenuLogout {
+  color: #fecaca;
+}
+
+.userMenuNotificationsHeader {
+  color: #f8fbff;
+}
+
+.userMenuNotificationsHeader button {
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.08);
+  color: #bae6fd;
+}
+
+.userMenuNotificationUnread {
+  background: rgba(56, 189, 248, 0.075);
+}
+
+.userMenuNotificationIcon {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.userMenuNotificationText strong {
+  color: #f8fbff;
+}
+
+.userMenuNotificationText span,
+.userMenuNotificationText small,
+.userMenuEmpty {
+  color: var(--client-muted);
+}
+
+.clientSection {
+  position: relative;
+  z-index: 2;
+}
+
+.pageGlow {
+  position: absolute;
+  top: -16rem;
+  left: 50%;
+  z-index: -1;
+  width: min(88vw, 980px);
+  height: 460px;
+  border-radius: 999px;
+  background:
+    conic-gradient(from 120deg, rgba(56, 189, 248, 0.22), rgba(168, 85, 247, 0.22), transparent 58%, rgba(56, 189, 248, 0.16)),
+    radial-gradient(circle, rgba(255, 255, 255, 0.06), transparent 68%);
+  filter: blur(54px);
+  opacity: 0.72;
+  transform: translateX(-50%);
+  animation: clientAurora 12s ease-in-out infinite alternate;
+}
+
+.shell {
+  position: relative;
+  max-width: 1360px;
+  padding: 0 24px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 28px;
+  padding: 28px 0 12px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: #67e8f9;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(103, 232, 249, 0.42);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--client-green);
+  box-shadow: 0 0 18px rgba(57, 255, 182, 0.78);
+}
+
+.title {
+  max-width: 860px;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2.65rem, 5vw, 5.4rem);
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.subtitle {
+  max-width: 720px;
+  margin-top: 20px;
+  color: #a7b3c7;
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.heroSignal {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-width: 248px;
+  border: 1px solid rgba(56, 189, 248, 0.26);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(168, 85, 247, 0.08)),
+    rgba(255, 255, 255, 0.045);
+  box-shadow: 0 0 40px rgba(56, 189, 248, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.heroSignalPing {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--client-green);
+  box-shadow: 0 0 0 8px rgba(57, 255, 182, 0.08), 0 0 26px rgba(57, 255, 182, 0.76);
+  animation: clientPulse 1.8s ease-in-out infinite;
+}
+
+.heroSignal strong,
+.heroSignal span {
+  display: block;
+}
+
+.heroSignal strong {
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.heroSignal span {
+  margin-top: 2px;
+  color: #9fb0c8;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.sidebar,
+.panel,
+.profileHeader,
+.profileMetric,
+.profileCard,
+.chatPanel,
+.chatSidebar > *,
+.clientProjectsSection,
+.aiPurchaseSection,
+.clientProjectCard,
+.aiPurchaseCard,
+.invoiceList,
+.paymentProjectOption {
+  border: 1px solid var(--client-line);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)),
+    var(--client-panel);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(22px) saturate(145%);
+}
+
+.sidebar {
+  position: sticky;
+  top: 96px;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.sidebar::before,
+.panel::before,
+.chatPanel::before,
+.clientProjectCard::before,
+.aiPurchaseCard::before,
+.profileMetric::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sidebarProfile {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(56, 189, 248, 0.055);
+}
+
+.sidebarAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(125, 211, 252, 0.36);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 24%, rgba(255, 255, 255, 0.38), transparent 28%),
+    linear-gradient(135deg, #0f172a, #2563eb 54%, #a855f7);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 950;
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.22);
+}
+
+.sidebarProfile strong,
+.sidebarProfile span {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebarProfile strong {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.sidebarProfile span {
+  margin-top: 2px;
+  color: var(--client-muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.tabList {
+  display: grid;
+  gap: 8px;
+}
+
+.tabButton {
+  position: relative;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0 12px;
+  background: transparent;
+  color: #a7b3c7;
+  font-size: 0.92rem;
+  font-weight: 850;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.tabButton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.14), rgba(168, 85, 247, 0.1));
+  transition: opacity 180ms ease;
+}
+
+.tabButton span,
+.tabButton svg {
+  position: relative;
+  z-index: 1;
+}
+
+.tabIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.tabButton:hover {
+  border-color: rgba(56, 189, 248, 0.24);
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.tabButton:hover::before,
+.tabButtonActive::before {
+  opacity: 1;
+}
+
+.tabButtonActive {
+  border-color: rgba(56, 189, 248, 0.45);
+  color: #ffffff;
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.12);
+}
+
+.panel {
+  position: relative;
+  min-height: 680px;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: clamp(20px, 2.6vw, 34px);
+}
+
+.panel::before {
+  background:
+    radial-gradient(42rem 22rem at 100% 0%, rgba(168, 85, 247, 0.1), transparent 72%),
+    radial-gradient(42rem 24rem at 0% 30%, rgba(56, 189, 248, 0.08), transparent 74%);
+  opacity: 0.9;
+}
+
+.panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.55rem, 2vw, 2.25rem);
+  font-weight: 930;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.sectionIntro,
+.cardMeta,
+.clientProjectMeta,
+.paymentHint {
+  color: var(--client-muted);
+  line-height: 1.65;
+}
+
+.sectionIntro {
+  max-width: 720px;
+  margin-top: 10px;
+  font-size: 0.98rem;
+}
+
+.profileTab,
+.chatLayout,
+.paymentTab {
+  animation: clientPanelIn 420ms ease both;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-radius: 8px;
+  padding: 22px;
+}
+
+.profileIdentity {
+  gap: 16px;
+}
+
+.profileAvatar {
+  width: 72px;
+  height: 72px;
+  border: 1px solid rgba(125, 211, 252, 0.38);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.46), transparent 27%),
+    linear-gradient(135deg, #0ea5e9, #2563eb 44%, #a855f7);
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 950;
+  box-shadow: 0 0 48px rgba(56, 189, 248, 0.26);
+}
+
+.profileStatus,
+.onlineBadge,
+.statusPill,
+.projectCountBadge,
+.purchaseModel,
+.paymentStatusPaid,
+.paymentStatusPending,
+.paymentStatusFree {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 30px;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.74rem;
+  font-weight: 950;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.profileStatus,
+.onlineBadge,
+.statusActive,
+.paymentStatusPaid {
+  border: 1px solid rgba(57, 255, 182, 0.3);
+  background: rgba(57, 255, 182, 0.1);
+  color: #bbf7d0;
+  box-shadow: 0 0 26px rgba(57, 255, 182, 0.1);
+}
+
+.profileSummaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.profileMetric {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.profileMetric::before {
+  opacity: 0;
+  background: radial-gradient(16rem 10rem at 90% 10%, rgba(56, 189, 248, 0.14), transparent 70%);
+  transition: opacity 180ms ease;
+}
+
+.profileMetric:hover::before {
+  opacity: 1;
+}
+
+.profileMetricIcon {
+  width: 22px;
+  height: 22px;
+  color: #67e8f9;
+  filter: drop-shadow(0 0 12px rgba(103, 232, 249, 0.35));
+}
+
+.profileMetric span {
+  margin-top: 16px;
+  color: var(--client-muted);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.profileMetric strong {
+  margin-top: 7px;
+  color: #ffffff;
+  font-size: clamp(1.35rem, 2vw, 2rem);
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.profileMetricWarning {
+  border-color: rgba(248, 113, 113, 0.26);
+  background:
+    linear-gradient(180deg, rgba(127, 29, 29, 0.24), rgba(255, 255, 255, 0.025)),
+    var(--client-panel);
+}
+
+.profileMetricWarning .profileMetricIcon,
+.profileMetricWarning strong {
+  color: #fecaca;
+}
+
+.profileContentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.16fr) minmax(280px, 0.84fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.profileCard {
+  border-radius: 8px;
+  padding: 22px;
+}
+
+.profileCard h3,
+.cardTitle,
+.purchaseTitle,
+.clientProjectTitle {
+  margin: 0;
+  color: #ffffff;
+  font-weight: 930;
+  letter-spacing: 0;
+}
+
+.profileCard h3 {
+  font-size: 1.02rem;
+}
+
+.profileFieldList,
+.profileTimeline {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.profileField {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 8px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.profileField span,
+.profileTimeline span,
+.clientProjectDetail span {
+  color: #7dd3fc;
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.profileField strong,
+.profileSensitiveField strong,
+.profileTimeline strong,
+.clientProjectDetail strong {
+  min-width: 0;
+  color: #f8fbff;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.profileSensitiveField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.profileIconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.08);
+  color: #bae6fd;
+}
+
+.profilePhoneForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  border-radius: 8px;
+  padding: 14px;
+  background: rgba(56, 189, 248, 0.045);
+}
+
+.profilePhoneForm label {
+  display: grid;
+  gap: 8px;
+}
+
+.profilePhoneForm label span {
+  color: #7dd3fc;
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.profilePhoneForm input,
+.chatInput {
+  width: 100%;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 8px;
+  background: rgba(5, 5, 5, 0.48);
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  outline: none;
+}
+
+.profilePhoneForm input {
+  min-height: 46px;
+  padding: 0 14px;
+}
+
+.profilePhoneForm input:focus,
+.chatInput:focus {
+  border-color: rgba(56, 189, 248, 0.54);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.profilePhoneForm button,
+.primaryButton,
+.secondaryButton,
+.purchaseButton,
+.sendButton,
+.attachButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border-radius: 8px;
+  font-weight: 900;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, color 180ms ease;
+}
+
+.profilePhoneForm button,
+.primaryButton,
+.purchaseButton,
+.sendButton {
+  border: 1px solid rgba(125, 211, 252, 0.38);
+  background:
+    radial-gradient(circle at 30% 0%, rgba(255, 255, 255, 0.24), transparent 32%),
+    linear-gradient(135deg, #0284c7, #2563eb 48%, #7c3aed);
+  color: #ffffff;
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+}
+
+.profilePhoneForm button {
+  min-height: 46px;
+  padding: 0 16px;
+}
+
+.secondaryButton,
+.attachButton {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.045);
+  color: #dbeafe;
+}
+
+.primaryButton,
+.secondaryButton,
+.purchaseButton {
+  min-height: 46px;
+  padding: 0 16px;
+}
+
+.profilePhoneForm button:hover,
+.primaryButton:hover,
+.secondaryButton:hover,
+.purchaseButton:hover,
+.sendButton:hover,
+.attachButton:hover {
+  transform: translateY(-1px);
+  border-color: rgba(56, 189, 248, 0.56);
+  box-shadow: 0 0 34px rgba(56, 189, 248, 0.18);
+}
+
+.profilePhoneForm button:disabled,
+.primaryButton:disabled,
+.purchaseButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+  transform: none;
+}
+
+.profileSuccess,
+.profileError,
+.paymentError {
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.profileSuccess {
+  color: #86efac;
+}
+
+.profileError,
+.paymentError {
+  color: #fecaca;
+}
+
+.profileTimeline > div {
+  position: relative;
+  border-left: 1px solid rgba(56, 189, 248, 0.24);
+  padding: 4px 0 14px 18px;
+}
+
+.profileTimeline > div::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: -5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #67e8f9;
+  box-shadow: 0 0 18px rgba(103, 232, 249, 0.58);
+}
+
+.profileTimeline strong,
+.profileTimeline p {
+  display: block;
+  margin-top: 6px;
+}
+
+.profileTimeline p {
+  margin-bottom: 0;
+  color: var(--client-muted);
+  line-height: 1.55;
+}
+
+.profileActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.chatLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 292px;
+  gap: 16px;
+}
+
+.chatPanel {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(360px, 1fr) auto;
+  min-height: 680px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.chatHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  padding: 22px;
+}
+
+.messageList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 520px;
+  overflow-y: auto;
+  padding: 22px;
+  scrollbar-color: rgba(56, 189, 248, 0.35) transparent;
+}
+
+.messageRow {
+  display: flex;
+}
+
+.messageRowClient {
+  justify-content: flex-end;
+}
+
+.messageBubble {
+  max-width: min(78%, 680px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 8px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.055);
+  color: #e5eefb;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+}
+
+.messageBubbleClient {
+  border-color: rgba(56, 189, 248, 0.34);
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(124, 58, 237, 0.14));
+}
+
+.messageMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  color: #7dd3fc;
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.messageBubble p {
+  margin: 0;
+  color: #eef5ff;
+  line-height: 1.6;
+}
+
+.messageAttachments,
+.attachmentPreview {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.messageAttachment,
+.messageImageAttachment,
+.attachmentChip,
+.attachmentImagePreview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 8px;
+  padding: 10px;
+  background: rgba(5, 5, 5, 0.34);
+  color: #e5eefb;
+  text-decoration: none;
+}
+
+.messageAttachment span,
+.attachmentChip span,
+.attachmentImageInfo span,
+.messageImageMeta span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.messageAttachment small,
+.attachmentChip small,
+.attachmentImageInfo small,
+.messageImageMeta small {
+  color: var(--client-muted);
+  font-size: 0.72rem;
+}
+
+.messageImageAttachment {
+  align-items: stretch;
+}
+
+.messageImagePreview,
+.attachmentImagePreview img {
+  width: 54px;
+  height: 54px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.messageImageMeta,
+.attachmentImageInfo {
+  display: grid;
+  min-width: 0;
+}
+
+.chatComposer {
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+  padding: 16px;
+  background: rgba(5, 5, 5, 0.28);
+}
+
+.composerRow {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  gap: 10px;
+  align-items: end;
+}
+
+.attachButton,
+.sendButton {
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chatInput {
+  min-height: 48px;
+  max-height: 160px;
+  resize: vertical;
+  padding: 12px 14px;
+  line-height: 1.45;
+}
+
+.chatSidebar {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.infoCard,
+.quickTopics {
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.iconBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.1);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.12);
+}
+
+.infoIcon {
+  width: 20px;
+  height: 20px;
+  color: #67e8f9;
+}
+
+.cardTitle {
+  margin-top: 14px;
+  font-size: 1rem;
+}
+
+.cardMeta {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+}
+
+.quickTopics {
+  display: grid;
+  gap: 10px;
+}
+
+.quickTopics .cardTitle {
+  margin-top: 0;
+}
+
+.quickTopics button {
+  min-height: 42px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 8px;
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.035);
+  color: #dbeafe;
+  font-weight: 820;
+  text-align: left;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.quickTopics button:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  background: rgba(56, 189, 248, 0.08);
+  transform: translateX(2px);
+}
+
+.clientProjectsSection,
+.aiPurchaseSection {
+  border-radius: 8px;
+  padding: 22px;
+}
+
+.clientProjectsSection {
+  margin-top: 24px;
+}
+
+.aiPurchaseSection {
+  margin-top: 16px;
+}
+
+.clientProjectsHeader,
+.clientProjectTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.purchaseTitle {
+  font-size: 1.18rem;
+}
+
+.projectCountBadge,
+.purchaseModel {
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  background: rgba(56, 189, 248, 0.08);
+  color: #bae6fd;
+}
+
+.clientProjectGrid,
+.aiPurchaseGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.clientProjectCard,
+.aiPurchaseCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 18px;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.clientProjectCard:hover,
+.aiPurchaseCard:hover {
+  border-color: rgba(56, 189, 248, 0.36);
+  transform: translateY(-2px);
+  box-shadow: 0 24px 76px rgba(0, 0, 0, 0.32), 0 0 36px rgba(56, 189, 248, 0.12);
+}
+
+.clientProjectTitle {
+  font-size: 1.02rem;
+}
+
+.statusPill {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.055);
+  color: #dbeafe;
+}
+
+.statusBlocked {
+  border-color: rgba(248, 113, 113, 0.28);
+  background: rgba(127, 29, 29, 0.24);
+  color: #fecaca;
+}
+
+.clientProjectDetails {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.clientProjectDetail {
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.clientProjectDetail strong {
+  display: block;
+  margin-top: 6px;
+}
+
+.paymentStatus {
+  min-height: auto;
+  padding: 0;
+}
+
+.paymentStatusPending {
+  border: 1px solid rgba(248, 113, 113, 0.28);
+  background: rgba(127, 29, 29, 0.28);
+  color: #fecaca;
+}
+
+.paymentStatusFree {
+  border: 1px solid rgba(103, 232, 249, 0.24);
+  background: rgba(103, 232, 249, 0.09);
+  color: #cffafe;
+}
+
+.aiPurchaseCard {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.aiPurchaseCard .cardTitle {
+  margin-top: 0;
+}
+
+.purchaseButton {
+  margin-top: 4px;
+}
+
+.paymentTab {
+  display: flex;
+  min-height: 600px;
+  flex-direction: column;
+}
+
+.invoiceList {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.paymentProjectOption {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto auto;
+  gap: 14px;
+  align-items: center;
+  min-height: 82px;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.paymentProjectOption:hover,
+.paymentProjectOptionActive {
+  border-color: rgba(56, 189, 248, 0.42);
+  background:
+    linear-gradient(135deg, rgba(56, 189, 248, 0.14), rgba(168, 85, 247, 0.08)),
+    var(--client-panel-strong);
+  box-shadow: 0 0 34px rgba(56, 189, 248, 0.13);
+}
+
+.paymentProjectOption:hover {
+  transform: translateY(-1px);
+}
+
+.paymentProjectRadio {
+  width: 18px;
+  height: 18px;
+  accent-color: #38bdf8;
+}
+
+.paymentProjectInfo {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.paymentProjectInfo strong,
+.paymentProjectInfo span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.paymentProjectInfo strong,
+.invoiceValue {
+  color: #ffffff;
+}
+
+.paymentProjectInfo span {
+  color: var(--client-muted);
+}
+
+.invoiceValue {
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.paymentActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.emptyState {
+  border: 1px dashed rgba(148, 163, 184, 0.22);
+  border-radius: 8px;
+  padding: 22px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--client-muted);
+  font-weight: 780;
+  text-align: center;
+}
+
+.smallIcon,
+.navIcon {
+  flex-shrink: 0;
+}
+
+@keyframes clientAurora {
+  from {
+    opacity: 0.56;
+    transform: translateX(-52%) rotate(-3deg) scale(0.96);
+  }
+
+  to {
+    opacity: 0.88;
+    transform: translateX(-48%) rotate(4deg) scale(1.04);
+  }
+}
+
+@keyframes clientPulse {
+  0%,
+  100% {
+    transform: scale(0.88);
+    opacity: 0.72;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes clientPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clientPage *,
+  .pageGlow,
+  .heroSignalPing {
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+    scroll-behavior: auto;
+    transition-duration: 1ms;
+  }
+}
+
+@media (max-width: 1100px) {
+  .hero,
+  .dashboard,
+  .chatLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .heroSignal {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .sidebar {
+    position: relative;
+    top: auto;
+  }
+
+  .tabList {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .tabButton {
+    justify-content: center;
+  }
+
+  .profileContentGrid,
+  .clientProjectGrid,
+  .aiPurchaseGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .clientPage {
+    padding-top: 82px;
+  }
+
+  .clientNavInner {
+    min-height: 68px;
+    padding: 0 14px;
+  }
+
+  .clientNavLinks,
+  .userMenuTrigger span {
+    display: none;
+  }
+
+  .clientSiteLink {
+    width: 42px;
+    padding: 0;
+  }
+
+  .clientSiteLink span {
+    display: none;
+  }
+
+  .shell {
+    padding: 0 14px;
+  }
+
+  .hero {
+    padding-top: 18px;
+  }
+
+  .title {
+    font-size: clamp(2.15rem, 14vw, 3.8rem);
+  }
+
+  .panel,
+  .profileHeader,
+  .profileCard,
+  .clientProjectsSection,
+  .aiPurchaseSection {
+    padding: 16px;
+  }
+
+  .profileHeader,
+  .profileIdentity,
+  .clientProjectsHeader,
+  .clientProjectTop,
+  .chatHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .profileSummaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .profileField,
+  .profilePhoneForm,
+  .paymentProjectOption {
+    grid-template-columns: 1fr;
+  }
+
+  .profileActions,
+  .paymentActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .primaryButton,
+  .secondaryButton,
+  .purchaseButton {
+    width: 100%;
+  }
+
+  .tabList {
+    grid-template-columns: 1fr;
+  }
+
+  .tabButton {
+    justify-content: flex-start;
+  }
+
+  .clientProjectDetails {
+    grid-template-columns: 1fr;
+  }
+
+  .chatPanel {
+    min-height: 600px;
+  }
+
+  .messageList {
+    max-height: 390px;
+    padding: 16px;
+  }
+
+  .messageBubble {
+    max-width: 92%;
+  }
+
+  .composerRow {
+    grid-template-columns: 46px minmax(0, 1fr) 46px;
+  }
+
+  .attachButton,
+  .sendButton {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+@media (max-width: 460px) {
+  .clientBrandIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .notificationNavbarButton,
+  .themeToggle,
+  .clientSiteLink,
+  .userMenuTrigger {
+    width: 38px;
+    height: 38px;
+    min-height: 38px;
+    padding: 0;
+  }
+
+  .userMenuPanel {
+    position: fixed;
+    top: 72px;
+    right: 12px;
+    left: 12px;
+    min-width: 0;
+  }
+}
