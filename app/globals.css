@@ -498,6 +498,16 @@
     linear-gradient(135deg, #e7f7ff 0%, #fbfdff 43%, #f6efff 100%);
 }
 
+:root.dark .login-os-shell,
+:root[data-theme="dark"] .login-os-shell {
+  background:
+    radial-gradient(42rem 32rem at var(--login-mouse-x) var(--login-mouse-y), rgba(56, 189, 248, 0.2), transparent 66%),
+    radial-gradient(48rem 36rem at 10% 14%, rgba(37, 99, 235, 0.2), transparent 70%),
+    radial-gradient(44rem 34rem at 88% 20%, rgba(168, 85, 247, 0.18), transparent 70%),
+    radial-gradient(36rem 30rem at 64% 92%, rgba(45, 212, 191, 0.1), transparent 72%),
+    linear-gradient(135deg, #020617 0%, #07111f 48%, #120a24 100%);
+}
+
 .login-os-shell::before,
 .login-os-shell::after {
   content: "";
@@ -520,11 +530,29 @@
   animation: login-grid-drift 24s linear infinite;
 }
 
+:root.dark .login-os-shell::before,
+:root[data-theme="dark"] .login-os-shell::before {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(168, 85, 247, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.08) 1px, transparent 1px);
+  opacity: 0.5;
+}
+
 .login-os-shell::after {
   background:
     radial-gradient(circle at var(--login-mouse-x) var(--login-mouse-y), rgba(255, 255, 255, 0.74), transparent 18rem),
     radial-gradient(circle at calc(var(--login-mouse-x) + 10%) calc(var(--login-mouse-y) + 12%), rgba(59, 130, 246, 0.18), transparent 22rem);
   mix-blend-mode: screen;
+  opacity: 0.72;
+}
+
+:root.dark .login-os-shell::after,
+:root[data-theme="dark"] .login-os-shell::after {
+  background:
+    radial-gradient(circle at var(--login-mouse-x) var(--login-mouse-y), rgba(56, 189, 248, 0.16), transparent 18rem),
+    radial-gradient(circle at calc(var(--login-mouse-x) + 10%) calc(var(--login-mouse-y) + 12%), rgba(168, 85, 247, 0.18), transparent 24rem);
   opacity: 0.72;
 }
 
@@ -557,6 +585,11 @@
   will-change: transform, opacity;
 }
 
+:root.dark .login-particle,
+:root[data-theme="dark"] .login-particle {
+  background: rgba(56, 189, 248, 0.82);
+}
+
 .login-card,
 .login-side-panel {
   transform-style: preserve-3d;
@@ -583,6 +616,15 @@
   padding: 1px;
 }
 
+:root.dark .login-card::before,
+:root.dark .login-side-panel::before,
+:root[data-theme="dark"] .login-card::before,
+:root[data-theme="dark"] .login-side-panel::before {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(56, 189, 248, 0.32) 34%, rgba(168, 85, 247, 0.3) 74%, rgba(255, 255, 255, 0.12)),
+    radial-gradient(circle at var(--login-mouse-x) var(--login-mouse-y), rgba(56, 189, 248, 0.28), transparent 26rem);
+}
+
 .login-card::after,
 .login-side-panel::after {
   content: "";
@@ -594,6 +636,14 @@
   opacity: 0.42;
   transform: rotate(-8deg);
   transition: opacity 220ms ease;
+}
+
+:root.dark .login-card::after,
+:root.dark .login-side-panel::after,
+:root[data-theme="dark"] .login-card::after,
+:root[data-theme="dark"] .login-side-panel::after {
+  background: radial-gradient(closest-side, rgba(56, 189, 248, 0.22), transparent 72%);
+  opacity: 0.5;
 }
 
 .login-card:hover,
@@ -630,6 +680,14 @@
     0 0 0 1px rgba(37, 99, 235, 0.24),
     0 16px 42px rgba(37, 99, 235, 0.13),
     inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+:root.dark .login-input:focus,
+:root[data-theme="dark"] .login-input:focus {
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.28),
+    0 16px 42px rgba(56, 189, 248, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.11);
 }
 
 .login-google-button {
