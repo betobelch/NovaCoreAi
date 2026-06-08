@@ -5,16 +5,19 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { getClientAuth } from "@/lib/client-auth"
 
-type SoliciteIaLinkProps = {
+type ContactLinkProps = {
   children: ReactNode
   className?: string
+  onNavigate?: () => void
 }
 
-export function SoliciteIaLink({ children, className }: SoliciteIaLinkProps) {
+export function ContactLink({ children, className, onNavigate }: ContactLinkProps) {
   const router = useRouter()
 
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     const clientUser = getClientAuth()
+
+    onNavigate?.()
 
     if (!clientUser) return
 
@@ -25,11 +28,11 @@ export function SoliciteIaLink({ children, className }: SoliciteIaLinkProps) {
       return
     }
 
-    router.push("/cliente?tab=produtos#painel")
+    router.push("/cliente?tab=contato#painel")
   }
 
   return (
-    <Link href="/cliente/cadastrar" onClick={handleClick} className={className}>
+    <Link href="/#cadastro" onClick={handleClick} className={className}>
       {children}
     </Link>
   )

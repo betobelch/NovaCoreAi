@@ -1,8 +1,6 @@
 "use client"
 
-import type { MouseEvent } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import {
   Activity,
@@ -18,7 +16,7 @@ import {
   Workflow,
   Zap,
 } from "lucide-react"
-import { getClientAuth } from "@/lib/client-auth"
+import { SoliciteIaLink } from "@/components/solicite-ia-link"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -48,17 +46,6 @@ const workflowNodes = [
 ]
 
 export function HeroSection() {
-  const router = useRouter()
-
-  function handleSolicitarIaClick(event: MouseEvent<HTMLAnchorElement>) {
-    const clientUser = getClientAuth()
-
-    if (!clientUser || clientUser.role === "admin") return
-
-    event.preventDefault()
-    router.push("/cliente?tab=produtos#painel")
-  }
-
   return (
     <section
       id="home"
@@ -105,14 +92,12 @@ export function HeroSection() {
 
           <motion.div variants={fadeUp} className="mt-9 flex flex-col items-center gap-4 sm:flex-row lg:items-start">
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }}>
-              <Link
-                href="/login"
-                onClick={handleSolicitarIaClick}
+              <SoliciteIaLink
                 className="cinematic-cta inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-black text-primary-foreground shadow-lg shadow-primary/25 transition-colors hover:bg-primary/90 sm:text-lg"
               >
                 Solicite sua IA
                 <ArrowRight className="h-5 w-5" />
-              </Link>
+              </SoliciteIaLink>
             </motion.div>
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
               <Link

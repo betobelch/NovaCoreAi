@@ -1,23 +1,23 @@
 import Link from "next/link"
 import { Sparkles } from "lucide-react"
+import { ContactLink } from "@/components/contact-link"
 
 const footerLinks = {
   servicos: [
-    { label: "Agentes de IA", href: "#servicos" },
-    { label: "Chatbots WhatsApp", href: "#servicos" },
-    { label: "Automacao", href: "#servicos" },
-    { label: "Integracoes", href: "#servicos" },
+    { label: "Agentes de IA", href: "/#servicos" },
+    { label: "Chatbots WhatsApp", href: "/#servicos" },
+    { label: "Automacao", href: "/#servicos" },
+    { label: "Integracoes", href: "/#servicos" },
   ],
   empresa: [
-    { label: "Sobre nos", href: "#sobre" },
-    { label: "Contato", href: "#cadastro" },
+    { label: "Sobre nos", href: "/#sobre" },
   ],
 }
 
 const socialLinks = [
-  { label: "LinkedIn", short: "in" },
-  { label: "Instagram", short: "ig" },
-  { label: "X", short: "x" },
+  { label: "LinkedIn", short: "in", href: "https://www.linkedin.com/company/novacore-ai" },
+  { label: "Instagram", short: "ig", href: "https://www.instagram.com/novacoreai" },
+  { label: "X", short: "x", href: "https://x.com/novacoreai" },
 ]
 
 export function Footer() {
@@ -46,7 +46,9 @@ export function Footer() {
               {socialLinks.map((link) => (
                 <a
                   key={link.label}
-                  href="#"
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-secondary/70 text-xs font-black text-muted-foreground transition-all hover:border-primary/35 hover:bg-secondary hover:text-foreground"
                   aria-label={link.label}
                 >
@@ -79,6 +81,11 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <ContactLink className="text-muted-foreground transition-colors hover:text-foreground">
+                  Contato
+                </ContactLink>
+              </li>
             </ul>
           </div>
         </div>
@@ -86,10 +93,10 @@ export function Footer() {
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-sm text-muted-foreground sm:flex-row">
           <p>&copy; {new Date().getFullYear()} NovaCore AI. Todos os direitos reservados.</p>
           <div className="flex items-center gap-6">
-            <Link href="#" className="transition-colors hover:text-foreground">
+            <Link href="/politica-de-privacidade" className="transition-colors hover:text-foreground">
               Politica de Privacidade
             </Link>
-            <Link href="#" className="transition-colors hover:text-foreground">
+            <Link href="/termos-de-uso" className="transition-colors hover:text-foreground">
               Termos de Uso
             </Link>
           </div>

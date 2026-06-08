@@ -89,6 +89,8 @@ flowchart LR
 | `/cliente/cadastrar` | Cadastro de novo cliente. |
 | `/cliente` | Area do cliente com perfil, produtos, projetos, pagamentos e contato. |
 | `/admin` | Painel administrativo para clientes, projetos, produtos e operacao. |
+| `/politica-de-privacidade` | Politica de privacidade do site e da plataforma. |
+| `/termos-de-uso` | Termos de uso do site e da plataforma. |
 
 ## APIs
 

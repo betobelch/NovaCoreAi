@@ -1,6 +1,7 @@
 "use client"
 
 import type { MouseEvent, ReactNode } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import {
   type MotionValue,
@@ -41,6 +42,7 @@ import {
   Zap,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
+import { ContactLink } from "@/components/contact-link"
 import { SoliciteIaLink } from "@/components/solicite-ia-link"
 
 const fadeUp = {
@@ -559,6 +561,8 @@ function MicroMetrics() {
 }
 
 function DemoSection() {
+  const [isDemoActive, setIsDemoActive] = useState(false)
+
   return (
     <section id="demonstracao" className="relative z-10 scroll-mt-24 px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
@@ -583,12 +587,27 @@ function DemoSection() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(56,189,248,0.06),rgba(5,5,5,0.24)_55%,rgba(5,5,5,0.68)_100%)]" />
             <button
               type="button"
+              onClick={() => setIsDemoActive(true)}
               className="product-play-button absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-cyan-200/28 bg-white/10 text-white shadow-[0_0_70px_rgba(56,189,248,0.38)] backdrop-blur-xl transition group-hover:scale-105"
-              aria-label="Reproduzir demonstração"
-              title="Reproduzir demonstração"
+              aria-label={isDemoActive ? "Demonstração iniciada" : "Reproduzir demonstração"}
+              title={isDemoActive ? "Demonstração iniciada" : "Reproduzir demonstração"}
             >
               <Play className="ml-1 h-8 w-8 fill-white" />
             </button>
+            {isDemoActive && (
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute left-5 top-5 max-w-[calc(100%-2.5rem)] rounded-[8px] border border-emerald-300/20 bg-black/52 px-4 py-3 text-left backdrop-blur-xl"
+              >
+                <span className="text-xs font-black uppercase tracking-[0.14em] text-emerald-200">
+                  Demo iniciada
+                </span>
+                <p className="mt-1 text-sm font-bold leading-6 text-slate-200">
+                  Cliente recebido, IA qualificando pedido, CRM atualizado e follow-up preparado.
+                </p>
+              </motion.div>
+            )}
             <div className="absolute inset-x-5 bottom-5 flex items-center gap-3 rounded-[8px] border border-white/10 bg-black/44 px-4 py-3 backdrop-blur-xl">
               <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.9)]" />
               <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
@@ -753,13 +772,15 @@ function ProductFooter() {
           <h3 className="mb-4 text-sm font-black uppercase tracking-[0.16em] text-slate-300">Redes</h3>
           <div className="flex gap-3">
             {[
-              { label: "LinkedIn", icon: Network },
-              { label: "Instagram", icon: MessageSquareText },
-              { label: "NovaCore", icon: Sparkles },
+              { label: "LinkedIn", icon: Network, href: "https://www.linkedin.com/company/novacore-ai" },
+              { label: "Instagram", icon: MessageSquareText, href: "https://www.instagram.com/novacoreai" },
+              { label: "NovaCore", icon: Sparkles, href: "/" },
             ].map((item) => (
               <a
                 key={item.label}
-                href="#"
+                href={item.href}
+                target={item.href.startsWith("http") ? "_blank" : undefined}
+                rel={item.href.startsWith("http") ? "noreferrer" : undefined}
                 aria-label={item.label}
                 title={item.label}
                 className="flex h-10 w-10 items-center justify-center rounded-[8px] border border-white/10 bg-white/[0.055] text-slate-400 backdrop-blur-xl transition hover:border-cyan-300/24 hover:text-cyan-100 hover:shadow-[0_0_32px_rgba(56,189,248,0.14)]"
@@ -774,10 +795,10 @@ function ProductFooter() {
       <div className="mx-auto mt-10 flex max-w-7xl flex-col justify-between gap-4 border-t border-white/10 pt-6 text-xs font-bold text-slate-600 sm:flex-row">
         <p>© {new Date().getFullYear()} NovaCore AI. Todos os direitos reservados.</p>
         <div className="flex gap-5">
-          <Link href="#" className="transition hover:text-slate-300">
+          <Link href="/politica-de-privacidade" className="transition hover:text-slate-300">
             Privacidade
           </Link>
-          <Link href="#" className="transition hover:text-slate-300">
+          <Link href="/termos-de-uso" className="transition hover:text-slate-300">
             Termos
           </Link>
         </div>
@@ -836,13 +857,12 @@ export function ProdutoExperience() {
             </motion.p>
 
             <motion.div variants={fadeUp} className="mt-9 flex flex-col items-center gap-4 sm:flex-row lg:items-start">
-              <Link
-                href="/#cadastro"
+              <ContactLink
                 className="cinematic-cta inline-flex min-h-14 items-center justify-center gap-2 rounded-[8px] bg-gradient-to-r from-cyan-300 via-blue-500 to-violet-500 px-8 py-4 text-base font-black text-white shadow-[0_22px_80px_rgba(59,130,246,0.42)] transition hover:scale-[1.03] sm:text-lg"
               >
                 Falar com a equipe
                 <ArrowRight className="h-5 w-5" />
-              </Link>
+              </ContactLink>
               <Link
                 href="#demonstracao"
                 className="inline-flex min-h-14 items-center justify-center gap-2 rounded-[8px] border border-white/12 bg-white/[0.055] px-8 py-4 text-base font-black text-white backdrop-blur-2xl transition hover:border-cyan-300/30 hover:bg-white/[0.09] hover:shadow-[0_0_42px_rgba(56,189,248,0.14)] sm:text-lg"
