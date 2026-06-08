@@ -73,10 +73,20 @@ function getConversationClass(status: ConversationStatus) {
   return status === "Aberta" ? styles.statusActive : styles.statusDone
 }
 
+const adminMenuItems = [
+  { id: "visao", label: "Visao geral", description: "Indicadores e prioridades", icon: BarChart3 },
+  { id: "clientes", label: "Clientes", description: "Carteira e atendimento", icon: Users },
+  { id: "produtos", label: "Produtos", description: "Catalogo para compra", icon: Bot },
+  { id: "projetos", label: "Projetos", description: "Tabela e status", icon: Briefcase },
+] as const
+
+type AdminMenuId = (typeof adminMenuItems)[number]["id"]
+
 export default function AdminPage() {
   const router = useRouter()
   const [data, setData] = useState<AdminState>(initialAdminState)
   const [selectedClientId, setSelectedClientId] = useState("")
+  const [activeMenu, setActiveMenu] = useState<AdminMenuId>("visao")
   const [search, setSearch] = useState("")
   const [projectFilter, setProjectFilter] = useState<"Todos" | ProjectStatus>("Todos")
   const [reply, setReply] = useState("")
@@ -189,6 +199,7 @@ export default function AdminPage() {
 
     if (requestedClientId && data.clients.some((client) => client.id === requestedClientId)) {
       setSelectedClientId(requestedClientId)
+      setActiveMenu("clientes")
       setHasAppliedClientParam(true)
     }
   }, [data.clients, hasAppliedClientParam])
@@ -236,6 +247,20 @@ export default function AdminPage() {
   const tableProjects = data.projects.filter((project) =>
     projectFilter === "Todos" ? true : project.status === projectFilter,
   )
+  const statusSummary = statusOptions.map((status) => ({
+    status,
+    count: data.projects.filter((project) => project.status === status).length,
+  }))
+  const attentionClients = data.clients
+    .map((client) => {
+      const conversation = data.conversations[client.id] ?? createEmptyConversation(client.name)
+      const projects = data.projects.filter((project) => project.clientId === client.id)
+
+      return { client, conversation, projects }
+    })
+    .filter(({ conversation }) => conversation.status === "Aberta" && conversation.messages.length > 0)
+    .slice(0, 4)
+  const recentProjects = data.projects.slice(0, 4)
   const projectPendingDeletionClient = projectPendingDeletion
     ? data.clients.find((client) => client.id === projectPendingDeletion.clientId)
     : null
@@ -534,14 +559,164 @@ export default function AdminPage() {
           </div>
         </section>
 
-        <section className={styles.metricsGrid} aria-label="Indicadores administrativos">
-          <MetricCard icon={Briefcase} label="Projetos" value={String(metrics.totalProjects)} note={`${metrics.activeProjects} em andamento`} />
-          <MetricCard icon={Users} label="Clientes" value={String(metrics.clients)} note={`${metrics.openConversations} conversas abertas`} />
-          <MetricCard icon={DollarSign} label="Receita" value={formatMoney(metrics.totalRevenue)} note="valor bruto em carteira" />
-          <MetricCard icon={TrendingUp} label="Lucro" value={formatMoney(metrics.profit)} note="receita menos custo" />
-        </section>
+        <nav className={styles.adminMenu} aria-label="Menu administrativo">
+          {adminMenuItems.map((item) => {
+            const Icon = item.icon
+            const isActive = activeMenu === item.id
 
-        <section className={styles.workspace}>
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActiveMenu(item.id)}
+                className={`${styles.adminMenuButton} ${isActive ? styles.adminMenuButtonActive : ""}`}
+                aria-current={isActive ? "page" : undefined}
+              >
+                <span className={styles.adminMenuIcon}>
+                  <Icon className={styles.smallIcon} />
+                </span>
+                <span className={styles.adminMenuText}>
+                  <strong>{item.label}</strong>
+                  <small>{item.description}</small>
+                </span>
+              </button>
+            )
+          })}
+        </nav>
+
+        <div className={styles.menuContent}>
+          {activeMenu === "visao" && (
+            <section className={styles.menuPanel} aria-label="Visao geral administrativa">
+              <section className={styles.metricsGrid} aria-label="Indicadores administrativos">
+                <MetricCard icon={Briefcase} label="Projetos" value={String(metrics.totalProjects)} note={`${metrics.activeProjects} em andamento`} />
+                <MetricCard icon={Users} label="Clientes" value={String(metrics.clients)} note={`${metrics.openConversations} conversas abertas`} />
+                <MetricCard icon={DollarSign} label="Receita" value={formatMoney(metrics.totalRevenue)} note="valor bruto em carteira" />
+                <MetricCard icon={TrendingUp} label="Lucro" value={formatMoney(metrics.profit)} note="receita menos custo" />
+              </section>
+
+              <section className={styles.overviewGrid} aria-label="Resumo administrativo">
+                <article className={styles.overviewPanel}>
+                  <div className={styles.tableHeader}>
+                    <div>
+                      <h2>Status dos projetos</h2>
+                      <p>Distribuicao da operacao por etapa</p>
+                    </div>
+                    <button type="button" className={styles.overviewAction} onClick={() => setActiveMenu("projetos")}>
+                      Ver tabela
+                    </button>
+                  </div>
+                  <div className={styles.statusSummaryList}>
+                    {statusSummary.map((item) => (
+                      <div key={item.status} className={styles.statusSummaryItem}>
+                        <span className={`${styles.statusSummaryBadge} ${getStatusClass(item.status)}`}>{item.status}</span>
+                        <strong>{item.count}</strong>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+
+                <article className={styles.overviewPanel}>
+                  <div className={styles.tableHeader}>
+                    <div>
+                      <h2>Atendimento</h2>
+                      <p>Conversas abertas com mensagens</p>
+                    </div>
+                    <button type="button" className={styles.overviewAction} onClick={() => setActiveMenu("clientes")}>
+                      Atender
+                    </button>
+                  </div>
+                  <div className={styles.overviewList}>
+                    {attentionClients.length > 0 ? (
+                      attentionClients.map(({ client, conversation, projects }) => (
+                        <button
+                          key={client.id}
+                          type="button"
+                          className={styles.overviewListButton}
+                          onClick={() => {
+                            setSelectedClientId(client.id)
+                            setActiveMenu("clientes")
+                          }}
+                        >
+                          <span className={styles.avatar}>{getInitials(client.name)}</span>
+                          <span className={styles.overviewListText}>
+                            <strong>{client.company}</strong>
+                            <small>{conversation.messages.length} mensagens - {projects.length} projetos</small>
+                          </span>
+                        </button>
+                      ))
+                    ) : (
+                      <div className={styles.emptyState}>Nenhuma conversa aberta com mensagens.</div>
+                    )}
+                  </div>
+                </article>
+
+                <article className={styles.overviewPanel}>
+                  <div className={styles.tableHeader}>
+                    <div>
+                      <h2>Produtos</h2>
+                      <p>{purchaseProducts.length} itens no catalogo</p>
+                    </div>
+                    <button type="button" className={styles.overviewAction} onClick={() => setActiveMenu("produtos")}>
+                      Gerenciar
+                    </button>
+                  </div>
+                  <div className={styles.overviewList}>
+                    {purchaseProducts.length > 0 ? (
+                      purchaseProducts.slice(0, 3).map((product) => (
+                        <div key={product.id} className={styles.overviewRow}>
+                          <span className={styles.metricIcon}>
+                            <Bot className={styles.metricSvg} />
+                          </span>
+                          <span className={styles.overviewListText}>
+                            <strong>{product.name}</strong>
+                            <small>{product.model}</small>
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className={styles.emptyState}>Nenhum produto cadastrado no banco.</div>
+                    )}
+                  </div>
+                </article>
+
+                <article className={styles.overviewPanel}>
+                  <div className={styles.tableHeader}>
+                    <div>
+                      <h2>Projetos recentes</h2>
+                      <p>Ultimos registros carregados</p>
+                    </div>
+                    <button type="button" className={styles.overviewAction} onClick={() => setActiveMenu("projetos")}>
+                      Abrir
+                    </button>
+                  </div>
+                  <div className={styles.overviewList}>
+                    {recentProjects.length > 0 ? (
+                      recentProjects.map((project) => {
+                        const client = data.clients.find((item) => item.id === project.clientId)
+
+                        return (
+                          <div key={project.id} className={styles.overviewRow}>
+                            <span className={`${styles.statusSummaryBadge} ${getStatusClass(project.status)}`}>
+                              {project.status}
+                            </span>
+                            <span className={styles.overviewListText}>
+                              <strong>{project.name}</strong>
+                              <small>{client?.company ?? "Cliente"} - {formatDate(project.dueDate)}</small>
+                            </span>
+                          </div>
+                        )
+                      })
+                    ) : (
+                      <div className={styles.emptyState}>Nenhum projeto registrado no banco.</div>
+                    )}
+                  </div>
+                </article>
+              </section>
+            </section>
+          )}
+
+          {activeMenu === "clientes" && (
+            <section className={styles.workspace}>
           <aside className={styles.clientsPanel}>
             <div className={styles.panelHeader}>
               <div>
@@ -878,9 +1053,11 @@ export default function AdminPage() {
               <div className={styles.emptyState}>Selecione um cliente real cadastrado no banco.</div>
             )}
           </section>
-        </section>
+            </section>
+          )}
 
-        <section className={styles.productCatalogSection}>
+          {activeMenu === "produtos" && (
+            <section className={styles.productCatalogSection}>
           <div className={styles.tableHeader}>
             <div>
               <h2>Cadastrar produto para compra</h2>
@@ -950,9 +1127,11 @@ export default function AdminPage() {
               )}
             </div>
           </div>
-        </section>
+            </section>
+          )}
 
-        <section className={styles.tableSection}>
+          {activeMenu === "projetos" && (
+            <section className={styles.tableSection}>
           <div className={styles.tableHeader}>
             <div>
               <h2>Todos os projetos</h2>
@@ -1053,7 +1232,9 @@ export default function AdminPage() {
               </tbody>
             </table>
           </div>
-        </section>
+            </section>
+          )}
+        </div>
       </div>
 
       {projectPendingDeletion && (
