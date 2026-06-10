@@ -1,6 +1,8 @@
-import type { CSSProperties } from "react"
+"use client"
 
-const particles = Array.from({ length: 16 }, (_, index) => ({
+import { useEffect, useRef, type CSSProperties } from "react"
+
+const particles = Array.from({ length: 30 }, (_, index) => ({
   id: index,
   left: `${(index * 37 + 11) % 100}%`,
   top: `${(index * 53 + 19) % 100}%`,
@@ -11,9 +13,37 @@ const particles = Array.from({ length: 16 }, (_, index) => ({
 }))
 
 export function AnimatedSiteBackground() {
+  const rootRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handlePointerMove(event: PointerEvent) {
+      const root = rootRef.current
+
+      if (!root) return
+
+      root.style.setProperty("--novacore-mouse-x", `${event.clientX}px`)
+      root.style.setProperty("--novacore-mouse-y", `${event.clientY}px`)
+    }
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true })
+
+    return () => window.removeEventListener("pointermove", handlePointerMove)
+  }, [])
+
   return (
-    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <div
+      ref={rootRef}
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      aria-hidden="true"
+      style={
+        {
+          "--novacore-mouse-x": "68vw",
+          "--novacore-mouse-y": "24vh",
+        } as CSSProperties
+      }
+    >
       <div className="novacore-ambient-base absolute inset-0" />
+      <div className="novacore-mouse-glow absolute inset-0" />
       <div className="novacore-static-glow absolute inset-0 opacity-80" />
       <div className="novacore-aurora-layer novacore-aurora-layer-primary absolute -left-1/4 top-8 h-[44rem] w-[150vw]" />
       <div className="novacore-aurora-layer novacore-aurora-layer-secondary absolute -right-1/3 top-1/3 h-[36rem] w-[140vw]" />

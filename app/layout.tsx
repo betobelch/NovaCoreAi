@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${spaceGrotesk.variable} bg-background`}>
+    <html lang="pt-BR" data-theme="dark" className={`dark ${inter.variable} ${spaceGrotesk.variable} bg-background`}>
       <body className="font-sans antialiased">
         <SiteShell>{children}</SiteShell>
         {process.env.NODE_ENV === 'production' && <Analytics />}

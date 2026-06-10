@@ -64,8 +64,8 @@ export function ContactSection() {
               Comece com a NovaCore AI
             </h2>
             <p className="text-lg text-muted-foreground mb-8 text-pretty">
-              Crie sua conta para acessar agentes, automações e integrações feitas sob medida.
-              Faça login se já for cliente.
+              Crie sua conta para acessar agentes, automacoes e integracoes feitas sob medida.
+              Faca login se ja for cliente.
             </p>
 
             {/* Contact Methods */}
@@ -85,8 +85,8 @@ export function ContactSection() {
                   <MapPin className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-foreground font-medium">Localização</p>
-                  <p className="text-sm">São Paulo, Brasil</p>
+                  <p className="text-foreground font-medium">Localizacao</p>
+                  <p className="text-sm">Sao Paulo, Brasil</p>
                 </div>
               </div>
             </div>

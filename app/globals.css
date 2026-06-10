@@ -247,6 +247,23 @@
     linear-gradient(135deg, var(--background) 0%, color-mix(in srgb, var(--background) 82%, var(--primary) 18%) 48%, var(--background) 100%);
 }
 
+:root.dark .novacore-ambient-base,
+:root[data-theme="dark"] .novacore-ambient-base {
+  background:
+    radial-gradient(72rem 48rem at 15% 10%, rgba(37, 99, 235, 0.24), transparent 64%),
+    radial-gradient(60rem 44rem at 86% 18%, rgba(168, 85, 247, 0.18), transparent 66%),
+    radial-gradient(56rem 40rem at 48% 88%, rgba(20, 184, 166, 0.12), transparent 70%),
+    linear-gradient(135deg, #050505 0%, #07101f 44%, #0b0620 76%, #050505 100%);
+}
+
+.novacore-mouse-glow {
+  background:
+    radial-gradient(32rem 32rem at var(--novacore-mouse-x) var(--novacore-mouse-y), color-mix(in srgb, var(--primary) 18%, transparent), transparent 66%),
+    radial-gradient(18rem 18rem at var(--novacore-mouse-x) var(--novacore-mouse-y), rgba(255, 255, 255, 0.1), transparent 72%);
+  mix-blend-mode: screen;
+  opacity: 0.86;
+}
+
 .novacore-aurora-layer {
   background: linear-gradient(
     90deg,
@@ -291,6 +308,7 @@
   background-size: 54px 54px;
   mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 78%, transparent 100%);
   opacity: 0.48;
+  animation: novacore-grid-drift 30s linear infinite;
 }
 
 .novacore-energy-lines {
@@ -345,6 +363,53 @@
 .premium-card:hover::before,
 .premium-card:hover::after {
   opacity: 1;
+}
+
+.hero-gradient-word {
+  filter: drop-shadow(0 0 26px rgba(56, 189, 248, 0.36));
+}
+
+.hero-command-center,
+.proof-dashboard {
+  animation: novacore-panel-float 8s ease-in-out infinite;
+}
+
+.hero-command-center::before,
+.proof-dashboard::before {
+  opacity: 0.72;
+}
+
+.hero-metric-card {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.hero-metric-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.18), transparent 46%);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.hero-metric-card:hover {
+  border-color: rgba(103, 232, 249, 0.36);
+  box-shadow: 0 24px 80px rgba(56, 189, 248, 0.16);
+  transform: translateY(-4px);
+}
+
+.hero-metric-card:hover::after {
+  opacity: 1;
+}
+
+.product-tilt:hover {
+  transform: translateY(-8px) rotateX(1deg) rotateY(-1deg);
 }
 
 .cinematic-cta {
@@ -484,6 +549,16 @@
 @keyframes novacore-flow {
   to {
     stroke-dashoffset: -36;
+  }
+}
+
+@keyframes novacore-panel-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
   }
 }
 
@@ -1413,7 +1488,9 @@
   .product-holographic-lines,
   .product-scan-beam,
   .product-breathing,
-  .product-play-button::before {
+  .product-play-button::before,
+  .hero-command-center,
+  .proof-dashboard {
     animation: none;
   }
 }
