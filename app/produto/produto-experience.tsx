@@ -15,6 +15,7 @@ import {
 } from "framer-motion"
 import {
   Activity,
+  AlertTriangle,
   ArrowRight,
   BarChart3,
   Bot,
@@ -42,7 +43,6 @@ import {
   Zap,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
-import { ContactLink } from "@/components/contact-link"
 import { SoliciteIaLink } from "@/components/solicite-ia-link"
 
 const fadeUp = {
@@ -67,28 +67,32 @@ type IconItem = {
 }
 
 const microMetrics: IconItem[] = [
-  { icon: Clock3, label: "Atendimento 24h", value: "Sempre ativo" },
-  { icon: DatabaseZap, label: "CRM integrado", value: "Dados sincronizados" },
-  { icon: Workflow, label: "Fluxos sob medida", value: "Operacao conectada" },
+  { icon: Clock3, label: "Atendimento 24h", value: "IA sempre online" },
+  { icon: DatabaseZap, label: "CRM sincronizado", value: "Dados em tempo real" },
+  { icon: Workflow, label: "Fluxos ativos", value: "Operacao conectada" },
   { icon: UsersRound, label: "Leads organizados", value: "Pipeline limpo" },
 ]
 
 const processSteps = [
   {
-    title: "Mapeamos seu atendimento",
-    description: "Entendemos canais, equipe, perguntas, gargalos, regras comerciais e pontos de decisao do fluxo real.",
+    title: "Mapeamos seu processo",
+    description: "Entendemos canais, equipe, gargalos, regras comerciais, CRM, agenda e pontos onde tempo esta escapando.",
   },
   {
-    title: "Criamos o fluxo com IA",
-    description: "Desenhamos agentes, automacoes, respostas, classificacoes e a logica operacional por tras da conversa.",
+    title: "Criamos a IA operacional",
+    description: "Desenhamos agentes, automacoes, respostas, classificacoes e a logica operacional por tras das conversas.",
   },
   {
     title: "Integramos sistemas e CRM",
-    description: "Conectamos agenda, CRM, planilhas, formularios, WhatsApp e ferramentas internas com rastreabilidade.",
+    description: "Conectamos WhatsApp, agenda, CRM, formularios, pagamentos e ferramentas internas com rastreabilidade.",
+  },
+  {
+    title: "Automatizamos atendimento e vendas",
+    description: "Ativamos qualificacao, follow-up, agendamento, handoff humano e rotinas repetitivas.",
   },
   {
     title: "Acompanhamos resultados",
-    description: "Monitoramos uso, ajustamos prompts, melhoramos rotas e deixamos a automacao mais precisa a cada ciclo.",
+    description: "Monitoramos volume, velocidade, conversao, oportunidades geradas e melhoria continua da IA.",
   },
 ]
 
@@ -129,6 +133,18 @@ const benefits = [
     description: "Atualiza cadastros, registra interacoes, organiza pipeline e prepara proximas acoes.",
     stat: "CRM",
   },
+  {
+    icon: Workflow,
+    title: "Processos automatizados",
+    description: "Fluxos conectam tarefas, times e sistemas para reduzir retrabalho e erro operacional.",
+    stat: "Fluxos",
+  },
+  {
+    icon: BarChart3,
+    title: "Analytics em tempo real",
+    description: "Dashboards mostram leads, tempo economizado, conversao, filas e performance da operacao.",
+    stat: "Live",
+  },
 ]
 
 const particles = Array.from({ length: 26 }, (_, index) => ({
@@ -159,7 +175,31 @@ const footerLinks = [
   { label: "Atendimento", href: "#beneficios" },
   { label: "Vendas", href: "#beneficios" },
   { label: "CRM", href: "#beneficios" },
-  { label: "Demonstração", href: "#demonstracao" },
+  { label: "Demonstracao", href: "#demonstracao" },
+]
+
+const heroTriggers = ["ganho de tempo", "automacao", "escala", "produtividade", "mais vendas", "menos operacao manual"]
+
+const beforeAfterItems = [
+  {
+    icon: AlertTriangle,
+    title: "Antes",
+    subtitle: "Operacao manual",
+    items: ["Mensagens perdidas", "Follow-up esquecido", "CRM desatualizado", "Equipe sobrecarregada"],
+  },
+  {
+    icon: CheckCircle2,
+    title: "Depois",
+    subtitle: "Produto NovaCore AI",
+    items: ["IA atende 24/7", "Leads organizados", "CRM atualizado", "Vendas priorizadas"],
+  },
+]
+
+const proofStats = [
+  { icon: UsersRound, value: "+312", label: "leads organizados", width: "88%" },
+  { icon: TimerReset, value: "64h", label: "economizadas no mes", width: "74%" },
+  { icon: Workflow, value: "18", label: "fluxos ativos", width: "82%" },
+  { icon: Activity, value: "98%", label: "respostas automatizadas", width: "96%" },
 ]
 
 function ReactiveParticle({
@@ -278,7 +318,7 @@ function ProductCommandMockup() {
       className="relative mx-auto w-full max-w-3xl lg:max-w-none"
     >
       <motion.div
-        className="product-floating-chip absolute -left-3 top-12 z-20 hidden w-[210px] border border-cyan-300/18 bg-white/[0.07] p-3 shadow-[0_22px_70px_rgba(14,165,233,0.18)] backdrop-blur-2xl md:block"
+        className="product-floating-chip absolute -top-7 left-4 z-20 hidden w-[210px] border border-cyan-300/18 bg-white/[0.07] p-3 shadow-[0_22px_70px_rgba(14,165,233,0.18)] backdrop-blur-2xl md:block lg:left-8"
         animate={shouldReduceMotion ? undefined : { y: [0, -9, 0], x: [0, 5, 0] }}
         transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -294,7 +334,7 @@ function ProductCommandMockup() {
       </motion.div>
 
       <motion.div
-        className="product-floating-chip absolute -right-2 bottom-16 z-20 hidden w-[224px] border border-violet-300/18 bg-white/[0.07] p-3 shadow-[0_22px_70px_rgba(168,85,247,0.18)] backdrop-blur-2xl sm:block"
+        className="product-floating-chip absolute -bottom-7 right-4 z-20 hidden w-[224px] border border-violet-300/18 bg-white/[0.07] p-3 shadow-[0_22px_70px_rgba(168,85,247,0.18)] backdrop-blur-2xl sm:block lg:right-8"
         animate={shouldReduceMotion ? undefined : { y: [0, 10, 0], x: [0, -6, 0] }}
         transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -304,7 +344,7 @@ function ProductCommandMockup() {
           </span>
           <div>
             <strong className="block text-sm font-black text-white">Agenda sincronizada</strong>
-            <span className="text-xs font-bold text-slate-400">Reunião confirmada</span>
+            <span className="text-xs font-bold text-slate-400">Reuniao confirmada</span>
           </div>
         </div>
       </motion.div>
@@ -320,7 +360,7 @@ function ProductCommandMockup() {
             </div>
             <div className="hidden items-center gap-2 rounded-full border border-emerald-300/15 bg-emerald-300/10 px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.14em] text-emerald-200 sm:flex">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.95)]" />
-              Operação ativa
+              Operacao ativa
             </div>
           </div>
 
@@ -428,7 +468,7 @@ function ProductCommandMockup() {
                       <span className="ai-thinking-dot h-1.5 w-1.5 rounded-full bg-violet-200" />
                       <span className="ai-thinking-dot h-1.5 w-1.5 rounded-full bg-violet-200" />
                       <span className="ai-thinking-dot h-1.5 w-1.5 rounded-full bg-violet-200" />
-                      Processando intenção
+                      Processando intencao
                     </div>
                   </div>
                 </section>
@@ -560,15 +600,219 @@ function MicroMetrics() {
   )
 }
 
+function ProductTransformationSection() {
+  return (
+    <section id="operacao" className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
+      <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-cyan-300/22 to-transparent" />
+      <div className="mx-auto max-w-7xl">
+        <SectionIntro eyebrow="Antes e depois" title="O produto troca caos operacional por uma IA viva trabalhando em tempo real." centered>
+          O visitante precisa enxergar o antes, sentir o custo da operacao manual e entender que a NovaCore AI organiza
+          atendimento, CRM, agenda e vendas em um unico fluxo.
+        </SectionIntro>
+
+        <div className="mt-14 grid gap-5 lg:grid-cols-2">
+          {beforeAfterItems.map((group, index) => (
+            <motion.article
+              key={group.title}
+              initial={{ opacity: 0, y: 26 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.55, delay: index * 0.08 }}
+              className={`product-glass-card group border p-5 shadow-[0_24px_90px_rgba(2,6,23,0.26)] backdrop-blur-2xl ${
+                index === 0
+                  ? "border-red-300/14 bg-red-950/10"
+                  : "border-cyan-300/18 bg-cyan-300/[0.055]"
+              }`}
+            >
+              <div className="relative z-10">
+                <div className="mb-6 flex items-center gap-3">
+                  <span
+                    className={`flex h-12 w-12 items-center justify-center rounded-[8px] border ${
+                      index === 0
+                        ? "border-red-300/16 bg-red-300/10 text-red-200"
+                        : "border-emerald-300/20 bg-emerald-300/10 text-emerald-200"
+                    }`}
+                  >
+                    <group.icon className="h-6 w-6" />
+                  </span>
+                  <div>
+                    <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                      {group.subtitle}
+                    </span>
+                    <h3 className="text-2xl font-black text-white">{group.title}</h3>
+                  </div>
+                </div>
+
+                <div className="grid gap-3">
+                  {group.items.map((item) => (
+                    <div key={item} className="flex items-center gap-3 rounded-[8px] border border-white/10 bg-black/24 px-4 py-3">
+                      <span
+                        className={`h-2 w-2 rounded-full ${
+                          index === 0
+                            ? "bg-red-300 shadow-[0_0_16px_rgba(252,165,165,0.75)]"
+                            : "bg-cyan-300 shadow-[0_0_16px_rgba(103,232,249,0.78)]"
+                        }`}
+                      />
+                      <span className="text-sm font-black text-slate-200">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 26 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.55, delay: 0.12 }}
+          className="product-flow-strip mt-5 grid gap-3 border border-white/10 bg-white/[0.045] p-4 shadow-[0_20px_80px_rgba(2,6,23,0.2)] backdrop-blur-2xl md:grid-cols-5"
+        >
+          {["Lead entra", "IA entende", "CRM atualiza", "Follow-up dispara", "Venda avanca"].map((step, index) => (
+            <div key={step} className="rounded-[8px] border border-white/10 bg-black/24 p-4">
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-xs font-black text-slate-500">0{index + 1}</span>
+                <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(103,232,249,0.8)]" />
+              </div>
+              <strong className="text-sm font-black text-white">{step}</strong>
+              <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/8">
+                <motion.div
+                  className="h-full origin-left rounded-full bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-400"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: index * 0.08 }}
+                />
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+function ProductProofSection() {
+  return (
+    <section className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <SectionIntro eyebrow="Prova do produto" title="Metricas, eventos e automacoes aparecendo na mesma tela.">
+            A experiencia precisa comunicar alto valor: cada lead, conversa, follow-up e atualizacao de CRM fica visivel
+            para a equipe operar com velocidade enterprise.
+          </SectionIntro>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {proofStats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                className="product-glass-card border border-white/10 bg-white/[0.055] p-4 shadow-[0_18px_70px_rgba(2,6,23,0.22)] backdrop-blur-2xl"
+              >
+                <div className="relative z-10">
+                  <div className="mb-4 flex items-center justify-between">
+                    <stat.icon className="h-5 w-5 text-cyan-200" />
+                    <strong className="text-3xl font-black text-white">{stat.value}</strong>
+                  </div>
+                  <span className="text-sm font-black text-slate-400">{stat.label}</span>
+                  <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/8">
+                    <motion.div
+                      className="h-full origin-left rounded-full bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-400"
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, delay: 0.12 + index * 0.06 }}
+                      style={{ width: stat.width }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 34 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.62 }}
+          className="product-live-proof product-glass-card mt-8 border border-white/10 bg-[#070914]/76 p-5 shadow-[0_34px_130px_rgba(37,99,235,0.2)] backdrop-blur-2xl"
+        >
+          <div className="relative z-10 grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="rounded-[8px] border border-white/10 bg-black/24 p-5">
+              <div className="mb-5 flex items-center justify-between gap-4">
+                <div>
+                  <span className="text-xs font-black uppercase tracking-[0.16em] text-cyan-200">
+                    Operacao ao vivo
+                  </span>
+                  <h3 className="mt-1 text-xl font-black text-white">Eventos do agente</h3>
+                </div>
+                <Radio className="h-5 w-5 text-emerald-200" />
+              </div>
+              <div className="grid gap-3">
+                {[
+                  "Cliente respondido em 2.4s",
+                  "Lead quente enviado ao CRM",
+                  "Reuniao confirmada na agenda",
+                  "Follow-up automatico preparado",
+                ].map((event, index) => (
+                  <motion.div
+                    key={event}
+                    initial={{ opacity: 0, x: -16 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.35, delay: index * 0.08 }}
+                    className="flex items-center gap-3 rounded-[8px] border border-white/10 bg-white/[0.055] px-4 py-3"
+                  >
+                    <CheckCircle2 className="h-4 w-4 text-emerald-200" />
+                    <span className="text-sm font-black text-slate-200">{event}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[8px] border border-white/10 bg-black/24 p-5">
+              <div className="mb-5 flex items-center justify-between gap-4">
+                <div>
+                  <span className="text-xs font-black uppercase tracking-[0.16em] text-violet-200">
+                    Receita assistida
+                  </span>
+                  <h3 className="mt-1 text-xl font-black text-white">Conversao por etapa</h3>
+                </div>
+                <LineChart className="h-5 w-5 text-violet-200" />
+              </div>
+              <div className="flex h-52 items-end gap-3 rounded-[8px] border border-white/10 bg-white/[0.035] p-4">
+                {["42%", "68%", "53%", "86%", "74%", "92%", "64%"].map((height, index) => (
+                  <motion.div
+                    key={`${height}-${index}`}
+                    className="min-w-0 flex-1 rounded-t-[6px] bg-gradient-to-t from-blue-500 via-cyan-300 to-emerald-200 shadow-[0_0_24px_rgba(56,189,248,0.22)]"
+                    initial={{ height: "8%" }}
+                    whileInView={{ height }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: index * 0.06 }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
 function DemoSection() {
   const [isDemoActive, setIsDemoActive] = useState(false)
 
   return (
     <section id="demonstracao" className="relative z-10 scroll-mt-24 px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-        <SectionIntro eyebrow="Demonstração" title="Veja o fluxo completo em uma única experiência.">
-          A demonstração mostra como um cliente chega pelo atendimento, como a IA entende o pedido, atualiza sistemas
-          internos e entrega informação útil para acompanhamento.
+        <SectionIntro eyebrow="Demonstracao" title="Veja o fluxo completo em uma unica experiencia.">
+          A demonstracao mostra como um cliente chega pelo atendimento, como a IA entende o pedido, atualiza sistemas
+          internos e entrega informacao util para acompanhamento.
         </SectionIntro>
 
         <motion.div
@@ -581,7 +825,7 @@ function DemoSection() {
           <div className="relative aspect-video overflow-hidden border border-white/10 bg-[#070914]">
             <img
               src="/produto-demo-poster.svg"
-              alt="Demonstração visual da plataforma NovaCore AI"
+              alt="Demonstracao visual da plataforma NovaCore AI"
               className="h-full w-full object-cover opacity-78 saturate-[1.2]"
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(56,189,248,0.06),rgba(5,5,5,0.24)_55%,rgba(5,5,5,0.68)_100%)]" />
@@ -589,8 +833,8 @@ function DemoSection() {
               type="button"
               onClick={() => setIsDemoActive(true)}
               className="product-play-button absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-cyan-200/28 bg-white/10 text-white shadow-[0_0_70px_rgba(56,189,248,0.38)] backdrop-blur-xl transition group-hover:scale-105"
-              aria-label={isDemoActive ? "Demonstração iniciada" : "Reproduzir demonstração"}
-              title={isDemoActive ? "Demonstração iniciada" : "Reproduzir demonstração"}
+              aria-label={isDemoActive ? "Demonstracao iniciada" : "Reproduzir demonstracao"}
+              title={isDemoActive ? "Demonstracao iniciada" : "Reproduzir demonstracao"}
             >
               <Play className="ml-1 h-8 w-8 fill-white" />
             </button>
@@ -634,7 +878,7 @@ function TimelineSection() {
       <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-cyan-300/18 to-transparent" />
       <div className="mx-auto max-w-7xl">
         <SectionIntro eyebrow="Como funciona" title="Da conversa ao processo rodando com IA." centered>
-          Uma operação premium nasce de mapeamento, desenho de fluxo, integração e melhoria contínua.
+          Uma operacao premium nasce de mapeamento, desenho de fluxo, integracao e melhoria continua.
         </SectionIntro>
 
         <div className="relative mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -668,8 +912,8 @@ function BenefitsSection() {
     <section id="beneficios" className="relative z-10 px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr]">
-          <SectionIntro eyebrow="Benefícios" title="Automação inteligente para cada área crítica.">
-            Atendimento, vendas, CRM, suporte, agenda e processos passam a operar em uma camada integrada, mensurável e
+          <SectionIntro eyebrow="Beneficios" title="Automacao inteligente para cada area critica.">
+            Atendimento, vendas, CRM, suporte, agenda e processos passam a operar em uma camada integrada, mensuravel e
             pronta para escala.
           </SectionIntro>
 
@@ -718,14 +962,17 @@ function FinalCta() {
         <div className="relative z-10 mx-auto max-w-4xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-cyan-300/18 bg-cyan-300/10 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-cyan-100">
             <Rocket className="h-4 w-4" />
-            Próximo salto operacional
+            Proximo salto operacional
           </span>
           <h2 className="mt-6 text-3xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
-            Vamos transformar um processo real da sua empresa em automação.
+            Pare de perder vendas com processos manuais.
           </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-lg font-medium leading-8 text-slate-300">
+            Transforme atendimento, CRM e vendas em um fluxo inteligente operando 24 horas por dia.
+          </p>
           <div className="mt-9 flex justify-center">
             <SoliciteIaLink className="cinematic-cta inline-flex min-h-14 items-center justify-center gap-2 rounded-[8px] bg-gradient-to-r from-cyan-300 via-blue-500 to-violet-500 px-8 py-4 text-base font-black text-white shadow-[0_22px_80px_rgba(59,130,246,0.42)] transition hover:scale-[1.03] sm:text-lg">
-              Solicite sua IA
+              Quero minha IA operacional
               <ArrowRight className="h-5 w-5" />
             </SoliciteIaLink>
           </div>
@@ -793,7 +1040,7 @@ function ProductFooter() {
       </div>
 
       <div className="mx-auto mt-10 flex max-w-7xl flex-col justify-between gap-4 border-t border-white/10 pt-6 text-xs font-bold text-slate-600 sm:flex-row">
-        <p>© {new Date().getFullYear()} NovaCore AI. Todos os direitos reservados.</p>
+        <p>&copy; {new Date().getFullYear()} NovaCore AI. Todos os direitos reservados.</p>
         <div className="flex gap-5">
           <Link href="/politica-de-privacidade" className="transition hover:text-slate-300">
             Privacidade
@@ -841,34 +1088,47 @@ export function ProdutoExperience() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-70" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.9)]" />
               </span>
-              Produto NovaCore AI
+              Produto NovaCore online para operar 24/7
             </motion.div>
 
             <motion.h1
               variants={fadeUp}
               className="font-[Satoshi,var(--font-space),var(--font-inter),system-ui,sans-serif] text-4xl font-black leading-[1.02] text-white sm:text-5xl md:text-6xl lg:text-7xl"
             >
-              IA operacional para atendimento, vendas e processos.
+              Produto NovaCore AI:{" "}
+              <span className="hero-gradient-word bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-300 bg-clip-text text-transparent">
+                IA operacional
+              </span>{" "}
+              para atendimento, vendas e processos.
             </motion.h1>
 
             <motion.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl lg:mx-0">
-              A NovaCore AI cria agentes, automações e integrações sob medida para transformar conversas em atendimento,
-              agenda, acompanhamento e oportunidades reais de venda.
+              A NovaCore AI cria agentes, automacoes e integracoes sob medida para transformar conversas em atendimento,
+              CRM, agenda, follow-up e oportunidades reais de venda.
             </motion.p>
 
+            <motion.div variants={fadeUp} className="mt-6 flex flex-wrap justify-center gap-2 lg:justify-start">
+              {heroTriggers.map((trigger) => (
+                <span
+                  key={trigger}
+                  className="rounded-full border border-white/10 bg-white/[0.055] px-3 py-1.5 text-xs font-black uppercase text-cyan-50/80 shadow-[0_10px_34px_rgba(56,189,248,0.08)] backdrop-blur-xl"
+                >
+                  {trigger}
+                </span>
+              ))}
+            </motion.div>
+
             <motion.div variants={fadeUp} className="mt-9 flex flex-col items-center gap-4 sm:flex-row lg:items-start">
-              <ContactLink
-                className="cinematic-cta inline-flex min-h-14 items-center justify-center gap-2 rounded-[8px] bg-gradient-to-r from-cyan-300 via-blue-500 to-violet-500 px-8 py-4 text-base font-black text-white shadow-[0_22px_80px_rgba(59,130,246,0.42)] transition hover:scale-[1.03] sm:text-lg"
-              >
-                Falar com a equipe
+              <SoliciteIaLink className="cinematic-cta inline-flex min-h-14 items-center justify-center gap-2 rounded-[8px] bg-gradient-to-r from-cyan-300 via-blue-500 to-violet-500 px-8 py-4 text-base font-black text-white shadow-[0_22px_80px_rgba(59,130,246,0.42)] transition hover:scale-[1.03] sm:text-lg">
+                Quero minha IA operacional
                 <ArrowRight className="h-5 w-5" />
-              </ContactLink>
+              </SoliciteIaLink>
               <Link
                 href="#demonstracao"
                 className="inline-flex min-h-14 items-center justify-center gap-2 rounded-[8px] border border-white/12 bg-white/[0.055] px-8 py-4 text-base font-black text-white backdrop-blur-2xl transition hover:border-cyan-300/30 hover:bg-white/[0.09] hover:shadow-[0_0_42px_rgba(56,189,248,0.14)] sm:text-lg"
               >
                 <Play className="h-5 w-5" />
-                Ver demonstração
+                Ver demonstracao
               </Link>
             </motion.div>
 
@@ -884,9 +1144,9 @@ export function ProdutoExperience() {
       <section className="relative z-10 px-4 pb-10 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 border-y border-white/10 py-6 md:grid-cols-4">
           {[
-            { icon: ShieldCheck, label: "SaaS enterprise", value: "Governança" },
+            { icon: ShieldCheck, label: "SaaS enterprise", value: "Governanca" },
             { icon: Layers3, label: "Plataforma viva", value: "Motion + dados" },
-            { icon: Activity, label: "Operação real", value: "Fluxo completo" },
+            { icon: Activity, label: "Operacao real", value: "Fluxo completo" },
             { icon: Zap, label: "IA sob medida", value: "Alto valor" },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-3">
@@ -902,9 +1162,11 @@ export function ProdutoExperience() {
         </div>
       </section>
 
+      <ProductTransformationSection />
       <DemoSection />
       <TimelineSection />
       <BenefitsSection />
+      <ProductProofSection />
       <FinalCta />
       <ProductFooter />
     </main>

@@ -409,7 +409,7 @@
 }
 
 .product-tilt:hover {
-  transform: translateY(-8px) rotateX(1deg) rotateY(-1deg);
+  filter: drop-shadow(0 24px 54px rgba(56, 189, 248, 0.12));
 }
 
 .cinematic-cta {
@@ -1218,6 +1218,21 @@
     linear-gradient(135deg, #050505 0%, #07101f 42%, #0b0620 72%, #050505 100%);
 }
 
+.product-page-shell {
+  background:
+    radial-gradient(60rem 40rem at 50% 0%, rgba(56, 189, 248, 0.12), transparent 64%),
+    #050505;
+}
+
+.product-page-shell h1,
+.product-page-shell h2 {
+  text-wrap: balance;
+}
+
+.product-page-shell p {
+  text-wrap: pretty;
+}
+
 .product-aurora-field {
   filter: blur(76px);
   mix-blend-mode: screen;
@@ -1292,7 +1307,9 @@
 .product-dashboard,
 .product-glass-card,
 .product-floating-chip,
-.product-final-cta {
+.product-final-cta,
+.product-flow-strip,
+.product-live-proof {
   border-radius: 8px;
 }
 
@@ -1307,18 +1324,22 @@
 .product-dashboard section,
 .product-dashboard aside,
 .product-dashboard [class*="bg-black/22"],
-.product-dashboard [class*="bg-#080b18"] {
+.product-dashboard [class*="bg-[#080b18]"] {
   border-radius: 8px;
 }
 
 .product-glass-card,
-.product-final-cta {
+.product-final-cta,
+.product-flow-strip,
+.product-live-proof {
   position: relative;
   isolation: isolate;
 }
 
 .product-glass-card::before,
-.product-final-cta::before {
+.product-final-cta::before,
+.product-flow-strip::before,
+.product-live-proof::before {
   content: "";
   position: absolute;
   inset: -1px;
@@ -1336,7 +1357,9 @@
 }
 
 .product-glass-card::after,
-.product-final-cta::after {
+.product-final-cta::after,
+.product-flow-strip::after,
+.product-live-proof::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1350,8 +1373,22 @@
 .product-glass-card:hover::before,
 .product-glass-card:hover::after,
 .product-final-cta:hover::before,
-.product-final-cta:hover::after {
+.product-final-cta:hover::after,
+.product-flow-strip:hover::before,
+.product-flow-strip:hover::after,
+.product-live-proof:hover::before,
+.product-live-proof:hover::after {
   opacity: 0.9;
+}
+
+.product-floating-chip {
+  pointer-events: none;
+  max-width: calc(100vw - 2rem);
+}
+
+.product-flow-strip,
+.product-live-proof {
+  overflow: hidden;
 }
 
 .product-breathing {

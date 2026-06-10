@@ -207,7 +207,7 @@ export function HeroSection() {
           </motion.div>
 
           <motion.div
-            className="absolute -left-3 top-28 z-20 hidden rounded-xl border border-cyan-300/20 bg-white/[0.07] px-4 py-3 shadow-[0_18px_54px_rgba(56,189,248,0.16)] backdrop-blur-xl md:block"
+            className="absolute -bottom-7 left-4 z-20 hidden rounded-xl border border-cyan-300/20 bg-white/[0.07] px-4 py-3 shadow-[0_18px_54px_rgba(56,189,248,0.16)] backdrop-blur-xl md:block lg:left-10"
             animate={{ x: [0, 8, 0], y: [0, -6, 0] }}
             transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
           >
