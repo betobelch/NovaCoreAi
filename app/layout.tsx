@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
+import Script from 'next/script'
 import { SiteShell } from '@/components/site-shell'
 import './globals.css'
 
@@ -29,14 +30,42 @@ export const metadata: Metadata = {
   },
 }
 
+const themeInitScript = `
+(function () {
+  try {
+    var savedTheme = window.localStorage.getItem('novacore-theme');
+    var theme = savedTheme === 'light' ? 'light' : 'dark';
+    var root = document.documentElement;
+
+    root.dataset.theme = theme;
+    root.classList.toggle('dark', theme === 'dark');
+    root.style.colorScheme = theme;
+  } catch (_) {
+    var fallbackRoot = document.documentElement;
+
+    fallbackRoot.dataset.theme = 'dark';
+    fallbackRoot.classList.add('dark');
+    fallbackRoot.style.colorScheme = 'dark';
+  }
+})();
+`
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" data-theme="dark" className={`dark ${inter.variable} ${spaceGrotesk.variable} bg-background`}>
+    <html
+      lang="pt-BR"
+      data-theme="dark"
+      className={`dark ${inter.variable} ${spaceGrotesk.variable} bg-background`}
+      suppressHydrationWarning
+    >
       <body className="font-sans antialiased">
+        <Script id="novacore-theme-init" strategy="beforeInteractive">
+          {themeInitScript}
+        </Script>
         <SiteShell>{children}</SiteShell>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

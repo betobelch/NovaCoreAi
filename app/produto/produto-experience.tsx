@@ -1068,7 +1068,7 @@ export function ProdutoExperience() {
   return (
     <main
       onMouseMove={handleMouseMove}
-      className="product-page-shell relative isolate min-h-screen overflow-hidden bg-[#050505] text-white [--background:#050505] [--border:rgba(255,255,255,0.12)] [--card:rgba(255,255,255,0.06)] [--foreground:#f8fbff] [--muted-foreground:#9ca3af] [--primary:#38bdf8] [--primary-foreground:#04111f]"
+      className="product-page-shell relative isolate min-h-screen overflow-hidden bg-background text-foreground"
     >
       <ProductAmbient mouseX={smoothX} mouseY={smoothY} />
 

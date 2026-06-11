@@ -6,32 +6,81 @@ import { Moon, Sun } from "lucide-react"
 type Theme = "light" | "dark"
 
 const STORAGE_KEY = "novacore-theme"
+const THEME_CHANGE_EVENT = "novacore-theme-change"
 
-function applyTheme(theme: Theme) {
+function isTheme(value: unknown): value is Theme {
+  return value === "light" || value === "dark"
+}
+
+function getSavedTheme(): Theme {
+  try {
+    return window.localStorage.getItem(STORAGE_KEY) === "light" ? "light" : "dark"
+  } catch {
+    return "dark"
+  }
+}
+
+function applyTheme(theme: Theme, shouldNotify = true) {
   const root = document.documentElement
 
   root.dataset.theme = theme
   root.classList.toggle("dark", theme === "dark")
   root.style.colorScheme = theme
+
+  if (shouldNotify) {
+    window.dispatchEvent(new CustomEvent<Theme>(THEME_CHANGE_EVENT, { detail: theme }))
+  }
+}
+
+function persistTheme(theme: Theme) {
+  try {
+    window.localStorage.setItem(STORAGE_KEY, theme)
+  } catch {
+    return
+  }
 }
 
 export function ThemeToggle({ className = "" }: { className?: string }) {
   const [theme, setTheme] = useState<Theme>("dark")
 
   useEffect(() => {
-    const savedTheme = window.localStorage.getItem(STORAGE_KEY)
-    const initialTheme: Theme = savedTheme === "light" ? "light" : "dark"
+    const initialTheme = getSavedTheme()
 
     setTheme(initialTheme)
-    applyTheme(initialTheme)
+    applyTheme(initialTheme, false)
+
+    function handleThemeChange(event: Event) {
+      const nextTheme = event instanceof CustomEvent ? event.detail : null
+
+      if (isTheme(nextTheme)) {
+        setTheme(nextTheme)
+      }
+    }
+
+    function handleStorage(event: StorageEvent) {
+      if (event.key !== STORAGE_KEY) return
+
+      const nextTheme: Theme = event.newValue === "light" ? "light" : "dark"
+
+      setTheme(nextTheme)
+      applyTheme(nextTheme, false)
+    }
+
+    window.addEventListener(THEME_CHANGE_EVENT, handleThemeChange)
+    window.addEventListener("storage", handleStorage)
+
+    return () => {
+      window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange)
+      window.removeEventListener("storage", handleStorage)
+    }
   }, [])
 
   function toggleTheme() {
     const nextTheme: Theme = theme === "light" ? "dark" : "light"
 
     setTheme(nextTheme)
+    persistTheme(nextTheme)
     applyTheme(nextTheme)
-    window.localStorage.setItem(STORAGE_KEY, nextTheme)
   }
 
   const isLight = theme === "light"

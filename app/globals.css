@@ -1423,6 +1423,155 @@
   animation-duration: 3.6s;
 }
 
+:root:not(.dark):not([data-theme="dark"]) .premium-card,
+:root:not(.dark):not([data-theme="dark"]) .hero-metric-card,
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center,
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard,
+:root:not(.dark):not([data-theme="dark"]) .product-dashboard,
+:root:not(.dark):not([data-theme="dark"]) .product-glass-card,
+:root:not(.dark):not([data-theme="dark"]) .product-floating-chip,
+:root:not(.dark):not([data-theme="dark"]) .product-final-cta,
+:root:not(.dark):not([data-theme="dark"]) .product-flow-strip,
+:root:not(.dark):not([data-theme="dark"]) .product-live-proof {
+  --foreground: #0f172a;
+  --muted-foreground: #5b6778;
+  --card: rgba(255, 255, 255, 0.88);
+  --border: rgba(37, 99, 235, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(239, 246, 255, 0.64)),
+    rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(37, 99, 235, 0.16) !important;
+  color: var(--foreground);
+  box-shadow:
+    0 22px 70px rgba(15, 23, 42, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82) !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center,
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard,
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell {
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --accent: #7c3aed;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell {
+  --background: #f8fbff;
+  --foreground: #0f172a;
+  --muted-foreground: #5b6778;
+  --border: rgba(37, 99, 235, 0.16);
+  --card: rgba(255, 255, 255, 0.86);
+  background:
+    radial-gradient(60rem 40rem at 50% 0%, rgba(37, 99, 235, 0.12), transparent 64%),
+    linear-gradient(180deg, #ffffff 0%, #eef6ff 48%, #f8fbff 100%) !important;
+  color: var(--foreground) !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .product-cinematic-base {
+  background:
+    radial-gradient(60rem 42rem at 18% 8%, rgba(37, 99, 235, 0.12), transparent 66%),
+    radial-gradient(52rem 38rem at 86% 18%, rgba(124, 58, 237, 0.1), transparent 68%),
+    radial-gradient(58rem 42rem at 54% 84%, rgba(14, 165, 233, 0.08), transparent 70%),
+    linear-gradient(135deg, #ffffff 0%, #eef6ff 48%, #f8fbff 100%);
+}
+
+:root:not(.dark):not([data-theme="dark"]) .product-aurora-field,
+:root:not(.dark):not([data-theme="dark"]) .product-holographic-lines {
+  mix-blend-mode: multiply;
+  opacity: 0.32;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .product-futuristic-grid {
+  opacity: 0.34;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .product-noise-layer {
+  opacity: 0.12;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="bg-black/"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="bg-black/"],
+:root:not(.dark):not([data-theme="dark"]) .premium-card [class*="bg-black/"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="bg-black/"],
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="bg-white/"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="bg-white/"],
+:root:not(.dark):not([data-theme="dark"]) .premium-card [class*="bg-white/"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="bg-white/"],
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="bg-[#060914]"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="bg-[#060914]"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="bg-[#070914]"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="bg-[#080b18]"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="bg-[#0a1020]"] {
+  background: rgba(255, 255, 255, 0.68) !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="border-white/"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="border-white/"],
+:root:not(.dark):not([data-theme="dark"]) .premium-card [class*="border-white/"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="border-white/"] {
+  border-color: rgba(37, 99, 235, 0.14) !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="text-white"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="text-white"],
+:root:not(.dark):not([data-theme="dark"]) .premium-card [class*="text-white"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="text-white"] {
+  color: var(--foreground) !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="text-slate-"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="text-slate-"],
+:root:not(.dark):not([data-theme="dark"]) .premium-card [class*="text-slate-"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="text-slate-"] {
+  color: var(--muted-foreground) !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .premium-card [class*="text-cyan-"],
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="text-cyan-50"],
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="text-cyan-100"],
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="text-cyan-200"],
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="text-cyan-300"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="text-cyan-50"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="text-cyan-100"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="text-cyan-200"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="text-cyan-300"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="text-cyan-50"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="text-cyan-100"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="text-cyan-200"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="text-cyan-300"] {
+  color: #0369a1 !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .premium-card [class*="text-emerald-"],
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="text-emerald-"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="text-emerald-"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="text-emerald-"] {
+  color: #047857 !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .premium-card [class*="text-violet-"],
+:root:not(.dark):not([data-theme="dark"]) .hero-command-center [class*="text-violet-"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="text-violet-"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="text-violet-"] {
+  color: #6d28d9 !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .premium-card [class*="text-amber-"],
+:root:not(.dark):not([data-theme="dark"]) .proof-dashboard [class*="text-amber-"],
+:root:not(.dark):not([data-theme="dark"]) .product-page-shell [class*="text-amber-"] {
+  color: #b45309 !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .premium-card [class*="text-red-"] {
+  color: #b91c1c !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .nova-logo-mark [class*="text-white"],
+:root:not(.dark):not([data-theme="dark"]) .cinematic-cta,
+:root:not(.dark):not([data-theme="dark"]) .cinematic-cta * {
+  color: #ffffff !important;
+}
+
 @keyframes product-aurora-a {
   0%,
   100% {

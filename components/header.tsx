@@ -72,10 +72,10 @@ export function Header() {
           : "border-white/[0.55] bg-white/[0.54] shadow-[0_18px_58px_rgba(37,99,235,0.13)] backdrop-blur-2xl dark:border-white/10 dark:bg-background/[0.54]"
       }`
     : isProductPage
-      ? `fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 [--accent:#a78bfa] [--background:#050505] [--border:rgba(255,255,255,0.12)] [--card:rgba(10,13,24,0.78)] [--foreground:#f8fbff] [--muted:#111827] [--muted-foreground:#a8b3cf] [--primary:#38bdf8] [--primary-foreground:#04111f] [--secondary:rgba(255,255,255,0.08)] ${
+      ? `fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
           isScrolled
-            ? "border-cyan-300/20 bg-[#050505]/76 shadow-[0_18px_80px_rgba(14,165,233,0.16)] backdrop-blur-2xl"
-            : "border-white/10 bg-[#050505]/36 backdrop-blur-xl"
+            ? "border-primary/20 bg-background/76 shadow-[0_18px_70px_rgba(37,99,235,0.14)] backdrop-blur-2xl"
+            : "border-border/60 bg-background/46 backdrop-blur-xl"
         }`
     : `fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
         isScrolled

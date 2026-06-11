@@ -119,7 +119,7 @@ export function ProblemsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.22 }}
           transition={{ duration: 0.58, delay: 0.12 }}
-          className="mt-6 rounded-2xl border border-white/10 bg-white/[0.045] p-4 shadow-[0_24px_90px_rgba(2,6,23,0.2)] backdrop-blur-2xl"
+          className="premium-card mt-6 rounded-2xl border border-white/10 bg-white/[0.045] p-4 shadow-[0_24px_90px_rgba(2,6,23,0.2)] backdrop-blur-2xl"
         >
           <div className="grid gap-3 md:grid-cols-5">
             {flowSteps.map((step, index) => (
