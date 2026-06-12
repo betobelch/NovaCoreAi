@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Bell, CheckCheck, ChevronDown, CreditCard, FileText, LayoutDashboard, LogIn, LogOut, Menu, MessageCircle, Sparkles, User, UserPlus, X } from "lucide-react"
+import { ArrowRight, Bell, CheckCheck, ChevronDown, CreditCard, FileText, LayoutDashboard, LogIn, LogOut, Menu, MessageCircle, Sparkles, User, UserPlus, X } from "lucide-react"
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion"
 import { usePathname, useRouter } from "next/navigation"
 import { clearClientAuth, ClientAuthUser, getClientAuth } from "@/lib/client-auth"
@@ -10,10 +10,10 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 const navLinks = [
   { href: "/#home", label: "Home" },
-  { href: "/produto", label: "Produtos" },
+  { href: "/#plataforma", label: "Plataforma" },
   { href: "/#servicos", label: "Servicos" },
-  { href: "/#beneficios", label: "Beneficios" },
-  { href: "/#sobre", label: "Sobre" },
+  { href: "/#beneficios", label: "Resultados" },
+  { href: "/#arquitetura", label: "Arquitetura" },
 ]
 
 type NotificationItem = {
@@ -62,20 +62,21 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { scrollY } = useScroll()
   const isAuthPage = pathname === "/login" || pathname === "/cliente/cadastrar"
-  const isProductPage = pathname === "/produto"
+  const isPremiumLanding = pathname === "/" || pathname === "/produto"
+  const isNeoPage = isAuthPage || isPremiumLanding
   const dashboardHref = clientUser?.role === "admin" ? "/admin" : "/cliente"
   const dashboardLabel = clientUser?.role === "admin" ? "Painel Admin" : "Area do Cliente"
   const headerClassName = isAuthPage
-    ? `fixed left-3 right-3 top-3 z-50 rounded-2xl border transition-all duration-300 ${
+    ? `neo-site-header fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
         isScrolled
-          ? "border-blue-300/[0.45] bg-white/[0.72] shadow-[0_22px_72px_rgba(37,99,235,0.18)] backdrop-blur-2xl dark:border-primary/25 dark:bg-background/[0.76]"
-          : "border-white/[0.55] bg-white/[0.54] shadow-[0_18px_58px_rgba(37,99,235,0.13)] backdrop-blur-2xl dark:border-white/10 dark:bg-background/[0.54]"
+          ? "border-white/12 bg-[#050505]/86 shadow-[0_18px_70px_rgba(0,0,0,0.42)] backdrop-blur-2xl"
+          : "border-white/8 bg-[#050505]/58 backdrop-blur-xl"
       }`
-    : isProductPage
-      ? `fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
+    : isPremiumLanding
+      ? `neo-site-header fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
           isScrolled
-            ? "border-primary/20 bg-background/76 shadow-[0_18px_70px_rgba(37,99,235,0.14)] backdrop-blur-2xl"
-            : "border-border/60 bg-background/46 backdrop-blur-xl"
+            ? "border-white/12 bg-[#050505]/86 shadow-[0_18px_70px_rgba(0,0,0,0.42)] backdrop-blur-2xl"
+            : "border-white/8 bg-[#050505]/58 backdrop-blur-xl"
         }`
     : `fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
         isScrolled
@@ -186,7 +187,9 @@ export function Header() {
       className={headerClassName}
     >
       <div
-        className={`pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent transition-opacity duration-300 ${
+        className={`pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent ${
+          isNeoPage ? "via-white/42" : "via-primary/70"
+        } to-transparent transition-opacity duration-300 ${
           isScrolled ? "opacity-100" : "opacity-35"
         }`}
       />
@@ -197,12 +200,22 @@ export function Header() {
             <motion.div
               whileHover={{ rotate: -8, scale: 1.06 }}
               transition={{ type: "spring", stiffness: 360, damping: 18 }}
-              className="nova-logo-mark flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary via-sky-500 to-accent shadow-[0_14px_34px_rgba(37,99,235,0.32)]"
+              className={
+                isNeoPage
+                  ? "flex h-9 w-9 items-center justify-center rounded-[8px] border border-white/16 bg-white/[0.035] text-white shadow-[0_0_30px_rgba(255,255,255,0.08)]"
+                  : "nova-logo-mark flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary via-sky-500 to-accent shadow-[0_14px_34px_rgba(37,99,235,0.32)]"
+              }
             >
               <Sparkles className="relative z-10 w-5 h-5 text-white" />
             </motion.div>
-            <span className="text-xl font-black text-foreground transition-colors group-hover:text-primary">
-              NovaCore<span className="text-primary">AI</span>
+            <span
+              className={
+                isNeoPage
+                  ? "text-xl font-black text-white transition-colors group-hover:text-white/72"
+                  : "text-xl font-black text-foreground transition-colors group-hover:text-primary"
+              }
+            >
+              NovaCore{isNeoPage ? "AI" : <span className="text-primary">AI</span>}
             </span>
           </Link>
 
@@ -212,10 +225,20 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group relative py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                className={
+                  isNeoPage
+                    ? "group relative py-2 text-sm font-medium text-white/54 transition-colors hover:text-white"
+                    : "group relative py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                }
               >
                 {link.label}
-                <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100" />
+                <span
+                  className={
+                    isNeoPage
+                      ? "absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-white/80 transition-transform duration-300 group-hover:scale-x-100"
+                      : "absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-300 group-hover:scale-x-100"
+                  }
+                />
               </Link>
             ))}
           </nav>
@@ -334,21 +357,29 @@ export function Header() {
               <>
                 <Link
                   href="/login"
-                  className="inline-flex items-center gap-2 px-4 py-2 border border-border bg-card/70 hover:border-primary/35 hover:bg-card text-foreground rounded-lg text-sm font-semibold transition-all hover:shadow-[0_12px_30px_rgba(37,99,235,0.12)]"
+                  className={
+                    isNeoPage
+                      ? "inline-flex items-center gap-2 rounded-[8px] border border-white/14 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-white transition-all hover:border-white/28 hover:bg-white/[0.07]"
+                      : "inline-flex items-center gap-2 px-4 py-2 border border-border bg-card/70 hover:border-primary/35 hover:bg-card text-foreground rounded-lg text-sm font-semibold transition-all hover:shadow-[0_12px_30px_rgba(37,99,235,0.12)]"
+                  }
                 >
                   <LogIn className="w-4 h-4" />
                   Login
                 </Link>
                 <Link
                   href="/cliente/cadastrar"
-                  className="cinematic-cta inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-sm font-semibold transition-all hover:scale-[1.03]"
+                  className={
+                    isNeoPage
+                      ? "neo-header-cta inline-flex items-center gap-2 rounded-[8px] bg-[#1463ff] px-4 py-2 text-sm font-semibold text-white transition-all hover:scale-[1.03] hover:bg-[#1e6bff]"
+                      : "cinematic-cta inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-sm font-semibold transition-all hover:scale-[1.03]"
+                  }
                 >
-                  <UserPlus className="w-4 h-4" />
-                  Cadastrar
+                  {isNeoPage ? <ArrowRight className="w-4 h-4" /> : <UserPlus className="w-4 h-4" />}
+                  {isNeoPage ? "Agendar Diagnostico" : "Cadastrar"}
                 </Link>
               </>
             )}
-            <ThemeToggle />
+            {!isNeoPage && <ThemeToggle />}
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
@@ -372,12 +403,16 @@ export function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="rounded-lg border border-border bg-card/60 p-2 text-foreground backdrop-blur transition-colors hover:border-primary/35"
+              className={
+                isNeoPage
+                  ? "rounded-[8px] border border-white/14 bg-white/[0.04] p-2 text-white backdrop-blur transition-colors hover:border-white/28"
+                  : "rounded-lg border border-border bg-card/60 p-2 text-foreground backdrop-blur transition-colors hover:border-primary/35"
+              }
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
-            <ThemeToggle />
+            {!isNeoPage && <ThemeToggle />}
           </div>
         </div>
       </div>
@@ -389,7 +424,11 @@ export function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-b border-primary/15 bg-background/86 backdrop-blur-2xl"
+            className={
+              isNeoPage
+                ? "md:hidden border-b border-white/10 bg-[#050505]/94 backdrop-blur-2xl"
+                : "md:hidden border-b border-primary/15 bg-background/86 backdrop-blur-2xl"
+            }
           >
             <nav className="flex flex-col px-4 py-4 gap-4">
               {navLinks.map((link) => (
@@ -397,7 +436,11 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className={
+                    isNeoPage
+                      ? "py-2 text-sm font-semibold text-white/58 transition-colors hover:text-white"
+                      : "text-muted-foreground hover:text-foreground transition-colors py-2"
+                  }
                 >
                   {link.label}
                 </Link>
@@ -485,10 +528,14 @@ export function Header() {
                   <Link
                     href="/cliente/cadastrar"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="cinematic-cta inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-sm font-medium transition-all"
+                    className={
+                      isNeoPage
+                        ? "neo-header-cta inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#1463ff] px-4 py-3 text-sm font-semibold text-white transition-all"
+                        : "cinematic-cta inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-sm font-medium transition-all"
+                    }
                   >
-                    <UserPlus className="w-4 h-4" />
-                    Cadastrar
+                    {isNeoPage ? <ArrowRight className="w-4 h-4" /> : <UserPlus className="w-4 h-4" />}
+                    {isNeoPage ? "Agendar Diagnostico" : "Cadastrar"}
                   </Link>
                 </>
               )}

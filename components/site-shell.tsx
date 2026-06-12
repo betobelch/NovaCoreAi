@@ -13,7 +13,7 @@ type SiteShellProps = {
 export function SiteShell({ children }: SiteShellProps) {
   const pathname = usePathname()
   const showHeader = pathname !== "/cliente"
-  const showAnimatedBackground = pathname !== "/cliente"
+  const showAnimatedBackground = pathname !== "/cliente" && pathname !== "/" && pathname !== "/produto"
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background">

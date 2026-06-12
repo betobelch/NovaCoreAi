@@ -3874,3 +3874,347 @@
     min-width: 0;
   }
 }
+
+/* Neo Luxury Tech client dashboard overrides */
+.clientPage {
+  --background: #050505;
+  --foreground: #ffffff;
+  --card: rgba(255, 255, 255, 0.035);
+  --card-foreground: #ffffff;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-strong: rgba(5, 5, 5, 0.88);
+  --surface-soft: rgba(255, 255, 255, 0.028);
+  --surface-hover: rgba(255, 255, 255, 0.07);
+  --subtle-hover: rgba(255, 255, 255, 0.055);
+  --panel-shadow: 0 34px 120px rgba(0, 0, 0, 0.52);
+  --border: rgba(255, 255, 255, 0.115);
+  --input: rgba(255, 255, 255, 0.13);
+  --primary: #1463ff;
+  --primary-foreground: #ffffff;
+  --accent: #ffffff;
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: rgba(255, 255, 255, 0.52);
+  --success: rgba(255, 255, 255, 0.78);
+  --success-soft: rgba(255, 255, 255, 0.075);
+  --warning: rgba(255, 255, 255, 0.7);
+  --warning-soft: rgba(255, 255, 255, 0.06);
+  --danger: #ff6b6b;
+  --danger-soft: rgba(255, 107, 107, 0.12);
+  --info: rgba(255, 255, 255, 0.78);
+  --info-soft: rgba(255, 255, 255, 0.075);
+  --violet: rgba(255, 255, 255, 0.78);
+  --violet-soft: rgba(255, 255, 255, 0.06);
+  --client-bg: #050505;
+  --client-panel: rgba(255, 255, 255, 0.035);
+  --client-panel-strong: rgba(255, 255, 255, 0.055);
+  --client-line: rgba(255, 255, 255, 0.11);
+  --client-line-strong: rgba(255, 255, 255, 0.22);
+  --client-text: #ffffff;
+  --client-muted: rgba(255, 255, 255, 0.52);
+  --client-blue: #1463ff;
+  --client-blue-strong: #1e6bff;
+  --client-purple: rgba(255, 255, 255, 0.7);
+  --client-green: rgba(255, 255, 255, 0.76);
+  --client-red: #ff6b6b;
+  min-height: 100vh;
+  background:
+    radial-gradient(34rem 28rem at var(--mouse-x, 58%) var(--mouse-y, 24%), rgba(255, 255, 255, 0.13), transparent 66%),
+    radial-gradient(58rem 32rem at 50% -12%, rgba(255, 255, 255, 0.09), transparent 68%),
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    #050505 !important;
+  background-size: auto, auto, 72px 72px, 72px 72px, auto;
+  color: #ffffff;
+  color-scheme: dark;
+}
+
+.clientPage::before {
+  background:
+    radial-gradient(360px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.12), transparent 68%),
+    linear-gradient(rgba(255, 255, 255, 0.042) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.034) 1px, transparent 1px) !important;
+  background-size: auto, 58px 58px, 58px 58px !important;
+  mask-image: radial-gradient(circle at 50% 36%, #000 0%, #000 42%, transparent 82%) !important;
+  opacity: 0.46 !important;
+}
+
+.clientPage::after {
+  background:
+    radial-gradient(52rem 20rem at 50% -10%, rgba(255, 255, 255, 0.08), transparent 70%),
+    linear-gradient(180deg, transparent 0%, rgba(5, 5, 5, 0.9) 100%) !important;
+}
+
+.clientNavbar {
+  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+  background: rgba(5, 5, 5, 0.86) !important;
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.42) !important;
+}
+
+.clientBrand,
+.clientBrandText span,
+.title,
+.sectionTitle,
+.purchaseTitle,
+.cardTitle,
+.clientProjectTitle,
+.profileCard h3,
+.profileMetric strong,
+.profileField strong,
+.profileSensitiveField strong,
+.profileTimeline strong,
+.clientProjectDetail strong,
+.paymentProjectInfo strong,
+.invoiceValue,
+.userMenuNotificationText strong,
+.heroSignal strong,
+.sidebarProfile strong {
+  color: #ffffff !important;
+}
+
+.subtitle,
+.sectionIntro,
+.cardMeta,
+.clientProjectMeta,
+.paymentHint,
+.profileMetric span,
+.profileTimeline p,
+.sidebarProfile span,
+.heroSignal span,
+.paymentProjectInfo span,
+.emptyState,
+.userMenuNotificationText span,
+.userMenuNotificationText small,
+.userMenuEmpty {
+  color: rgba(255, 255, 255, 0.52) !important;
+}
+
+.eyebrow,
+.profileMetricIcon,
+.profileField span,
+.profileTimeline span,
+.clientProjectDetail span,
+.profilePhoneForm label span,
+.messageMeta,
+.infoIcon,
+.clientBrandSvg {
+  color: rgba(255, 255, 255, 0.76) !important;
+  text-shadow: none !important;
+}
+
+.clientBrandIcon,
+.profileAvatar,
+.sidebarAvatar,
+.iconBox,
+.clientNavLinks,
+.heroSignal,
+.sidebarProfile,
+.profilePhoneForm {
+  border-color: rgba(255, 255, 255, 0.13) !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 34px rgba(255, 255, 255, 0.045) !important;
+}
+
+.clientNavLinks a,
+.clientSiteLink,
+.userMenuTrigger,
+.notificationNavbarButton,
+.themeToggle,
+.userMenuNotificationsHeader button,
+.profileIconButton,
+.quickTopics button,
+.attachButton {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.clientNavLinks a:hover,
+.clientSiteLink:hover,
+.userMenuTrigger:hover,
+.notificationNavbarButton:hover,
+.themeToggle:hover,
+.userMenuNotificationsHeader button:hover,
+.profileIconButton:hover,
+.quickTopics button:hover,
+.attachButton:hover {
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  background: rgba(255, 255, 255, 0.075) !important;
+  color: #ffffff !important;
+}
+
+.sidebar,
+.panel,
+.profileHeader,
+.profileMetric,
+.profileCard,
+.chatPanel,
+.chatSidebar > *,
+.clientProjectsSection,
+.aiPurchaseSection,
+.clientProjectCard,
+.aiPurchaseCard,
+.invoiceList,
+.paymentProjectOption,
+.userMenuPanel {
+  border-color: rgba(255, 255, 255, 0.115) !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 34px 120px rgba(0, 0, 0, 0.42) !important;
+}
+
+.profileMetricWarning,
+.statusBlocked,
+.paymentStatusPending {
+  border-color: rgba(255, 107, 107, 0.2) !important;
+  background: rgba(255, 107, 107, 0.075) !important;
+  color: #ff9a9a !important;
+}
+
+.profileStatus,
+.onlineBadge,
+.statusActive,
+.paymentStatusPaid,
+.paymentStatusFree,
+.projectCountBadge,
+.purchaseModel,
+.statusPill {
+  border-color: rgba(255, 255, 255, 0.13) !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  color: rgba(255, 255, 255, 0.76) !important;
+  box-shadow: none !important;
+}
+
+.profileField,
+.clientProjectDetail,
+.messageBubble,
+.messageAttachment,
+.messageImageAttachment,
+.attachmentChip,
+.attachmentImagePreview,
+.emptyState,
+.chatHeader,
+.chatComposer {
+  border-color: rgba(255, 255, 255, 0.11) !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+  color: #ffffff !important;
+}
+
+.profilePhoneForm input,
+.chatInput {
+  border-color: rgba(255, 255, 255, 0.13) !important;
+  border-radius: 8px !important;
+  background: rgba(0, 0, 0, 0.48) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+.profilePhoneForm input::placeholder,
+.chatInput::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.profilePhoneForm input:focus,
+.chatInput:focus {
+  border-color: rgba(255, 255, 255, 0.32) !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 32px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09) !important;
+}
+
+.tabButton {
+  border-radius: 8px !important;
+  color: rgba(255, 255, 255, 0.52) !important;
+}
+
+.tabButton:hover {
+  border-color: rgba(255, 255, 255, 0.13) !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  color: #ffffff !important;
+}
+
+.tabButtonActive,
+.tabButtonActive:hover,
+.profilePhoneForm button,
+.primaryButton,
+.purchaseButton,
+.sendButton {
+  border-color: rgba(112, 163, 255, 0.72) !important;
+  border-radius: 8px !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 48%),
+    #1463ff !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.11) inset,
+    0 20px 58px rgba(20, 99, 255, 0.26),
+    0 0 44px rgba(20, 99, 255, 0.32) !important;
+}
+
+.messageBubbleClient {
+  border-color: rgba(112, 163, 255, 0.58) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 44%),
+    #1463ff !important;
+  color: #ffffff !important;
+}
+
+.messageBubbleClient p,
+.messageBubbleClient .messageMeta,
+.messageBubbleClient .messageAttachment,
+.messageBubbleClient .messageImageAttachment {
+  color: #ffffff !important;
+}
+
+.messageBubbleClient .messageAttachment,
+.messageBubbleClient .messageImageAttachment {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.paymentProjectOption:hover,
+.paymentProjectOptionActive,
+.clientProjectCard:hover,
+.aiPurchaseCard:hover {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 26px 82px rgba(0, 0, 0, 0.42) !important;
+}
+
+.pageGlow {
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 68%),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.065), transparent) !important;
+  opacity: 0.42 !important;
+}
+
+.heroSignalPing {
+  background: #ffffff !important;
+  box-shadow: 0 0 22px rgba(255, 255, 255, 0.52) !important;
+}
+
+.paymentProjectRadio {
+  accent-color: #1463ff !important;
+}
+
+@media (max-width: 760px) {
+  .panel,
+  .profileHeader,
+  .profileCard,
+  .clientProjectsSection,
+  .aiPurchaseSection,
+  .sidebar,
+  .chatPanel,
+  .chatSidebar > * {
+    border-radius: 8px !important;
+  }
+}

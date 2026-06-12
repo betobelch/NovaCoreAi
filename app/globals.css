@@ -1642,6 +1642,511 @@
   }
 }
 
+.neo-page-shell {
+  --neo-blue: #1463ff;
+  --neo-blue-soft: rgba(20, 99, 255, 0.38);
+  background: #050505;
+  letter-spacing: 0;
+}
+
+.neo-page-shell h1,
+.neo-page-shell h2,
+.neo-page-shell h3,
+.neo-page-shell p {
+  text-wrap: balance;
+}
+
+.neo-page-shell p {
+  text-wrap: pretty;
+}
+
+.neo-ambient-base {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    radial-gradient(60rem 34rem at 50% -12%, rgba(255, 255, 255, 0.1), transparent 68%),
+    radial-gradient(48rem 28rem at 50% 36%, rgba(255, 255, 255, 0.045), transparent 72%),
+    #050505;
+  background-size: 72px 72px, 72px 72px, auto, auto, auto;
+}
+
+.neo-noise {
+  background-image:
+    radial-gradient(circle at 16% 24%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px),
+    radial-gradient(circle at 82% 62%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px);
+  background-size: 31px 31px, 43px 43px;
+  mix-blend-mode: overlay;
+  opacity: 0.12;
+}
+
+.neo-vignette {
+  background:
+    linear-gradient(to bottom, rgba(5, 5, 5, 0.12), transparent 18%, rgba(5, 5, 5, 0.28) 78%, #050505),
+    radial-gradient(circle at 50% 42%, transparent 0 38%, rgba(0, 0, 0, 0.58) 100%);
+}
+
+.neo-depth-panel {
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.045), transparent 54%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  clip-path: polygon(50% 0, 100% 24%, 82% 100%, 18% 100%, 0 24%);
+  opacity: 0.5;
+  transform-style: preserve-3d;
+}
+
+.neo-depth-panel-a {
+  left: max(-12rem, -8vw);
+  top: 12rem;
+  width: min(34vw, 30rem);
+  height: 22rem;
+  transform: rotate(-18deg) skewY(6deg);
+  animation: neo-depth-float-a 12s ease-in-out infinite;
+}
+
+.neo-depth-panel-b {
+  right: max(-12rem, -8vw);
+  top: 17rem;
+  width: min(36vw, 32rem);
+  height: 25rem;
+  transform: rotate(16deg) skewY(-5deg);
+  animation: neo-depth-float-b 13s ease-in-out infinite;
+}
+
+.neo-depth-panel-c {
+  left: 50%;
+  bottom: 10%;
+  width: min(44vw, 38rem);
+  height: 15rem;
+  transform: translateX(-50%) rotate(0deg) scaleX(1.2);
+  opacity: 0.28;
+}
+
+.neo-site-header {
+  color: #fff;
+}
+
+.neo-site-header a,
+.neo-site-header button {
+  border-radius: 8px;
+}
+
+.neo-header-cta {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 16px 44px rgba(20, 99, 255, 0.3),
+    0 0 34px rgba(20, 99, 255, 0.32);
+}
+
+.neo-pill {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 20px 80px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(18px);
+}
+
+.neo-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 8px;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.neo-button:hover {
+  transform: translateY(-2px);
+}
+
+.neo-button-primary {
+  border: 1px solid rgba(112, 163, 255, 0.72);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 48%),
+    var(--neo-blue);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.11) inset,
+    0 20px 58px rgba(20, 99, 255, 0.34),
+    0 0 44px rgba(20, 99, 255, 0.42);
+}
+
+.neo-button-primary::after {
+  content: "";
+  position: absolute;
+  inset: -60% auto -60% -35%;
+  z-index: -1;
+  width: 34%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.68), transparent);
+  transform: translateX(-120%) skewX(-18deg);
+  animation: neo-cta-shine 3.9s ease-in-out infinite;
+}
+
+.neo-button-primary:hover {
+  border-color: rgba(189, 214, 255, 0.9);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 50%),
+    #1e6bff;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.13) inset,
+    0 24px 70px rgba(20, 99, 255, 0.42),
+    0 0 60px rgba(20, 99, 255, 0.48);
+}
+
+.neo-button-ghost {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.neo-button-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: 0 20px 56px rgba(255, 255, 255, 0.05);
+}
+
+.neo-core-stage {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 82%, transparent);
+}
+
+.neo-core-object {
+  transform-style: preserve-3d;
+  filter:
+    drop-shadow(0 32px 80px rgba(255, 255, 255, 0.1))
+    drop-shadow(0 0 42px rgba(255, 255, 255, 0.08));
+  will-change: transform;
+}
+
+.neo-core-reactive-light {
+  border-radius: 999px;
+  filter: blur(28px);
+  opacity: 0.72;
+  transform: translateZ(70px);
+}
+
+.neo-core-edge,
+.neo-core-fill {
+  clip-path: polygon(50% 0, 92% 18%, 84% 78%, 50% 100%, 16% 78%, 8% 18%);
+  transform-style: preserve-3d;
+}
+
+.neo-core-edge {
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.2), transparent 24%),
+    linear-gradient(32deg, transparent 44%, rgba(255, 255, 255, 0.18), transparent 61%),
+    rgba(255, 255, 255, 0.024);
+  box-shadow:
+    inset 0 0 42px rgba(255, 255, 255, 0.08),
+    0 0 72px rgba(255, 255, 255, 0.1);
+}
+
+.neo-core-edge::before,
+.neo-core-edge::after,
+.neo-core-fill::before,
+.neo-core-fill::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  clip-path: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.neo-core-edge::after {
+  inset: 25%;
+  border-color: rgba(255, 255, 255, 0.18);
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.12));
+}
+
+.neo-core-fill {
+  background:
+    linear-gradient(90deg, transparent 0 18%, rgba(255, 255, 255, 0.06) 19%, transparent 20% 80%, rgba(255, 255, 255, 0.06) 81%, transparent 82%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 52%),
+    rgba(5, 5, 5, 0.62);
+  box-shadow: inset 0 0 70px rgba(255, 255, 255, 0.07);
+  transform: translateZ(34px);
+}
+
+.neo-core-face {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.015));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.neo-core-face-left {
+  left: 12%;
+  top: 24%;
+  width: 35%;
+  height: 52%;
+  clip-path: polygon(0 0, 100% 16%, 100% 100%, 0 82%);
+  transform: rotateY(-38deg) translateZ(12px);
+}
+
+.neo-core-face-right {
+  right: 12%;
+  top: 24%;
+  width: 35%;
+  height: 52%;
+  clip-path: polygon(0 16%, 100% 0, 100% 82%, 0 100%);
+  transform: rotateY(38deg) translateZ(12px);
+}
+
+.neo-core-face-bottom {
+  left: 26%;
+  bottom: 2%;
+  width: 48%;
+  height: 24%;
+  clip-path: polygon(0 0, 100% 0, 72% 100%, 28% 100%);
+  transform: rotateX(58deg) translateZ(-6px);
+}
+
+.neo-core-inner {
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  background: rgba(255, 255, 255, 0.018);
+  box-shadow: 0 0 28px rgba(255, 255, 255, 0.08);
+}
+
+.neo-core-inner-a {
+  left: 36%;
+  top: 22%;
+  width: 28%;
+  height: 28%;
+  transform: rotate(45deg) translateZ(60px);
+}
+
+.neo-core-inner-b {
+  left: 24%;
+  top: 50%;
+  width: 20%;
+  height: 20%;
+  transform: rotate(45deg) translateZ(42px);
+}
+
+.neo-core-inner-c {
+  right: 24%;
+  top: 50%;
+  width: 20%;
+  height: 20%;
+  transform: rotate(45deg) translateZ(42px);
+}
+
+.neo-core-cube {
+  width: 3.6rem;
+  height: 3.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.15), transparent 52%),
+    rgba(255, 255, 255, 0.035);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 34px rgba(255, 255, 255, 0.1);
+  transform: rotate(45deg) translateZ(78px);
+}
+
+.neo-core-cube-a {
+  left: 17%;
+  top: 16%;
+}
+
+.neo-core-cube-b {
+  right: 17%;
+  top: 16%;
+}
+
+.neo-core-cube-c {
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%) rotate(45deg) translateZ(86px);
+}
+
+.neo-command-panel,
+.neo-feature-card,
+.neo-metric-row,
+.neo-final-cta,
+.neo-architecture {
+  border-radius: 8px;
+}
+
+.neo-command-panel,
+.neo-feature-card,
+.neo-metric-row,
+.neo-final-cta,
+.neo-architecture {
+  position: relative;
+  isolation: isolate;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 32px 120px rgba(0, 0, 0, 0.42);
+}
+
+.neo-command-panel::before,
+.neo-feature-card::before,
+.neo-metric-row::before,
+.neo-final-cta::before,
+.neo-architecture::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.04) 38%, rgba(255, 255, 255, 0.16)),
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.18), transparent 24rem);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.58;
+  pointer-events: none;
+}
+
+.neo-feature-card,
+.neo-metric-row {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.neo-feature-card:hover,
+.neo-metric-row:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.055);
+  transform: translateY(-4px);
+}
+
+.neo-final-cta {
+  background:
+    radial-gradient(42rem 20rem at 50% 0%, rgba(255, 255, 255, 0.1), transparent 70%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.neo-architecture-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(circle at 50% 50%, #000 0 54%, transparent 82%);
+  opacity: 0.62;
+}
+
+.neo-architecture::after {
+  content: "";
+  position: absolute;
+  inset: 16%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transform: rotate(45deg);
+}
+
+.neo-orbit-node {
+  z-index: 2;
+  display: flex;
+  min-width: 7rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(5, 5, 5, 0.84);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 0 36px rgba(255, 255, 255, 0.065);
+}
+
+.neo-orbit-node-1 {
+  left: 10%;
+  top: 15%;
+}
+
+.neo-orbit-node-2 {
+  right: 12%;
+  top: 16%;
+}
+
+.neo-orbit-node-3 {
+  left: 7%;
+  top: 47%;
+}
+
+.neo-orbit-node-4 {
+  right: 8%;
+  top: 47%;
+}
+
+.neo-orbit-node-5 {
+  left: 19%;
+  bottom: 14%;
+}
+
+.neo-orbit-node-6 {
+  right: 18%;
+  bottom: 14%;
+}
+
+@keyframes neo-depth-float-a {
+  0%,
+  100% {
+    transform: rotate(-18deg) skewY(6deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate(-16deg) skewY(5deg) translate3d(2%, -3%, 0);
+  }
+}
+
+@keyframes neo-depth-float-b {
+  0%,
+  100% {
+    transform: rotate(16deg) skewY(-5deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate(14deg) skewY(-4deg) translate3d(-2%, 3%, 0);
+  }
+}
+
+@keyframes neo-cta-shine {
+  0%,
+  48% {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(470%) skewX(-18deg);
+  }
+}
+
+@media (max-width: 760px) {
+  .neo-depth-panel {
+    display: none;
+  }
+
+  .neo-core-stage {
+    top: 10rem;
+    height: 25rem;
+    opacity: 0.78;
+  }
+
+  .neo-core-object {
+    height: 20rem;
+  }
+
+  .neo-core-cube {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .neo-orbit-node {
+    min-width: 5.8rem;
+    height: 2.6rem;
+    font-size: 0.65rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .novacore-cinematic-grid,
   .novacore-aurora-layer,
@@ -1676,7 +2181,221 @@
   .product-breathing,
   .product-play-button::before,
   .hero-command-center,
-  .proof-dashboard {
+  .proof-dashboard,
+  .neo-depth-panel,
+  .neo-button-primary::after {
     animation: none;
   }
+}
+
+/* Neo Luxury Tech auth surfaces */
+.login-os-shell,
+.signup-os-shell {
+  color-scheme: dark;
+  background:
+    radial-gradient(34rem 28rem at var(--login-mouse-x, var(--signup-mouse-x, 58%)) var(--login-mouse-y, var(--signup-mouse-y, 24%)), rgba(255, 255, 255, 0.13), transparent 66%),
+    radial-gradient(58rem 32rem at 50% -12%, rgba(255, 255, 255, 0.09), transparent 68%),
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    #050505 !important;
+  background-size: auto, auto, 72px 72px, 72px 72px, auto !important;
+  color: #fff !important;
+}
+
+.login-os-shell::before,
+.signup-os-shell::before {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.042) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.034) 1px, transparent 1px) !important;
+  background-size: 58px 58px, 58px 58px !important;
+  mask-image: radial-gradient(circle at 50% 36%, #000 0%, #000 42%, transparent 82%) !important;
+  opacity: 0.5 !important;
+}
+
+.login-os-shell::after,
+.signup-os-shell::after {
+  background:
+    radial-gradient(circle at var(--login-mouse-x, var(--signup-mouse-x, 58%)) var(--login-mouse-y, var(--signup-mouse-y, 24%)), rgba(255, 255, 255, 0.16), transparent 18rem),
+    linear-gradient(to bottom, transparent 0%, rgba(5, 5, 5, 0.88) 100%) !important;
+  opacity: 0.82 !important;
+}
+
+.login-energy-orbit,
+.signup-depth-lines,
+.signup-noise-layer {
+  background:
+    linear-gradient(118deg, transparent 0 42%, rgba(255, 255, 255, 0.075) 48%, transparent 55%),
+    linear-gradient(66deg, transparent 0 62%, rgba(255, 255, 255, 0.055) 66%, transparent 72%) !important;
+  opacity: 0.28 !important;
+}
+
+.login-scan-beam,
+.signup-scan-beam {
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.12), transparent) !important;
+  opacity: 0.42 !important;
+}
+
+.login-particle,
+.signup-particle {
+  background: rgba(255, 255, 255, 0.74) !important;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.18) !important;
+}
+
+.login-card,
+.login-side-panel,
+.signup-card,
+.signup-orchestration-panel {
+  border-radius: 8px !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 34px 120px rgba(0, 0, 0, 0.48) !important;
+}
+
+.login-card::before,
+.login-side-panel::before,
+.signup-card::before,
+.signup-orchestration-panel::before {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.035) 44%, rgba(255, 255, 255, 0.14)),
+    radial-gradient(circle at var(--login-mouse-x, var(--signup-mouse-x, 58%)) var(--login-mouse-y, var(--signup-mouse-y, 24%)), rgba(255, 255, 255, 0.18), transparent 26rem) !important;
+  opacity: 0.66 !important;
+}
+
+.login-card::after,
+.login-side-panel::after,
+.signup-card::after,
+.signup-orchestration-panel::after {
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.16), transparent 72%) !important;
+  opacity: 0.38 !important;
+}
+
+.login-card *,
+.login-side-panel *,
+.signup-card *,
+.signup-orchestration-panel * {
+  letter-spacing: 0;
+}
+
+.login-os-shell [class*="text-slate-950"],
+.signup-os-shell [class*="text-slate-950"],
+.login-os-shell [class*="dark:text-white"],
+.signup-os-shell [class*="dark:text-white"] {
+  color: #fff !important;
+}
+
+.login-os-shell [class*="text-slate-300"],
+.login-os-shell [class*="text-slate-400"],
+.login-os-shell [class*="text-slate-500"],
+.login-os-shell [class*="text-slate-600"],
+.signup-os-shell [class*="text-slate-300"],
+.signup-os-shell [class*="text-slate-400"],
+.signup-os-shell [class*="text-slate-500"],
+.signup-os-shell [class*="text-slate-600"] {
+  color: rgba(255, 255, 255, 0.56) !important;
+}
+
+.login-os-shell [class*="text-blue-"],
+.login-os-shell [class*="text-cyan-"],
+.login-os-shell [class*="text-violet-"],
+.signup-os-shell [class*="text-blue-"],
+.signup-os-shell [class*="text-cyan-"],
+.signup-os-shell [class*="text-violet-"] {
+  color: rgba(255, 255, 255, 0.74) !important;
+}
+
+.login-os-shell [class*="border-white"],
+.signup-os-shell [class*="border-white"] {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.login-os-shell [class*="bg-white"],
+.signup-os-shell [class*="bg-white"] {
+  background: rgba(255, 255, 255, 0.045) !important;
+}
+
+.login-holo-icon,
+.signup-holo-icon,
+.login-side-panel [class*="bg-gradient-to-br"],
+.signup-orchestration-panel [class*="bg-gradient-to-br"] {
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  box-shadow: 0 0 34px rgba(255, 255, 255, 0.08) !important;
+}
+
+.login-input,
+.signup-input {
+  border-radius: 8px !important;
+  border-color: rgba(255, 255, 255, 0.13) !important;
+  background: rgba(0, 0, 0, 0.48) !important;
+  color: #fff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+.login-input::placeholder,
+.signup-input::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.login-input:focus,
+.signup-input:focus {
+  border-color: rgba(255, 255, 255, 0.32) !important;
+  background: rgba(0, 0, 0, 0.62) !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 32px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09) !important;
+}
+
+.login-google-button,
+.signup-google-button,
+.login-card a[href="/cliente/cadastrar"],
+.signup-card a[href="/login"] {
+  border-radius: 8px !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  color: #fff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.login-google-button:hover,
+.signup-google-button:hover,
+.login-card a[href="/cliente/cadastrar"]:hover,
+.signup-card a[href="/login"]:hover {
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  background: rgba(255, 255, 255, 0.075) !important;
+  color: #fff !important;
+}
+
+.login-primary-button,
+.signup-primary-button {
+  border: 1px solid rgba(112, 163, 255, 0.72) !important;
+  border-radius: 8px !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 48%),
+    #1463ff !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.11) inset,
+    0 20px 58px rgba(20, 99, 255, 0.34),
+    0 0 44px rgba(20, 99, 255, 0.42) !important;
+}
+
+.login-primary-button::after,
+.signup-primary-button::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.58), transparent) !important;
+}
+
+.login-signal-bar,
+.signup-orchestration-panel [class*="bg-gradient-to-r"] {
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.92)) !important;
+  box-shadow: 0 0 22px rgba(255, 255, 255, 0.08) !important;
+}
+
+.login-os-shell .rounded-2xl,
+.signup-os-shell .rounded-2xl,
+.login-os-shell .rounded-xl,
+.signup-os-shell .rounded-xl {
+  border-radius: 8px !important;
 }
