@@ -269,7 +269,7 @@ export function Header() {
                   </button>
 
                   {notificationMenuOpen && (
-                    <div className="absolute right-0 mt-3 grid w-[360px] max-w-[calc(100vw-28px)] gap-2 rounded-xl border border-border bg-card p-3 shadow-2xl shadow-black/10 dark:shadow-black/30">
+                    <div className="neo-notification-panel absolute right-0 mt-3 grid w-[360px] max-w-[calc(100vw-28px)] gap-2 rounded-xl border border-border bg-card p-3 shadow-2xl shadow-black/10 dark:shadow-black/30">
                       <div className="flex items-center justify-between gap-3 px-1">
                         <span className="text-xs font-black uppercase tracking-[0.08em] text-muted-foreground">
                           Atualizacoes
@@ -446,8 +446,8 @@ export function Header() {
                 </Link>
               ))}
               {clientUser ? (
-                <div className="mt-2 flex flex-col gap-3 rounded-xl border border-border bg-card/60 p-3">
-                  <div className="grid gap-2 rounded-lg border border-border bg-background/50 p-2">
+                <div className="neo-notification-mobile-panel mt-2 flex flex-col gap-3 rounded-xl border border-border bg-card/60 p-3">
+                  <div className="neo-notification-panel grid gap-2 rounded-lg border border-border bg-background/50 p-2">
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-xs font-black uppercase tracking-[0.08em] text-muted-foreground">
                         Atualizacoes

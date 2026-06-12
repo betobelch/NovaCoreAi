@@ -95,6 +95,10 @@ export default function AdminPage() {
   const [projectDraft, setProjectDraft] = useState(() => createProjectDraft(""))
   const [purchaseProducts, setPurchaseProducts] = useState<PurchaseProduct[]>([])
   const [productDraft, setProductDraft] = useState(() => createProductCatalogDraft())
+  const [isSavingProduct, setIsSavingProduct] = useState(false)
+  const [productCatalogStatus, setProductCatalogStatus] = useState<null | { type: "success" | "error"; message: string }>(
+    null,
+  )
   const [projectPendingDeletion, setProjectPendingDeletion] = useState<AdminProject | null>(null)
   const [isDeletingProject, setIsDeletingProject] = useState(false)
   const [deleteProjectError, setDeleteProjectError] = useState("")
@@ -448,24 +452,52 @@ export default function AdminPage() {
   async function handleProductCatalogSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    if (!productDraft.name.trim() || !productDraft.description.trim()) return
+    const name = productDraft.name.trim()
+    const description = productDraft.description.trim()
+    const model = productDraft.model.trim() || "Produto sob medida"
 
-    const response = await fetch("/api/products", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: productDraft.name.trim(),
-        description: productDraft.description.trim(),
-        model: productDraft.model.trim() || "Produto sob medida",
-      }),
-    })
+    setProductCatalogStatus(null)
 
-    if (!response.ok) return
+    if (!name || !description) {
+      setProductCatalogStatus({ type: "error", message: "Preencha nome e descricao antes de cadastrar." })
+      return
+    }
 
-    const payload = (await response.json()) as { products?: PurchaseProduct[] }
+    setIsSavingProduct(true)
 
-    setPurchaseProducts(payload.products ?? purchaseProducts)
-    setProductDraft(createProductCatalogDraft())
+    try {
+      const response = await fetch("/api/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, description, model }),
+      })
+      const payload = (await response.json().catch(() => null)) as {
+        message?: string
+        product?: PurchaseProduct
+        products?: PurchaseProduct[]
+      } | null
+
+      if (!response.ok) {
+        setProductCatalogStatus({
+          type: "error",
+          message: payload?.message ?? "Nao foi possivel cadastrar o produto agora.",
+        })
+        return
+      }
+
+      setPurchaseProducts((currentProducts) => {
+        if (payload?.products) return payload.products
+        if (!payload?.product) return currentProducts
+
+        return [payload.product, ...currentProducts.filter((product) => product.id !== payload.product?.id)]
+      })
+      setProductDraft(createProductCatalogDraft())
+      setProductCatalogStatus({ type: "success", message: "Produto cadastrado com sucesso." })
+    } catch {
+      setProductCatalogStatus({ type: "error", message: "Nao foi possivel conectar com o servidor agora." })
+    } finally {
+      setIsSavingProduct(false)
+    }
   }
 
   function requestProjectDeletion(projectId: string) {
@@ -1099,10 +1131,20 @@ export default function AdminPage() {
                   <option>Suporte recorrente</option>
                 </select>
               </label>
-              <button type="submit">
+              <button type="submit" disabled={isSavingProduct}>
                 <Plus className={styles.smallIcon} />
-                Cadastrar produto
+                {isSavingProduct ? "Cadastrando..." : "Cadastrar produto"}
               </button>
+              {productCatalogStatus && (
+                <p
+                  role="status"
+                  className={`${styles.productCatalogStatus} ${
+                    productCatalogStatus.type === "success" ? styles.productCatalogStatusSuccess : styles.productCatalogStatusError
+                  }`}
+                >
+                  {productCatalogStatus.message}
+                </p>
+              )}
             </form>
 
             <div className={styles.productCatalogList}>
